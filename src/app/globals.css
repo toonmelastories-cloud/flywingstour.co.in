@@ -1,26 +1,184 @@
-@import "tailwindcss";
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&family=Poppins:wght@300;400;500;600&display=swap');
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
+@layer base {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    /* Brand Colors */
+    --navy: 213 63% 13%;
+    --navy-light: 213 55% 18%;
+    --navy-dark: 213 70% 8%;
+    --gold: 43 88% 42%;
+    --gold-light: 43 88% 55%;
+    --gold-muted: 43 60% 70%;
+
+    /* Semantic Tokens */
+    --background: 0 0% 100%;
+    --foreground: 213 63% 13%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 213 63% 13%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 213 63% 13%;
+
+    --primary: 213 63% 13%;
+    --primary-foreground: 43 88% 55%;
+
+    --secondary: 43 88% 42%;
+    --secondary-foreground: 213 63% 13%;
+
+    --muted: 210 20% 96%;
+    --muted-foreground: 213 30% 45%;
+
+    --accent: 43 88% 55%;
+    --accent-foreground: 213 63% 13%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 98%;
+
+    --border: 210 20% 88%;
+    --input: 210 20% 88%;
+    --ring: 43 88% 42%;
+
+    --radius: 0.5rem;
+
+    /* Gradients */
+    --gradient-navy: linear-gradient(135deg, hsl(213 63% 13%), hsl(213 70% 8%));
+    --gradient-gold: linear-gradient(135deg, hsl(43 88% 42%), hsl(43 88% 55%));
+    --gradient-hero: linear-gradient(to bottom, hsl(213 63% 13% / 0.55) 0%, hsl(213 70% 8% / 0.75) 100%);
+    --gradient-card: linear-gradient(to top, hsl(213 63% 8% / 0.85) 0%, transparent 50%);
+
+    /* Shadows */
+    --shadow-sm: 0 2px 8px hsl(213 63% 13% / 0.08);
+    --shadow-md: 0 4px 20px hsl(213 63% 13% / 0.12);
+    --shadow-lg: 0 8px 40px hsl(213 63% 13% / 0.18);
+    --shadow-gold: 0 4px 20px hsl(43 88% 42% / 0.35);
+
+    /* Sidebar */
+    --sidebar-background: 213 63% 13%;
+    --sidebar-foreground: 0 0% 98%;
+    --sidebar-primary: 43 88% 42%;
+    --sidebar-primary-foreground: 0 0% 98%;
+    --sidebar-accent: 213 55% 18%;
+    --sidebar-accent-foreground: 0 0% 98%;
+    --sidebar-border: 213 55% 20%;
+    --sidebar-ring: 43 88% 42%;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    font-family: 'Poppins', sans-serif;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Montserrat', sans-serif;
+  }
+}
+
+@layer utilities {
+  .font-display {
+    font-family: 'Montserrat', sans-serif;
+  }
+
+  .font-body {
+    font-family: 'Poppins', sans-serif;
+  }
+
+  .text-navy {
+    color: hsl(var(--navy));
+  }
+
+  .text-gold {
+    color: hsl(var(--gold));
+  }
+
+  .text-gold-light {
+    color: hsl(var(--gold-light));
+  }
+
+  .bg-navy {
+    background-color: hsl(var(--navy));
+  }
+
+  .bg-navy-light {
+    background-color: hsl(var(--navy-light));
+  }
+
+  .bg-navy-dark {
+    background-color: hsl(var(--navy-dark));
+  }
+
+  .bg-gold {
+    background-color: hsl(var(--gold));
+  }
+
+  .bg-gold-light {
+    background-color: hsl(var(--gold-light));
+  }
+
+  .gradient-navy {
+    background: var(--gradient-navy);
+  }
+
+  .gradient-gold {
+    background: var(--gradient-gold);
+  }
+
+  .gradient-hero {
+    background: var(--gradient-hero);
+  }
+
+  .gradient-card {
+    background: var(--gradient-card);
+  }
+
+  .shadow-gold {
+    box-shadow: var(--shadow-gold);
+  }
+
+  .border-gold {
+    border-color: hsl(var(--gold));
+  }
+
+  .section-padding {
+    @apply py-16 md:py-24;
+  }
+
+  .container-custom {
+    @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+  }
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: hsl(var(--muted));
+}
+::-webkit-scrollbar-thumb {
+  background: hsl(var(--gold));
+  border-radius: 3px;
+}
+
+/* Hide scrollbar for category pills */
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
 }

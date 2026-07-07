@@ -1,65 +1,92 @@
-import Image from "next/image";
+"use client";
+
+import { useState, useEffect } from "react";
+import Navbar from "@/components/Navbar";
+import HeroSection from "@/components/HeroSection";
+import ServicesSection from "@/components/ServicesSection";
+import DestinationsSection from "@/components/DestinationsSection";
+import WhyChooseUs from "@/components/WhyChooseUs";
+import TourPackages from "@/components/TourPackages";
+import Testimonials from "@/components/Testimonials";
+import BlogSection from "@/components/BlogSection";
+
+import CTASection from "@/components/CTASection";
+import Footer from "@/components/Footer";
+import WhatsAppButton from "@/components/WhatsAppButton";
+import InquiryModal from "@/components/InquiryModal";
 
 export default function Home() {
+  const [inquiryOpen, setInquiryOpen] = useState(false);
+
+  // SEO meta tags
+  useEffect(() => {
+    document.title = "Best Travel Agency | Flywings Tour and Travel";
+    const setMeta = (name: string, content: string, property?: string) => {
+      const el = document.querySelector(
+        property ? `meta[property="${name}"]` : `meta[name="${name}"]`
+      ) || document.createElement("meta");
+      if (property) el.setAttribute("property", name);
+      else el.setAttribute("name", name);
+      el.setAttribute("content", content);
+      if (!el.parentNode) document.head.appendChild(el);
+    };
+
+    setMeta("description", "Flywings Tour and Travel — India's trusted travel agency for flight booking, holiday packages, visa services, and complete travel solutions. Best prices guaranteed.");
+    setMeta("keywords", "travel agency India, flight booking, holiday packages, visa services, tour packages, Flywings travel");
+    setMeta("og:title", "Flywings Tour and Travel | Best Travel Agency India", "property");
+    setMeta("og:description", "Explore the world with Flywings. Flights, Holidays, Visa & Complete Travel Solutions at best prices.", "property");
+    setMeta("og:type", "website", "property");
+    setMeta("twitter:card", "summary_large_image");
+    setMeta("twitter:title", "Flywings Tour and Travel");
+
+    // Travel schema markup
+    const schema = {
+      "@context": "https://schema.org",
+      "@type": "TravelAgency",
+      "name": "Flywings Tour and Travel",
+      "description": "India's premium travel agency offering flights, holiday packages, visa services, and complete travel solutions.",
+      "url": "https://flywings.in",
+      "telephone": "+919914310333",
+      "email": "info@flywingstour.in",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "SCF 29, First Floor, Phase 7, S.A.S Nagar Mohali",
+        "addressLocality": "Mohali",
+        "postalCode": "160062",
+        "addressCountry": "IN",
+      },
+      "priceRange": "₹₹",
+      "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingValue": "4.9",
+        "reviewCount": "5234",
+      },
+    };
+
+    const schemaScript = document.getElementById("travel-schema") || document.createElement("script");
+    schemaScript.setAttribute("type", "application/ld+json");
+    schemaScript.id = "travel-schema";
+    schemaScript.textContent = JSON.stringify(schema);
+    if (!schemaScript.parentNode) document.head.appendChild(schemaScript);
+  }, []);
+
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
+    <div className="min-h-screen bg-background font-body">
+      <Navbar onInquiryOpen={() => setInquiryOpen(true)} />
+      <main>
+        <HeroSection onInquiryOpen={() => setInquiryOpen(true)} />
+        <ServicesSection />
+        <DestinationsSection />
+        <WhyChooseUs />
+        <TourPackages onBook={() => setInquiryOpen(true)} />
+        <Testimonials />
+        <BlogSection />
+
+        <CTASection onInquiryOpen={() => setInquiryOpen(true)} />
       </main>
+      <Footer />
+      <WhatsAppButton />
+      <InquiryModal isOpen={inquiryOpen} onClose={() => setInquiryOpen(false)} />
     </div>
   );
 }
