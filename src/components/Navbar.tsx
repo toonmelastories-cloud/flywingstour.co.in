@@ -16,7 +16,7 @@ const navLinks = [
   { label: "Services", href: "/services", external: false },
   { label: "Destinations", href: "/destinations", external: false },
   { label: "Packages", href: "/packages", external: false },
-  { label: "Blog", href: "https://flywingstour.in/blog", external: true },
+  { label: "Blog", href: "/blog", external: false },
   { label: "About", href: "/about", external: false },
   { label: "Contact", href: "/contact", external: false },
 ];

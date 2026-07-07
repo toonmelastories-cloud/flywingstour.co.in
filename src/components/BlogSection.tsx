@@ -2,6 +2,7 @@
 
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
+import Link from "next/link";
 import { Clock, ArrowRight } from "lucide-react";
 
 const thailandImg = "/assets/thailand.jpg";
@@ -17,7 +18,7 @@ const posts = [
     date: "Feb 10, 2025",
     title: "Hidden Gems of Southeast Asia You Must Explore in 2025",
     excerpt: "Discover the untouched paradises beyond the tourist trail — from mystical jungle waterfalls to...",
-    link: "https://flywingstour.in/blog",
+    link: "/blog",
   },
   {
     category: "Honeymoon",
@@ -27,7 +28,7 @@ const posts = [
     date: "Feb 05, 2025",
     title: "The Perfect European Honeymoon: Santorini & Amalfi Coast Guide",
     excerpt: "Plan the most romantic getaway of your life with our expertly curated Europe honeymoon guide...",
-    link: "https://flywingstour.in/blog",
+    link: "/blog",
   },
   {
     category: "Destination Guide",
@@ -37,7 +38,7 @@ const posts = [
     date: "Jan 28, 2025",
     title: "Ultimate Dubai Travel Guide: Luxury, Culture & Adventure",
     excerpt: "From the Burj Al Arab to desert dunes at sunset — everything you need to know for an...",
-    link: "https://flywingstour.in/blog",
+    link: "/blog",
   },
 ];
 
@@ -65,27 +66,25 @@ export default function BlogSection() {
               Tips, guides and inspiration from our travel experts to help you plan your perfect trip.
             </p>
           </div>
-          <a
-            href="https://flywingstour.in/blog"
-            target="_blank"
-            rel="noopener noreferrer"
+          <Link
+            href="/blog"
             className="inline-flex items-center gap-2 text-navy font-body font-semibold text-sm hover:gap-3 hover:text-gold transition-all shrink-0"
           >
             View All Articles <ArrowRight className="w-4 h-4" />
-          </a>
+          </Link>
         </motion.div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {posts.map((post, i) => (
-            <motion.a
+            <motion.div
               key={post.title}
-              href={post.link}
-              target="_blank"
-              rel="noopener noreferrer"
               initial={{ opacity: 0, y: 40 }}
               animate={isInView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.5, delay: i * 0.1 }}
-              className="group bg-white rounded-2xl overflow-hidden border border-border shadow-card hover:shadow-navy transition-all duration-300 hover:-translate-y-1"
+            >
+            <Link
+              href={post.link}
+              className="group block bg-white rounded-2xl overflow-hidden border border-border shadow-card hover:shadow-navy transition-all duration-300 hover:-translate-y-1"
             >
               {/* Image */}
               <div className="relative h-56 overflow-hidden">
@@ -118,7 +117,8 @@ export default function BlogSection() {
                   Read More <ArrowRight className="w-3.5 h-3.5" />
                 </span>
               </div>
-            </motion.a>
+            </Link>
+            </motion.div>
           ))}
         </div>
       </div>
