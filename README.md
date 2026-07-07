@@ -34,3 +34,22 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+
+## Environment Variables
+
+| Variable | Required | Description |
+|---|---|---|
+| `WP_API_URL` | No (defaults to production URL) | Base URL of the headless WordPress REST API, e.g. `https://wp.flywingstour.co.in/wp-json/wp/v2`. Used server-side only by `src/lib/wordpress.ts` to fetch tours (`/tours`) and blog posts (`/posts`). If the "tours" custom post type doesn't exist yet or WordPress is unreachable, `/packages` pages automatically fall back to the local static data in `src/data/packages.ts` — no build/runtime crash. |
+
+**Local development:** already set in `.env.local` (gitignored).
+
+**Vercel:** add the same key under Project Settings → Environment Variables (Production, Preview, and Development) so deployed builds fetch from the same WordPress instance:
+
+```
+WP_API_URL=https://wp.flywingstour.co.in/wp-json/wp/v2
+```
+
+### WordPress content model this integration expects
+
+- **Tours** (`/wp-json/wp/v2/tours`): a custom post type with ACF fields `price`, `duration`, `destination`, `itinerary` (rich text), `gallery` (array of image URLs). Not required to exist yet — `/packages` and `/packages/[slug]` show the local curated packages until it's populated, then switch over automatically via ISR (`revalidate: 300`).
+- **Posts** (`/wp-json/wp/v2/posts`): standard WordPress posts power `/blog` and `/blog/[slug]`.
