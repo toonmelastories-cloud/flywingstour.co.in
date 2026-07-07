@@ -51,5 +51,8 @@ WP_API_URL=https://wp.flywingstour.co.in/wp-json/wp/v2
 
 ### WordPress content model this integration expects
 
-- **Tours** (`/wp-json/wp/v2/tours`): a custom post type with ACF fields `price`, `duration`, `destination`, `itinerary` (rich text), `gallery` (array of image URLs). Not required to exist yet — `/packages` and `/packages/[slug]` show the local curated packages until it's populated, then switch over automatically via ISR (`revalidate: 300`).
-- **Posts** (`/wp-json/wp/v2/posts`): standard WordPress posts power `/blog` and `/blog/[slug]`.
+No ACF, no custom post type — everything is a regular WordPress **Post**:
+
+- **Tours**: create a category in WP admin with slug `tours` (Posts → Categories) and assign tour posts to it. `/packages` and `/packages/[slug]` pull posts from that category; the post's featured image, title, excerpt and content are used. Until the `tours` category exists (or has no posts), those pages show the local curated packages in `src/data/packages.ts` and switch over automatically via ISR (`revalidate: 300`) once you start publishing.
+- **Blog**: any other post (i.e. not in the `tours` category) powers `/blog` and `/blog/[slug]`.
+- **SEO**: managed entirely by the **Yoast SEO** plugin — install & activate it on WordPress. Once active, Yoast automatically adds a `yoast_head_json` field (title, meta description) to every post in the REST API response, and this site prefers it over the raw post title/excerpt for page `<title>`/meta description. No extra configuration needed on the frontend side.

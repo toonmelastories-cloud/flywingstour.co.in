@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { ChevronRight, Clock } from "lucide-react";
 import SiteShell from "@/components/SiteShell";
-import { getPosts, getPostBySlug, getFeaturedImageUrl } from "@/lib/wordpress";
+import { getPosts, getPostBySlug, getFeaturedImageUrl, getYoastMeta } from "@/lib/wordpress";
 import { sanitizeWpHtml, stripWpHtml, estimateReadTime } from "@/lib/sanitize";
 
 export const revalidate = 300;
@@ -24,11 +24,12 @@ export async function generateMetadata({
   const post = await getPostBySlug(slug);
   if (!post) return {};
 
-  const title = stripWpHtml(post.title.rendered);
-  const description = stripWpHtml(post.excerpt.rendered).slice(0, 160);
+  const yoast = getYoastMeta(post);
+  const title = yoast.title || `${stripWpHtml(post.title.rendered)} | Flywings Blog`;
+  const description = yoast.description || stripWpHtml(post.excerpt.rendered).slice(0, 160);
 
   return {
-    title: `${title} | Flywings Blog`,
+    title,
     description,
     openGraph: { title, description, type: "article" },
   };

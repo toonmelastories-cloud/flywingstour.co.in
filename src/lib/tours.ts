@@ -1,4 +1,4 @@
-import { getTours, getTourBySlug, getFeaturedImageUrl, type WPTour } from "@/lib/wordpress";
+import { getTours, getTourBySlug, getFeaturedImageUrl, getYoastMeta, type WPPost } from "@/lib/wordpress";
 import { getAllPackages, getPackageBySlug, getRelatedPackages, type PackageData } from "@/data/packages";
 import { stripWpHtml } from "@/lib/sanitize";
 
@@ -6,66 +6,57 @@ const FALLBACK_IMAGE = "/assets/hero-bg.jpg";
 
 /**
  * Superset of PackageData used to render both WordPress-sourced tours
- * (minimal ACF fields) and the rich local static packages. Fields that
- * only WordPress provides raw HTML for are kept separately so the UI can
- * render them safely (sanitized) instead of forcing them into the
- * structured local shape.
+ * (plain posts — title, content, featured image, Yoast SEO meta; no
+ * structured pricing/itinerary/gallery fields) and the rich local
+ * static packages. WP tours simply leave the structured fields (hotels,
+ * pricingTiers, faqs, etc.) empty — the detail/listing UI already
+ * guards those sections and hides them when empty.
  */
 export interface TourData extends PackageData {
   source: "wordpress" | "local";
-  /** Raw itinerary HTML from WP ACF field, when present (WP tours only). */
-  itineraryHtml?: string;
   /** Raw WP post content HTML, shown in the overview section when present. */
   contentHtml?: string;
 }
 
-function mapWpTourToTourData(tour: WPTour): TourData {
-  const acf = tour.acf ?? {};
-  const title = stripWpHtml(tour.title?.rendered ?? "");
-  const excerpt = stripWpHtml(tour.excerpt?.rendered ?? "");
-  const overview = stripWpHtml(tour.content?.rendered ?? "").slice(0, 400);
-  const destination = acf.destination?.trim() ?? "";
-  const gallery = acf.gallery && acf.gallery.length > 0
-    ? acf.gallery
-    : [getFeaturedImageUrl(tour) ?? FALLBACK_IMAGE];
-  const price = acf.price?.trim() ?? "";
+function mapWpPostToTourData(post: WPPost): TourData {
+  const title = stripWpHtml(post.title?.rendered ?? "");
+  const excerpt = stripWpHtml(post.excerpt?.rendered ?? "");
+  const overview = stripWpHtml(post.content?.rendered ?? "").slice(0, 400);
+  const yoast = getYoastMeta(post);
 
   return {
-    slug: tour.slug,
-    destinationSlug: destination.toLowerCase().replace(/\s+/g, "-"),
+    slug: post.slug,
+    destinationSlug: "",
     title,
     shortTitle: title,
     tagline: excerpt,
-    heroImages: gallery,
+    heroImages: [getFeaturedImageUrl(post) ?? FALLBACK_IMAGE],
     rating: 0,
     reviewCount: 0,
-    duration: acf.duration ?? "",
+    duration: "",
     nights: 0,
     days: 0,
-    destinations: destination ? [destination] : [],
+    destinations: [],
     hotelCategory: "",
     transferIncluded: false,
     mealsIncluded: "",
-    startingPrice: price,
-    originalPrice: price,
+    startingPrice: "",
+    originalPrice: "",
     badge: undefined,
     overview: overview || excerpt,
     itinerary: [],
-    itineraryHtml: acf.itinerary,
-    contentHtml: tour.content?.rendered,
+    contentHtml: post.content?.rendered,
     inclusions: [],
     exclusions: [],
     hotels: [],
-    pricingTiers: price
-      ? [{ label: "Per Person", price, originalPrice: price, description: "" }]
-      : [],
+    pricingTiers: [],
     childPrice: undefined,
     emiAvailable: false,
     cancellationPolicy: [],
     faqs: [],
     relatedSlugs: [],
-    metaTitle: title,
-    metaDescription: excerpt.slice(0, 160),
+    metaTitle: yoast.title || title,
+    metaDescription: (yoast.description || excerpt).slice(0, 160),
     keywords: [],
     source: "wordpress",
   };
@@ -76,14 +67,15 @@ function localToTourData(pkg: PackageData): TourData {
 }
 
 /**
- * All tours for the /packages listing. Tries WordPress first; if the
- * "tours" post type doesn't exist yet or WP is unreachable, falls back
- * to the local curated package data so the page never looks empty.
+ * All tours for the /packages listing. Tries WordPress first (posts
+ * tagged with the "tours" category); if that category doesn't exist
+ * yet or WP is unreachable, falls back to the local curated package
+ * data so the page never looks empty.
  */
 export async function getAllTours(): Promise<TourData[]> {
   const wpTours = await getTours();
   if (wpTours && wpTours.length > 0) {
-    return wpTours.map(mapWpTourToTourData);
+    return wpTours.map(mapWpPostToTourData);
   }
   return getAllPackages().map(localToTourData);
 }
@@ -91,7 +83,7 @@ export async function getAllTours(): Promise<TourData[]> {
 /** A single tour by slug, checking WordPress first, then local data. */
 export async function getTourData(slug: string): Promise<TourData | null> {
   const wpTour = await getTourBySlug(slug);
-  if (wpTour) return mapWpTourToTourData(wpTour);
+  if (wpTour) return mapWpPostToTourData(wpTour);
 
   const local = getPackageBySlug(slug);
   return local ? localToTourData(local) : null;

@@ -3,39 +3,34 @@
  *
  * Talks to the WP REST API at WP_API_URL (defaults to the production
  * WordPress install). Every function fails soft: on network errors,
- * non-2xx responses (including 404 when a custom post type/endpoint
- * doesn't exist yet), or malformed JSON, it resolves to `null` instead
- * of throwing — so pages can fall back to static content and builds
+ * non-2xx responses (including 404 when a category/endpoint doesn't
+ * exist yet), or malformed JSON, it resolves to `null` instead of
+ * throwing — so pages can fall back to static content and builds
  * never crash because WordPress isn't ready yet.
+ *
+ * Content model: tours and blog articles are both plain WordPress
+ * Posts (no ACF, no custom post type). Tours are simply posts assigned
+ * to a category whose slug is TOURS_CATEGORY_SLUG (create it in
+ * WP admin and tag tour posts with it). SEO title/description are
+ * managed entirely by the Yoast SEO plugin, which — once installed and
+ * active — automatically adds a `yoast_head_json` field to every post
+ * in the REST API response. No extra plugin/config needed for that.
  */
 
 const WP_API_URL = process.env.WP_API_URL || "https://wp.flywingstour.co.in/wp-json/wp/v2";
-
+const TOURS_CATEGORY_SLUG = "tours";
 const REVALIDATE_SECONDS = 300;
 
 export interface WPRendered {
   rendered: string;
 }
 
-export interface WPTourACF {
-  price?: string;
-  duration?: string;
-  destination?: string;
-  itinerary?: string;
-  gallery?: string[];
-}
-
-export interface WPTour {
-  id: number;
-  slug: string;
-  date: string;
-  title: WPRendered;
-  content: WPRendered;
-  excerpt?: WPRendered;
-  acf?: WPTourACF;
-  _embedded?: {
-    "wp:featuredmedia"?: Array<{ source_url: string }>;
-  };
+/** Populated automatically by the Yoast SEO plugin on every REST post response. */
+export interface WPYoastHead {
+  title?: string;
+  description?: string;
+  og_title?: string;
+  og_description?: string;
 }
 
 export interface WPPost {
@@ -45,9 +40,11 @@ export interface WPPost {
   title: WPRendered;
   content: WPRendered;
   excerpt: WPRendered;
+  categories?: number[];
+  yoast_head_json?: WPYoastHead;
   _embedded?: {
     "wp:featuredmedia"?: Array<{ source_url: string }>;
-    "wp:term"?: Array<Array<{ name: string; slug: string }>>;
+    "wp:term"?: Array<Array<{ id: number; name: string; slug: string }>>;
   };
 }
 
@@ -60,7 +57,7 @@ async function wpFetch<T>(path: string): Promise<T | null> {
     });
 
     if (!res.ok) {
-      // Includes 404 (endpoint / post type not registered yet on WP)
+      // Includes 404 (category / endpoint doesn't exist yet)
       return null;
     }
 
@@ -74,29 +71,61 @@ async function wpFetch<T>(path: string): Promise<T | null> {
   }
 }
 
-/** Fetch all published tours from the "tours" custom post type. */
-export async function getTours(): Promise<WPTour[] | null> {
-  return wpFetch<WPTour[]>("/tours?_embed&per_page=100&orderby=date&order=desc");
+/** Resolves a category slug to its numeric WP term ID, or null if it doesn't exist / WP is unreachable. */
+async function getCategoryIdBySlug(slug: string): Promise<number | null> {
+  const categories = await wpFetch<Array<{ id: number; slug: string }>>(
+    `/categories?slug=${encodeURIComponent(slug)}`
+  );
+  return categories && categories.length > 0 ? categories[0].id : null;
 }
 
-/** Fetch a single tour by slug, or null if not found / WP unreachable. */
-export async function getTourBySlug(slug: string): Promise<WPTour | null> {
-  const tours = await wpFetch<WPTour[]>(`/tours?slug=${encodeURIComponent(slug)}&_embed`);
-  return tours && tours.length > 0 ? tours[0] : null;
+/**
+ * All published tours — posts tagged with the `tours` category.
+ * Returns null (triggering local fallback) if that category doesn't
+ * exist yet or WordPress is unreachable.
+ */
+export async function getTours(): Promise<WPPost[] | null> {
+  const categoryId = await getCategoryIdBySlug(TOURS_CATEGORY_SLUG);
+  if (categoryId === null) return null;
+  return wpFetch<WPPost[]>(`/posts?categories=${categoryId}&_embed&per_page=100&orderby=date&order=desc`);
 }
 
-/** Fetch all published blog posts. */
+/** A single tour by slug — must actually belong to the `tours` category, otherwise null. */
+export async function getTourBySlug(slug: string): Promise<WPPost | null> {
+  const categoryId = await getCategoryIdBySlug(TOURS_CATEGORY_SLUG);
+  if (categoryId === null) return null;
+
+  const posts = await wpFetch<WPPost[]>(`/posts?slug=${encodeURIComponent(slug)}&_embed`);
+  const post = posts && posts.length > 0 ? posts[0] : null;
+  if (!post || !post.categories?.includes(categoryId)) return null;
+  return post;
+}
+
+/**
+ * All published blog posts, excluding anything tagged `tours` so the
+ * two content types don't mix in listings.
+ */
 export async function getPosts(): Promise<WPPost[] | null> {
-  return wpFetch<WPPost[]>("/posts?_embed&per_page=100&orderby=date&order=desc");
+  const categoryId = await getCategoryIdBySlug(TOURS_CATEGORY_SLUG);
+  const exclude = categoryId !== null ? `&categories_exclude=${categoryId}` : "";
+  return wpFetch<WPPost[]>(`/posts?_embed&per_page=100&orderby=date&order=desc${exclude}`);
 }
 
-/** Fetch a single blog post by slug, or null if not found / WP unreachable. */
+/** A single blog post by slug (any category), or null if not found / WP unreachable. */
 export async function getPostBySlug(slug: string): Promise<WPPost | null> {
   const posts = await wpFetch<WPPost[]>(`/posts?slug=${encodeURIComponent(slug)}&_embed`);
   return posts && posts.length > 0 ? posts[0] : null;
 }
 
-/** Best-effort featured image URL extraction from an embedded WP entity. */
-export function getFeaturedImageUrl(entity: WPTour | WPPost): string | undefined {
-  return entity._embedded?.["wp:featuredmedia"]?.[0]?.source_url;
+/** Best-effort featured image URL extraction from an embedded WP post. */
+export function getFeaturedImageUrl(post: WPPost): string | undefined {
+  return post._embedded?.["wp:featuredmedia"]?.[0]?.source_url;
+}
+
+/** Yoast-managed SEO title/description, when the Yoast SEO plugin is active. */
+export function getYoastMeta(post: WPPost): { title?: string; description?: string } {
+  return {
+    title: post.yoast_head_json?.title,
+    description: post.yoast_head_json?.description,
+  };
 }

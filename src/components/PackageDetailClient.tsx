@@ -393,8 +393,7 @@ export default function PackageDetailClient({ pkg, related }: { pkg: TourData; r
   }, [pkg]);
 
   const hasStructuredItinerary = pkg.itinerary.length > 0;
-  const hasHtmlItinerary = Boolean(pkg.itineraryHtml && pkg.itineraryHtml.trim());
-  const hasItinerary = hasStructuredItinerary || hasHtmlItinerary;
+  const hasItinerary = hasStructuredItinerary;
   const hasInclusionsOrExclusions = pkg.inclusions.length > 0 || pkg.exclusions.length > 0;
   const hasHotels = pkg.hotels.length > 0;
   const hasPricing = pkg.pricingTiers.length > 0;
@@ -597,8 +596,7 @@ export default function PackageDetailClient({ pkg, related }: { pkg: TourData; r
                   title="Detailed Itinerary"
                   subtitle={pkg.duration ? `Your complete ${pkg.duration} journey — planned to perfection.` : undefined}
                 />
-                {hasStructuredItinerary ? (
-                  <div className="space-y-3">
+                <div className="space-y-3">
                     {pkg.itinerary.map((day, i) => (
                       <motion.div
                         key={day.day}
@@ -650,13 +648,7 @@ export default function PackageDetailClient({ pkg, related }: { pkg: TourData; r
                         </AnimatePresence>
                       </motion.div>
                     ))}
-                  </div>
-                ) : (
-                  <div
-                    className="bg-card border border-border rounded-2xl p-6 shadow-card text-muted-foreground font-body text-sm leading-relaxed prose prose-sm max-w-none"
-                    dangerouslySetInnerHTML={{ __html: sanitizeWpHtml(pkg.itineraryHtml!) }}
-                  />
-                )}
+                </div>
               </section>
             )}
 
