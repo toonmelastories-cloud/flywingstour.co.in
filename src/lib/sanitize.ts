@@ -30,6 +30,22 @@ export function estimateReadTime(html: string): string {
   return `${minutes} min read`;
 }
 
+const CATEGORY_COLORS = [
+  "bg-emerald-500/10 text-emerald-600",
+  "bg-pink-500/10 text-pink-600",
+  "bg-blue-500/10 text-blue-600",
+  "bg-amber-500/10 text-amber-600",
+  "bg-violet-500/10 text-violet-600",
+  "bg-teal-500/10 text-teal-600",
+];
+
+/** Deterministic color pair for a WP category name, so pills stay visually consistent across renders. */
+export function getCategoryColor(name: string): string {
+  let hash = 0;
+  for (let i = 0; i < name.length; i++) hash = (hash * 31 + name.charCodeAt(i)) >>> 0;
+  return CATEGORY_COLORS[hash % CATEGORY_COLORS.length];
+}
+
 /** Strips all HTML tags and decodes the handful of entities WordPress commonly emits. */
 export function stripWpHtml(html: string): string {
   return html
