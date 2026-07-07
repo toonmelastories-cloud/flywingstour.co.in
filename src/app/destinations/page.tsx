@@ -138,9 +138,6 @@ export default function DestinationsPage() {
                         loading="lazy"
                       />
                       <div className="absolute inset-0 bg-gradient-card" />
-                      <div className="absolute top-4 right-4 px-3 py-1 bg-primary/80 backdrop-blur-sm text-secondary text-sm font-display font-700 rounded-full border border-secondary/30">
-                        From {dest.startingPrice}
-                      </div>
                       <div className="absolute top-4 left-4 flex items-center gap-1 bg-black/30 backdrop-blur-sm px-2.5 py-1 rounded-full">
                         <MapPin className="w-3 h-3 text-secondary" />
                         <span className="text-white/90 text-xs font-body">{dest.country}</span>

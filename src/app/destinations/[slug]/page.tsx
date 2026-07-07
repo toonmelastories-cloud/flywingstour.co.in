@@ -82,18 +82,11 @@ function PackageCard({ pkg, index, isInView, onBook }: {
             </span>
           ))}
         </div>
-        <div className="flex items-end gap-2 mb-5">
-          <div>
-            <div className="text-muted-foreground line-through text-xs font-body">{pkg.originalPrice}</div>
-            <div className="text-primary font-display font-800 text-2xl">{pkg.price}</div>
-          </div>
-          <span className="text-muted-foreground text-xs font-body pb-1">/person</span>
-        </div>
         <button
           onClick={onBook}
           className="w-full flex items-center justify-center gap-2 py-3 bg-gradient-gold text-primary font-display font-700 text-sm rounded-xl shadow-gold hover:opacity-90 hover:scale-105 transition-all duration-200"
         >
-          Book Now <ArrowRight className="w-4 h-4" />
+          Enquire Now <ArrowRight className="w-4 h-4" />
         </button>
       </div>
     </motion.div>
@@ -275,11 +268,6 @@ export default function DestinationPage() {
               {destination.tagline}
             </p>
             <div className="flex flex-wrap items-center gap-4">
-              <div className="flex items-center gap-2 bg-secondary/20 backdrop-blur-sm border border-secondary/30 rounded-xl px-4 py-2">
-                <span className="text-secondary font-body text-xs">Starting from</span>
-                <span className="text-secondary font-display font-800 text-xl">{destination.startingPrice}</span>
-                <span className="text-white/60 font-body text-xs">/ person</span>
-              </div>
               <div className="flex items-center gap-1.5">
                 {[...Array(5)].map((_, i) => <Star key={i} className="w-4 h-4 text-secondary fill-secondary" />)}
                 <span className="text-white/80 font-body text-sm ml-1">5.0 Rating</span>
@@ -309,7 +297,7 @@ export default function DestinationPage() {
           onClick={() => setInquiryOpen(true)}
           className="w-full py-3 bg-gradient-gold text-primary font-display font-700 text-sm rounded-xl shadow-gold"
         >
-          Get Free Quote — Starting {destination.startingPrice}
+          Get Free Quote
         </button>
       </div>
 
@@ -641,7 +629,6 @@ export default function DestinationPage() {
                   <div className="absolute bottom-0 left-0 right-0 p-5">
                     <div className="text-secondary font-body text-xs uppercase tracking-widest mb-1">{dest.country}</div>
                     <h3 className="font-display font-700 text-white text-lg mb-1">{dest.name}</h3>
-                    <div className="text-white/70 font-body text-xs mb-3">From {dest.startingPrice}/person</div>
                     <Link
                       href={`/destinations/${dest.slug}`}
                       className="inline-flex items-center gap-1.5 bg-secondary/20 border border-secondary/30 text-secondary font-body text-xs px-3 py-1.5 rounded-full hover:bg-secondary/30 transition-colors"

@@ -8,11 +8,9 @@ import {
   ChevronRight, Star, Clock, MapPin, Hotel, Utensils, Plane,
   CheckCircle2, XCircle, Phone, MessageCircle, ArrowRight,
   ChevronDown, ChevronUp, Users, Shield, Headphones, BadgeCheck,
-  Globe, CreditCard, Zap, ImageIcon, X, Tag, Info,
+  Globe, Zap, ImageIcon, X, Tag, Info,
   AlertTriangle,
 } from "lucide-react";
-import { format, parse } from "date-fns";
-import { DatePicker } from "@/components/DatePicker";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import WhatsAppButton from "@/components/WhatsAppButton";
@@ -146,70 +144,8 @@ function FAQItem({ faq, index }: { faq: { question: string; answer: string }; in
   );
 }
 
-/* ─── Pricing Card ────────────────────────────────────────────────────────── */
-function PricingCard({ tier, index, onBook }: {
-  tier: TourData["pricingTiers"][0]; index: number; onBook: () => void;
-}) {
-  const isFirst = index === 0;
-  return (
-    <motion.div
-      initial={{ opacity: 0, y: 24 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
-      transition={{ delay: index * 0.08 }}
-      className={`rounded-2xl border p-6 transition-all duration-300 hover:-translate-y-1 ${
-        isFirst
-          ? "bg-primary border-secondary/30 shadow-gold ring-1 ring-secondary/20"
-          : "bg-card border-border shadow-card"
-      }`}
-    >
-      {isFirst && (
-        <div className="inline-flex items-center gap-1.5 bg-secondary/20 border border-secondary/30 rounded-full px-3 py-1 mb-4">
-          <Zap className="w-3 h-3 text-secondary" />
-          <span className="text-secondary text-xs font-body font-semibold">Most Popular</span>
-        </div>
-      )}
-      <h3 className={`font-display font-700 text-base mb-1 ${isFirst ? "text-white" : "text-primary"}`}>
-        {tier.label}
-      </h3>
-      {tier.description && (
-        <p className={`font-body text-xs mb-4 ${isFirst ? "text-white/60" : "text-muted-foreground"}`}>
-          {tier.description}
-        </p>
-      )}
-      <div className="flex items-end gap-2 mb-5">
-        <div>
-          {tier.originalPrice && tier.originalPrice !== tier.price && (
-            <div className={`line-through text-xs font-body ${isFirst ? "text-white/40" : "text-muted-foreground"}`}>
-              {tier.originalPrice}
-            </div>
-          )}
-          <div className={`font-display font-900 text-3xl ${isFirst ? "text-secondary" : "text-primary"}`}>
-            {tier.price}
-          </div>
-        </div>
-        <span className={`font-body text-xs pb-1 ${isFirst ? "text-white/50" : "text-muted-foreground"}`}>/person</span>
-      </div>
-      <button
-        onClick={onBook}
-        className={`w-full py-3 rounded-xl font-display font-700 text-sm transition-all duration-200 hover:scale-[1.02] ${
-          isFirst
-            ? "bg-gradient-gold text-primary shadow-gold"
-            : "bg-primary text-secondary hover:bg-primary/90"
-        }`}
-      >
-        Book This Package
-      </button>
-    </motion.div>
-  );
-}
-
-/* ─── Sticky Booking Sidebar ──────────────────────────────────────────────── */
+/* ─── Sticky Enquiry Sidebar ─────────────────────────────────────────────── */
 function BookingSidebar({ pkg, onBook }: { pkg: TourData; onBook: () => void }) {
-  const [travelers, setTravelers] = useState("2");
-  const [travelDate, setTravelDate] = useState("");
-  const hasPrice = Boolean(pkg.startingPrice);
-
   return (
     <div className="sticky top-28 bg-card border border-border rounded-2xl shadow-card overflow-hidden">
       {/* Header */}
@@ -221,60 +157,17 @@ function BookingSidebar({ pkg, onBook }: { pkg: TourData; onBook: () => void }) 
             <span className="text-secondary text-xs font-body font-semibold">{pkg.badge}</span>
           </div>
         )}
-        {hasPrice ? (
-          <>
-            {pkg.originalPrice && pkg.originalPrice !== pkg.startingPrice && (
-              <div className="text-white/50 font-body text-xs mb-0.5 line-through">{pkg.originalPrice}/person</div>
-            )}
-            <div className="text-secondary font-display font-900 text-3xl mb-1">{pkg.startingPrice}</div>
-            <div className="text-white/60 font-body text-xs">per person (twin sharing)</div>
-          </>
-        ) : (
-          <div className="text-white font-display font-700 text-lg mb-1">Get a Custom Quote</div>
-        )}
+        <div className="text-white font-display font-700 text-lg mb-1">Interested in this package?</div>
+        <div className="text-white/60 font-body text-xs">Enquire and our travel expert will get back to you.</div>
       </div>
 
-      {/* Form */}
-      <div className="p-6 space-y-4">
-        <div>
-          <label className="block text-primary font-body font-medium text-xs mb-1.5">Travel Date</label>
-          <DatePicker
-            value={travelDate ? parse(travelDate, "yyyy-MM-dd", new Date()) : undefined}
-            onChange={(date) => setTravelDate(date ? format(date, "yyyy-MM-dd") : "")}
-            placeholder="Select travel date"
-            minDate={new Date()}
-            buttonClassName="h-[42px] rounded-xl border-border bg-background"
-          />
-        </div>
-
-        <div>
-          <label className="block text-primary font-body font-medium text-xs mb-1.5">Travelers</label>
-          <div className="relative">
-            <Users className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
-            <select
-              value={travelers}
-              onChange={(e) => setTravelers(e.target.value)}
-              className="w-full pl-10 pr-3 py-2.5 border border-border rounded-xl text-primary font-body text-sm outline-none focus:border-secondary transition-colors bg-background appearance-none"
-            >
-              {["1", "2", "3", "4", "5", "6", "7", "8+"].map((n) => (
-                <option key={n} value={n}>{n} {n === "1" ? "Traveler" : "Travelers"}</option>
-              ))}
-            </select>
-          </div>
-        </div>
-
+      {/* CTAs */}
+      <div className="p-6 space-y-3">
         <button
           onClick={onBook}
           className="w-full py-3.5 bg-gradient-gold text-primary font-display font-700 rounded-xl shadow-gold hover:opacity-90 hover:scale-[1.02] transition-all duration-200"
         >
-          {hasPrice ? `Book Now — ${pkg.startingPrice}/person` : "Enquire Now"}
-        </button>
-
-        <button
-          onClick={onBook}
-          className="w-full py-3 border border-border text-primary font-display font-600 text-sm rounded-xl hover:bg-muted/50 transition-colors"
-        >
-          Get Custom Quote
+          Enquire Now
         </button>
 
         <a
@@ -291,8 +184,8 @@ function BookingSidebar({ pkg, onBook }: { pkg: TourData; onBook: () => void }) 
       {/* Trust Badges */}
       <div className="border-t border-border px-6 pb-5 pt-4 space-y-2">
         {[
-          { icon: Shield, text: "Secure & encrypted booking" },
-          { icon: BadgeCheck, text: "Instant confirmation" },
+          { icon: Shield, text: "Secure & confidential enquiry" },
+          { icon: BadgeCheck, text: "Fast response" },
           { icon: Phone, text: "24/7 support: +91 99143 10333" },
         ].map(({ icon: Icon, text }) => (
           <div key={text} className="flex items-center gap-2">
@@ -301,16 +194,6 @@ function BookingSidebar({ pkg, onBook }: { pkg: TourData; onBook: () => void }) 
           </div>
         ))}
       </div>
-
-      {/* EMI badge */}
-      {pkg.emiAvailable && (
-        <div className="mx-6 mb-5 flex items-center gap-2 bg-secondary/10 border border-secondary/20 rounded-xl px-4 py-3">
-          <CreditCard className="w-4 h-4 text-secondary flex-shrink-0" />
-          <span className="text-primary font-body text-xs font-medium">
-            Zero-cost EMI available on select cards
-          </span>
-        </div>
-      )}
     </div>
   );
 }
@@ -353,13 +236,7 @@ function RelatedCard({ pkg, index }: { pkg: TourData; index: number }) {
           <Clock className="w-3 h-3" /> {pkg.duration}
         </div>
         <h3 className="font-display font-700 text-primary text-sm mb-3 leading-snug line-clamp-2">{pkg.shortTitle}</h3>
-        <div className="flex items-center justify-between">
-          <div>
-            {pkg.originalPrice && pkg.originalPrice !== pkg.startingPrice && (
-              <div className="text-muted-foreground line-through text-xs font-body">{pkg.originalPrice}</div>
-            )}
-            <div className="text-primary font-display font-800 text-lg">{pkg.startingPrice}</div>
-          </div>
+        <div className="flex items-center justify-end">
           <Link
             href={`/packages/${pkg.slug}`}
             onClick={(e) => e.stopPropagation()}
@@ -396,7 +273,6 @@ export default function PackageDetailClient({ pkg, related }: { pkg: TourData; r
   const hasItinerary = hasStructuredItinerary;
   const hasInclusionsOrExclusions = pkg.inclusions.length > 0 || pkg.exclusions.length > 0;
   const hasHotels = pkg.hotels.length > 0;
-  const hasPricing = pkg.pricingTiers.length > 0;
   const hasFaqs = pkg.faqs.length > 0;
   const hasCancellationPolicy = pkg.cancellationPolicy.length > 0;
   const hasGallery = pkg.heroImages.length >= 2;
@@ -476,13 +352,6 @@ export default function PackageDetailClient({ pkg, related }: { pkg: TourData; r
             {pkg.rating > 0 && <StarRating rating={pkg.rating} count={pkg.reviewCount} />}
 
             <div className="flex flex-wrap items-center gap-3 mt-5">
-              {pkg.startingPrice && (
-                <div className="flex items-center gap-2 bg-secondary/20 backdrop-blur-sm border border-secondary/30 rounded-xl px-4 py-2">
-                  <span className="text-secondary font-body text-xs">Starting from</span>
-                  <span className="text-secondary font-display font-800 text-xl">{pkg.startingPrice}</span>
-                  <span className="text-white/60 font-body text-xs">/person</span>
-                </div>
-              )}
               {pkg.duration && (
                 <div className="flex items-center gap-1.5 bg-white/10 backdrop-blur-sm border border-white/20 rounded-xl px-3 py-2">
                   <Clock className="w-3.5 h-3.5 text-white/70" />
@@ -496,7 +365,7 @@ export default function PackageDetailClient({ pkg, related }: { pkg: TourData; r
                 onClick={() => setInquiryOpen(true)}
                 className="px-7 py-3.5 bg-gradient-gold text-primary font-display font-700 rounded-full shadow-gold hover:opacity-90 hover:scale-105 transition-all duration-200"
               >
-                Book Now
+                Enquire Now
               </button>
               {hasItinerary && (
                 <a
@@ -538,7 +407,7 @@ export default function PackageDetailClient({ pkg, related }: { pkg: TourData; r
           onClick={() => setInquiryOpen(true)}
           className="flex-1 py-3 bg-gradient-gold text-primary font-display font-700 text-sm rounded-xl shadow-gold"
         >
-          {pkg.startingPrice ? `Book Now — ${pkg.startingPrice}` : "Enquire Now"}
+          Enquire Now
         </button>
         <a
           href={`https://wa.me/919914310333?text=Hi! Interested in ${pkg.shortTitle}`}
@@ -753,48 +622,6 @@ export default function PackageDetailClient({ pkg, related }: { pkg: TourData; r
                     </motion.div>
                   ))}
                 </div>
-              </section>
-            )}
-
-            {/* ── PRICING ───────────────────────────────────────────────────── */}
-            {hasPricing && (
-              <section>
-                <SectionHeader
-                  badge="Pricing"
-                  title="Package Pricing Options"
-                  subtitle="Transparent pricing with no hidden charges. What you see is what you pay."
-                />
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
-                  {pkg.pricingTiers.map((tier, i) => (
-                    <PricingCard key={tier.label} tier={tier} index={i} onBook={() => setInquiryOpen(true)} />
-                  ))}
-                </div>
-                {pkg.childPrice && (
-                  <motion.div
-                    initial={{ opacity: 0, y: 12 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    className="mt-4 flex items-center gap-3 bg-muted/60 border border-border rounded-xl px-5 py-3.5"
-                  >
-                    <Users className="w-4 h-4 text-secondary flex-shrink-0" />
-                    <span className="font-body text-sm text-primary">
-                      <span className="font-semibold">Child Price:</span> {pkg.childPrice}
-                    </span>
-                  </motion.div>
-                )}
-                {pkg.emiAvailable && (
-                  <motion.div
-                    initial={{ opacity: 0, y: 12 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    className="mt-3 flex items-center gap-3 bg-secondary/5 border border-secondary/20 rounded-xl px-5 py-3.5"
-                  >
-                    <CreditCard className="w-4 h-4 text-secondary flex-shrink-0" />
-                    <span className="font-body text-sm text-primary">
-                      <span className="font-semibold text-secondary">Zero-cost EMI</span> available on SBI, HDFC, ICICI & Axis credit cards.
-                    </span>
-                  </motion.div>
-                )}
               </section>
             )}
 

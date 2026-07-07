@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 import { motion, useInView } from "framer-motion";
 import {
   Clock, Star, Plane, Hotel, Utensils, ArrowRight,
-  Search, Filter, Tag, Users, CreditCard,
+  Search, Filter, Tag, Users,
 } from "lucide-react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
@@ -15,16 +15,6 @@ import InquiryModal from "@/components/InquiryModal";
 import type { TourData } from "@/lib/tours";
 
 const FILTERS = ["All", "Dubai", "Thailand", "Bali", "Kashmir", "Maldives", "Singapore"];
-const BUDGETS = ["All Budgets", "Under ₹30k", "₹30k–₹60k", "₹60k–₹90k", "Above ₹90k"];
-
-function matchesBudget(price: string, budget: string) {
-  const num = parseInt(price.replace(/[₹,]/g, ""));
-  if (budget === "Under ₹30k") return num < 30000;
-  if (budget === "₹30k–₹60k") return num >= 30000 && num < 60000;
-  if (budget === "₹60k–₹90k") return num >= 60000 && num < 90000;
-  if (budget === "Above ₹90k") return num >= 90000;
-  return true;
-}
 
 function PackageCard({ pkg, index, isInView, onBook }: {
   pkg: TourData; index: number; isInView: boolean; onBook: () => void;
@@ -108,38 +98,22 @@ function PackageCard({ pkg, index, isInView, onBook }: {
           </div>
         )}
 
-        {/* Price + CTA */}
-        <div className="flex items-end justify-between gap-3">
-          <div>
-            {pkg.originalPrice && pkg.originalPrice !== pkg.startingPrice && (
-              <div className="text-muted-foreground line-through text-xs font-body">{pkg.originalPrice}</div>
-            )}
-            <div className="text-primary font-display font-900 text-2xl">{pkg.startingPrice || "Enquire"}</div>
-            <div className="text-muted-foreground font-body text-xs">/person</div>
-          </div>
-          <div className="flex flex-col gap-1.5">
-            <Link
-              href={`/packages/${pkg.slug}`}
-              onClick={(e) => e.stopPropagation()}
-              className="flex items-center gap-1.5 px-4 py-2 bg-gradient-gold text-primary font-display font-700 text-xs rounded-xl shadow-gold hover:opacity-90 transition-all"
-            >
-              View Details <ArrowRight className="w-3.5 h-3.5" />
-            </Link>
-            <button
-              onClick={(e) => { e.stopPropagation(); onBook(); }}
-              className="px-4 py-2 bg-primary text-secondary font-display font-600 text-xs rounded-xl hover:opacity-90 transition-all"
-            >
-              Book Now
-            </button>
-          </div>
+        {/* CTA */}
+        <div className="flex items-center gap-2">
+          <Link
+            href={`/packages/${pkg.slug}`}
+            onClick={(e) => e.stopPropagation()}
+            className="flex-1 flex items-center justify-center gap-1.5 px-4 py-2.5 border border-border text-primary font-display font-600 text-xs rounded-xl hover:bg-muted/50 transition-all"
+          >
+            View Details <ArrowRight className="w-3.5 h-3.5" />
+          </Link>
+          <button
+            onClick={(e) => { e.stopPropagation(); onBook(); }}
+            className="flex-1 px-4 py-2.5 bg-gradient-gold text-primary font-display font-700 text-xs rounded-xl shadow-gold hover:opacity-90 transition-all"
+          >
+            Enquire Now
+          </button>
         </div>
-
-        {pkg.emiAvailable && (
-          <div className="mt-3 flex items-center gap-1.5 text-muted-foreground font-body text-xs">
-            <CreditCard className="w-3 h-3 text-secondary" />
-            Zero-cost EMI available
-          </div>
-        )}
       </div>
     </motion.div>
   );
@@ -149,7 +123,6 @@ export default function PackagesClient({ packages }: { packages: TourData[] }) {
   const [inquiryOpen, setInquiryOpen] = useState(false);
   const [search, setSearch] = useState("");
   const [activeDestination, setActiveDestination] = useState("All");
-  const [activeBudget, setActiveBudget] = useState("All Budgets");
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-60px" });
 
@@ -160,8 +133,7 @@ export default function PackagesClient({ packages }: { packages: TourData[] }) {
     const matchDest = activeDestination === "All" ||
       pkg.destinations.some((d) => d.toLowerCase().includes(activeDestination.toLowerCase())) ||
       pkg.destinationSlug.toLowerCase().includes(activeDestination.toLowerCase());
-    const matchBudget = matchesBudget(pkg.startingPrice, activeBudget);
-    return matchSearch && matchDest && matchBudget;
+    return matchSearch && matchDest;
   });
 
   return (
@@ -225,20 +197,6 @@ export default function PackagesClient({ packages }: { packages: TourData[] }) {
                 {f}
               </button>
             ))}
-            <div className="w-px h-4 bg-border mx-1 flex-shrink-0" />
-            {BUDGETS.map((b) => (
-              <button
-                key={b}
-                onClick={() => setActiveBudget(b)}
-                className={`flex-shrink-0 px-3.5 py-1.5 rounded-full text-xs font-body font-semibold transition-all ${
-                  activeBudget === b
-                    ? "bg-secondary text-primary shadow-gold"
-                    : "bg-muted text-muted-foreground hover:bg-muted/70"
-                }`}
-              >
-                {b}
-              </button>
-            ))}
           </div>
         </div>
       </section>
@@ -252,7 +210,7 @@ export default function PackagesClient({ packages }: { packages: TourData[] }) {
               <h3 className="font-display font-700 text-primary text-xl mb-2">No packages found</h3>
               <p className="text-muted-foreground font-body text-sm mb-6">Try adjusting your filters or search term.</p>
               <button
-                onClick={() => { setSearch(""); setActiveDestination("All"); setActiveBudget("All Budgets"); }}
+                onClick={() => { setSearch(""); setActiveDestination("All"); }}
                 className="px-6 py-3 bg-gradient-gold text-primary font-display font-700 rounded-full shadow-gold hover:opacity-90 transition-all"
               >
                 Clear Filters

@@ -58,15 +58,8 @@ export interface ApiResponse<T> {
 }
 
 export interface InquiryPayload {
-  name: string;
   phone: string;
   email: string;
-  destination?: string;
-  travelDate?: string;
-  travelers?: string;
-  message?: string;
-  budget?: string;
-  contactMethod?: string;
   source?: string; // e.g., "contact-page", "inquiry-modal", "package-detail"
 }
 

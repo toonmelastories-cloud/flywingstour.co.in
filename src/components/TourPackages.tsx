@@ -166,17 +166,6 @@ function PackageCard({ pkg, index, isInView, onBook }: PackageCardProps) {
           ))}
         </div>
 
-        {/* Price */}
-        <div className="flex items-end gap-2 mb-5">
-          <div>
-            <div className="text-muted-foreground font-body text-xs line-through">{pkg.originalPrice}</div>
-            <div className="font-display font-900 text-2xl text-primary">{pkg.price}</div>
-          </div>
-          <div className="text-muted-foreground text-xs font-body font-medium pb-1">
-            /person
-          </div>
-        </div>
-
         {/* CTA */}
         <button
           onClick={handleView}

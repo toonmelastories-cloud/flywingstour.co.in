@@ -3,9 +3,7 @@
 import { useState } from "react";
 import { useSubmitInquiry } from "@/hooks/useApi";
 import { motion, AnimatePresence } from "framer-motion";
-import { X, User, Mail, Phone, MapPin, Send, CheckCircle } from "lucide-react";
-import { DatePicker } from "@/components/DatePicker";
-import { format, parse } from "date-fns";
+import { X, Mail, Phone, Send, CheckCircle } from "lucide-react";
 
 interface InquiryModalProps {
   isOpen: boolean;
@@ -15,15 +13,7 @@ interface InquiryModalProps {
 export default function InquiryModal({ isOpen, onClose }: InquiryModalProps) {
   const [submitted, setSubmitted] = useState(false);
   const inquiryMutation = useSubmitInquiry();
-  const [form, setForm] = useState({
-    name: "",
-    email: "",
-    phone: "",
-    destination: "",
-    travelDate: "",
-    travelers: "2",
-    message: "",
-  });
+  const [form, setForm] = useState({ phone: "", email: "" });
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -34,7 +24,7 @@ export default function InquiryModal({ isOpen, onClose }: InquiryModalProps) {
           setSubmitted(true);
           setTimeout(() => {
             setSubmitted(false);
-            setForm({ name: "", email: "", phone: "", destination: "", travelDate: "", travelers: "2", message: "" });
+            setForm({ phone: "", email: "" });
             onClose();
           }, 2500);
         },
@@ -61,7 +51,7 @@ export default function InquiryModal({ isOpen, onClose }: InquiryModalProps) {
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.9, y: 20 }}
             transition={{ type: "spring", damping: 20, stiffness: 300 }}
-            className="relative w-full max-w-lg bg-white rounded-3xl overflow-hidden shadow-2xl max-h-[90vh] overflow-y-auto"
+            className="relative w-full max-w-md bg-white rounded-3xl overflow-hidden shadow-2xl max-h-[90vh] overflow-y-auto"
           >
             {/* Header */}
             <div className="bg-gradient-navy px-7 pt-7 pb-5 relative overflow-hidden">
@@ -77,7 +67,7 @@ export default function InquiryModal({ isOpen, onClose }: InquiryModalProps) {
                   <span className="text-gold text-xs font-body font-medium">Free Consultation</span>
                 </div>
                 <h2 className="font-display font-800 text-2xl text-white mb-1">Plan Your Dream Trip</h2>
-                <p className="text-white/60 font-body text-sm">Fill out the form and our expert will call you within 24 hours.</p>
+                <p className="text-white/60 font-body text-sm">Leave your details and our expert will call you within 24 hours.</p>
               </div>
             </div>
 
@@ -97,34 +87,18 @@ export default function InquiryModal({ isOpen, onClose }: InquiryModalProps) {
                 </motion.div>
               ) : (
                 <form onSubmit={handleSubmit} className="space-y-4">
-                  <div className="grid grid-cols-2 gap-3">
-                    <div>
-                      <label className="block text-navy font-body font-medium text-xs mb-1.5">Full Name *</label>
-                      <div className="relative">
-                        <User className="absolute left-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-muted-foreground" />
-                        <input
-                          required
-                          type="text"
-                          value={form.name}
-                          onChange={(e) => setForm({ ...form, name: e.target.value })}
-                          placeholder="John Doe"
-                          className="w-full pl-8 pr-3 py-2.5 border border-border rounded-xl text-navy font-body text-sm outline-none focus:border-gold transition-colors"
-                        />
-                      </div>
-                    </div>
-                    <div>
-                      <label className="block text-navy font-body font-medium text-xs mb-1.5">Phone *</label>
-                      <div className="relative">
-                        <Phone className="absolute left-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-muted-foreground" />
-                        <input
-                          required
-                          type="tel"
-                          value={form.phone}
-                          onChange={(e) => setForm({ ...form, phone: e.target.value })}
-                          placeholder="+91 XXXXX"
-                          className="w-full pl-8 pr-3 py-2.5 border border-border rounded-xl text-navy font-body text-sm outline-none focus:border-gold transition-colors"
-                        />
-                      </div>
+                  <div>
+                    <label className="block text-navy font-body font-medium text-xs mb-1.5">Phone Number *</label>
+                    <div className="relative">
+                      <Phone className="absolute left-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-muted-foreground" />
+                      <input
+                        required
+                        type="tel"
+                        value={form.phone}
+                        onChange={(e) => setForm({ ...form, phone: e.target.value })}
+                        placeholder="+91 XXXXX XXXXX"
+                        className="w-full pl-9 pr-3 py-2.5 border border-border rounded-xl text-navy font-body text-sm outline-none focus:border-gold transition-colors"
+                      />
                     </div>
                   </div>
 
@@ -138,59 +112,9 @@ export default function InquiryModal({ isOpen, onClose }: InquiryModalProps) {
                         value={form.email}
                         onChange={(e) => setForm({ ...form, email: e.target.value })}
                         placeholder="you@example.com"
-                        className="w-full pl-8 pr-3 py-2.5 border border-border rounded-xl text-navy font-body text-sm outline-none focus:border-gold transition-colors"
+                        className="w-full pl-9 pr-3 py-2.5 border border-border rounded-xl text-navy font-body text-sm outline-none focus:border-gold transition-colors"
                       />
                     </div>
-                  </div>
-
-                  <div className="grid grid-cols-2 gap-3">
-                    <div>
-                      <label className="block text-navy font-body font-medium text-xs mb-1.5">Destination</label>
-                      <div className="relative">
-                        <MapPin className="absolute left-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-muted-foreground" />
-                        <input
-                          type="text"
-                          value={form.destination}
-                          onChange={(e) => setForm({ ...form, destination: e.target.value })}
-                          placeholder="e.g. Dubai"
-                          className="w-full pl-8 pr-3 py-2.5 border border-border rounded-xl text-navy font-body text-sm outline-none focus:border-gold transition-colors"
-                        />
-                      </div>
-                    </div>
-                    <div>
-                      <label className="block text-navy font-body font-medium text-xs mb-1.5">Travel Date</label>
-                      <DatePicker
-                        value={form.travelDate ? parse(form.travelDate, "yyyy-MM-dd", new Date()) : undefined}
-                        onChange={(date) => setForm({ ...form, travelDate: date ? format(date, "yyyy-MM-dd") : "" })}
-                        placeholder="Select travel date"
-                        minDate={new Date()}
-                        buttonClassName="h-[42px] rounded-xl border-border text-navy focus:border-gold"
-                      />
-                    </div>
-                  </div>
-
-                  <div>
-                    <label className="block text-navy font-body font-medium text-xs mb-1.5">Number of Travelers</label>
-                    <select
-                      value={form.travelers}
-                      onChange={(e) => setForm({ ...form, travelers: e.target.value })}
-                      className="w-full px-3 py-2.5 border border-border rounded-xl text-navy font-body text-sm outline-none focus:border-gold transition-colors"
-                    >
-                      {["1", "2", "3", "4", "5", "6", "7", "8+"].map((n) => (
-                        <option key={n} value={n}>{n} {n === "1" ? "Traveler" : "Travelers"}</option>
-                      ))}
-                    </select>
-                  </div>
-
-                  <div>
-                    <label className="block text-navy font-body font-medium text-xs mb-1.5">Special Requests</label>
-                    <textarea
-                      value={form.message}
-                      onChange={(e) => setForm({ ...form, message: e.target.value })}
-                      rows={3}
-                      placeholder="Any specific requirements, preferences, or questions..."
-                      className="w-full px-3 py-2.5 border border-border rounded-xl text-navy font-body text-sm outline-none focus:border-gold transition-colors resize-none"
-                    />
                   </div>
 
                   <button

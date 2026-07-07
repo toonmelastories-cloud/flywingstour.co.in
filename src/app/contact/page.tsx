@@ -4,7 +4,6 @@ import { useState, useEffect, useRef } from "react";
 import { motion, useInView } from "framer-motion";
 import { useSubmitContact } from "@/hooks/useApi";
 import Link from "next/link";
-import { format, parse } from "date-fns";
 import {
   ChevronRight, Phone, Mail, MapPin, Clock, MessageCircle,
   Send, CheckCircle, Zap, FileText, DollarSign, HeadphonesIcon,
@@ -15,7 +14,6 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import WhatsAppButton from "@/components/WhatsAppButton";
 import InquiryModal from "@/components/InquiryModal";
-import { DatePicker } from "@/components/DatePicker";
 
 const contactHero = "/assets/contact-hero.jpg";
 
@@ -292,10 +290,7 @@ function ContactFormSection() {
   const isInView = useInView(ref, { once: true, margin: "-80px" });
   const [submitted, setSubmitted] = useState(false);
   const contactMutation = useSubmitContact();
-  const [form, setForm] = useState({
-    name: "", phone: "", email: "", destination: "", travelDate: "",
-    travelers: "2", message: "", budget: "", contactMethod: "call",
-  });
+  const [form, setForm] = useState({ phone: "", email: "" });
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -306,7 +301,7 @@ function ContactFormSection() {
           setSubmitted(true);
           setTimeout(() => {
             setSubmitted(false);
-            setForm({ name: "", phone: "", email: "", destination: "", travelDate: "", travelers: "2", message: "", budget: "", contactMethod: "call" });
+            setForm({ phone: "", email: "" });
           }, 4000);
         },
       }
@@ -325,14 +320,14 @@ function ContactFormSection() {
             <span className="text-secondary text-xs font-body font-semibold tracking-widest uppercase">Free Consultation</span>
           </div>
           <h2 className="font-display font-800 text-3xl sm:text-4xl text-primary mb-4 leading-tight">Get Your Free Travel Consultation</h2>
-          <p className="text-muted-foreground font-body text-lg max-w-2xl mx-auto">Fill out the form below and our travel expert will contact you within a few hours.</p>
+          <p className="text-muted-foreground font-body text-lg max-w-2xl mx-auto">Leave your phone number and email and our travel expert will contact you within a few hours.</p>
         </div>
 
         <motion.div
           initial={{ opacity: 0, y: 40 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.7 }}
-          className="max-w-3xl mx-auto bg-card rounded-3xl shadow-lg border border-border overflow-hidden"
+          className="max-w-lg mx-auto bg-card rounded-3xl shadow-lg border border-border overflow-hidden"
         >
           <div className="bg-primary px-8 py-6 relative overflow-hidden">
             <div className="absolute top-0 right-0 w-32 h-32 rounded-full bg-secondary/10 -mr-10 -mt-10" />
@@ -351,89 +346,16 @@ function ContactFormSection() {
               </motion.div>
             ) : (
               <form onSubmit={handleSubmit} className="space-y-5">
-                <div className="grid sm:grid-cols-2 gap-4">
-                  <div>
-                    <label className="block text-primary font-body font-medium text-xs mb-1.5">Full Name *</label>
-                    <input required type="text" value={form.name} onChange={e => set("name", e.target.value)} placeholder="Your full name" maxLength={100}
-                      className="w-full px-4 py-3 border border-border rounded-xl text-primary font-body text-sm outline-none focus:border-secondary transition-colors" />
-                  </div>
-                  <div>
-                    <label className="block text-primary font-body font-medium text-xs mb-1.5">Phone Number *</label>
-                    <input required type="tel" value={form.phone} onChange={e => set("phone", e.target.value)} placeholder="+91 XXXXX XXXXX" maxLength={15}
-                      className="w-full px-4 py-3 border border-border rounded-xl text-primary font-body text-sm outline-none focus:border-secondary transition-colors" />
-                  </div>
+                <div>
+                  <label className="block text-primary font-body font-medium text-xs mb-1.5">Phone Number *</label>
+                  <input required type="tel" value={form.phone} onChange={e => set("phone", e.target.value)} placeholder="+91 XXXXX XXXXX" maxLength={15}
+                    className="w-full px-4 py-3 border border-border rounded-xl text-primary font-body text-sm outline-none focus:border-secondary transition-colors" />
                 </div>
 
                 <div>
                   <label className="block text-primary font-body font-medium text-xs mb-1.5">Email Address *</label>
                   <input required type="email" value={form.email} onChange={e => set("email", e.target.value)} placeholder="you@example.com" maxLength={255}
                     className="w-full px-4 py-3 border border-border rounded-xl text-primary font-body text-sm outline-none focus:border-secondary transition-colors" />
-                </div>
-
-                <div className="grid sm:grid-cols-2 gap-4">
-                  <div>
-                    <label className="block text-primary font-body font-medium text-xs mb-1.5">Destination Interested In</label>
-                    <input type="text" value={form.destination} onChange={e => set("destination", e.target.value)} placeholder="e.g. Dubai, Thailand" maxLength={100}
-                      className="w-full px-4 py-3 border border-border rounded-xl text-primary font-body text-sm outline-none focus:border-secondary transition-colors" />
-                  </div>
-                  <div>
-                    <label className="block text-primary font-body font-medium text-xs mb-1.5">Travel Date</label>
-                    <DatePicker
-                      value={form.travelDate ? parse(form.travelDate, "yyyy-MM-dd", new Date()) : undefined}
-                      onChange={(date) => set("travelDate", date ? format(date, "yyyy-MM-dd") : "")}
-                      placeholder="Select travel date"
-                      minDate={new Date()}
-                      buttonClassName="h-[48px] rounded-xl border-border"
-                    />
-                  </div>
-                </div>
-
-                <div className="grid sm:grid-cols-2 gap-4">
-                  <div>
-                    <label className="block text-primary font-body font-medium text-xs mb-1.5">Number of Travelers</label>
-                    <select value={form.travelers} onChange={e => set("travelers", e.target.value)}
-                      className="w-full px-4 py-3 border border-border rounded-xl text-primary font-body text-sm outline-none focus:border-secondary transition-colors">
-                      {["1","2","3","4","5","6","7","8+"].map(n => <option key={n} value={n}>{n} {n === "1" ? "Traveler" : "Travelers"}</option>)}
-                    </select>
-                  </div>
-                  <div>
-                    <label className="block text-primary font-body font-medium text-xs mb-1.5">Budget Range (Optional)</label>
-                    <select value={form.budget} onChange={e => set("budget", e.target.value)}
-                      className="w-full px-4 py-3 border border-border rounded-xl text-primary font-body text-sm outline-none focus:border-secondary transition-colors">
-                      <option value="">Select budget range</option>
-                      <option value="under-25k">Under ₹25,000</option>
-                      <option value="25k-50k">₹25,000 – ₹50,000</option>
-                      <option value="50k-1l">₹50,000 – ₹1,00,000</option>
-                      <option value="1l-2l">₹1,00,000 – ₹2,00,000</option>
-                      <option value="above-2l">Above ₹2,00,000</option>
-                    </select>
-                  </div>
-                </div>
-
-                <div>
-                  <label className="block text-primary font-body font-medium text-xs mb-1.5">Preferred Contact Method</label>
-                  <div className="flex gap-4">
-                    {[
-                      { value: "call", label: "📞 Call" },
-                      { value: "whatsapp", label: "💬 WhatsApp" },
-                      { value: "email", label: "📧 Email" },
-                    ].map(opt => (
-                      <label key={opt.value} className={`flex items-center gap-2 px-4 py-2.5 rounded-xl border cursor-pointer transition-all text-sm font-body
-                        ${form.contactMethod === opt.value ? "border-secondary bg-secondary/10 text-primary font-medium" : "border-border text-muted-foreground hover:border-secondary/50"}`}>
-                        <input type="radio" name="contactMethod" value={opt.value} checked={form.contactMethod === opt.value}
-                          onChange={e => set("contactMethod", e.target.value)} className="sr-only" />
-                        {opt.label}
-                      </label>
-                    ))}
-                  </div>
-                </div>
-
-                <div>
-                  <label className="block text-primary font-body font-medium text-xs mb-1.5">Message</label>
-                  <textarea value={form.message} onChange={e => set("message", e.target.value)} rows={4}
-                    placeholder="Tell us about your travel plans, preferences, or any questions..."
-                    maxLength={1000}
-                    className="w-full px-4 py-3 border border-border rounded-xl text-primary font-body text-sm outline-none focus:border-secondary transition-colors resize-none" />
                 </div>
 
                 <button

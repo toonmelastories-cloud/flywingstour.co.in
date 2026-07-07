@@ -47,7 +47,7 @@ export default function DestinationsSection() {
         </motion.div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {destinations.map(({ name, slug, country, image, price, description, badge }, i) => (
+          {destinations.map(({ name, slug, country, image, description, badge }, i) => (
             <motion.div
               key={name}
               initial={{ opacity: 0, y: 50 }}
@@ -69,9 +69,6 @@ export default function DestinationsSection() {
                     {badge}
                   </span>
                 )}
-                <div className="absolute top-4 right-4 px-3 py-1 bg-navy/80 backdrop-blur-sm text-gold text-sm font-display font-700 rounded-full border border-gold/30">
-                  From {price}
-                </div>
               </div>
 
               {/* Info */}
