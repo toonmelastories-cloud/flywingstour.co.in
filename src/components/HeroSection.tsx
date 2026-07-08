@@ -1,17 +1,103 @@
 "use client";
 
-import { useState } from "react";
-import { motion } from "framer-motion";
-import { Search, MapPin, Users, ArrowRight, Shield, Clock, Tag, CalendarIcon } from "lucide-react";
+import { useRef, useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import {
+  Search, MapPin, Users, ArrowRight, Shield, Clock, Tag, CalendarIcon,
+  Phone, CheckCircle2, Loader2, PlaneTakeoff, PlaneLanding,
+} from "lucide-react";
 import { format } from "date-fns";
 import { cn } from "@/lib/utils";
 import { Calendar } from "@/components/ui/calendar";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import { AIRPORTS, searchAirports, formatAirport, type Airport } from "@/data/airports";
 
 const heroBg = "/assets/hero-bg.jpg";
 
 interface HeroSectionProps {
   onInquiryOpen: () => void;
+}
+
+const POPULAR_ROUTES: { label: string; from: string; to: string }[] = [
+  { label: "Chandigarh → Dubai", from: "IXC", to: "DXB" },
+  { label: "Chandigarh → Bangkok", from: "IXC", to: "BKK" },
+  { label: "Amritsar → London", from: "ATQ", to: "LHR" },
+  { label: "Delhi → Singapore", from: "DEL", to: "SIN" },
+  { label: "Chandigarh → Mumbai", from: "IXC", to: "BOM" },
+];
+
+function AirportField({
+  label,
+  icon: Icon,
+  selected,
+  query,
+  onQueryChange,
+  onSelect,
+}: {
+  label: string;
+  icon: typeof MapPin;
+  selected: Airport | null;
+  query: string;
+  onQueryChange: (q: string) => void;
+  onSelect: (a: Airport | null) => void;
+}) {
+  const [open, setOpen] = useState(false);
+  const results = searchAirports(query);
+  const inputRef = useRef<HTMLInputElement>(null);
+
+  return (
+    <div className="relative col-span-1">
+      <div
+        className="bg-white/10 hover:bg-white/20 rounded-xl p-3 cursor-text transition-colors"
+        onClick={() => inputRef.current?.focus()}
+      >
+        <div className="flex items-center gap-2 mb-1">
+          <Icon className="w-3.5 h-3.5 text-gold" />
+          <span className="text-gold text-xs font-body font-medium uppercase tracking-wide">{label}</span>
+        </div>
+        <input
+          ref={inputRef}
+          type="text"
+          placeholder="City or airport"
+          value={query}
+          onChange={(e) => {
+            onQueryChange(e.target.value);
+            onSelect(null);
+            setOpen(true);
+          }}
+          onFocus={() => setOpen(true)}
+          onBlur={() => setTimeout(() => setOpen(false), 150)}
+          className="bg-transparent text-white placeholder-white/50 text-sm font-body w-full outline-none"
+        />
+      </div>
+      {open && !selected && results.length > 0 && (
+        <ul className="absolute left-0 right-0 top-full mt-2 z-[100] bg-navy border border-white/20 rounded-xl shadow-navy overflow-hidden max-h-72 overflow-y-auto min-w-[240px]">
+          {results.map((a) => (
+            <li key={a.code}>
+              <button
+                type="button"
+                onMouseDown={(e) => e.preventDefault()}
+                onClick={() => {
+                  onSelect(a);
+                  onQueryChange(formatAirport(a));
+                  setOpen(false);
+                }}
+                className="w-full flex items-center justify-between gap-3 px-4 py-2.5 text-left hover:bg-white/10 transition-colors"
+              >
+                <span>
+                  <span className="block text-white text-sm font-body">{a.city}</span>
+                  <span className="block text-white/50 text-[11px] font-body">{a.name}, {a.country}</span>
+                </span>
+                <span className="text-gold font-display font-700 text-xs bg-gold/15 border border-gold/25 rounded-md px-1.5 py-0.5">
+                  {a.code}
+                </span>
+              </button>
+            </li>
+          ))}
+        </ul>
+      )}
+    </div>
+  );
 }
 
 const trustBadges = [
@@ -29,6 +115,77 @@ const fadeUp = (delay: number) => ({
 export default function HeroSection({ onInquiryOpen }: HeroSectionProps) {
   const [departureDate, setDepartureDate] = useState<Date>();
   const [returnDate, setReturnDate] = useState<Date>();
+  const [fromQuery, setFromQuery] = useState("");
+  const [toQuery, setToQuery] = useState("");
+  const [fromAirport, setFromAirport] = useState<Airport | null>(null);
+  const [toAirport, setToAirport] = useState<Airport | null>(null);
+  const [travelers, setTravelers] = useState("1 Adult");
+  const [step, setStep] = useState<"search" | "phone" | "done">("search");
+  const [phone, setPhone] = useState("");
+  const [error, setError] = useState("");
+  const [submitting, setSubmitting] = useState(false);
+
+  const applyRoute = (fromCode: string, toCode: string) => {
+    const from = AIRPORTS.find((a) => a.code === fromCode) ?? null;
+    const to = AIRPORTS.find((a) => a.code === toCode) ?? null;
+    setFromAirport(from);
+    setToAirport(to);
+    setFromQuery(from ? formatAirport(from) : "");
+    setToQuery(to ? formatAirport(to) : "");
+    setError("");
+  };
+
+  const handleSearch = () => {
+    if (!fromAirport || !toAirport) {
+      setError("Please pick both airports from the list.");
+      return;
+    }
+    if (fromAirport.code === toAirport.code) {
+      setError("From and To can't be the same airport.");
+      return;
+    }
+    if (!departureDate) {
+      setError("Please select a departure date.");
+      return;
+    }
+    setError("");
+    setStep("phone");
+  };
+
+  const handleSubmit = async () => {
+    const cleanPhone = phone.trim();
+    if (cleanPhone.length < 10 || !/^[+\d\s()-]+$/.test(cleanPhone)) {
+      setError("Please enter a valid mobile number.");
+      return;
+    }
+    setError("");
+    setSubmitting(true);
+    try {
+      const res = await fetch("/api/fare-request", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          from: formatAirport(fromAirport!),
+          to: formatAirport(toAirport!),
+          departure: format(departureDate!, "PPP"),
+          returnDate: returnDate ? format(returnDate, "PPP") : undefined,
+          travelers,
+          phone: cleanPhone,
+        }),
+      });
+      const json = (await res.json().catch(() => null)) as { success?: boolean } | null;
+      if (!res.ok || !json?.success) throw new Error();
+      const w = window as unknown as { gtag?: (...args: unknown[]) => void };
+      w.gtag?.("event", "fare_request", {
+        route: `${fromAirport!.code}-${toAirport!.code}`,
+      });
+      setStep("done");
+    } catch {
+      setError("Could not send your request — please call us on +91 99143 10333.");
+    } finally {
+      setSubmitting(false);
+    }
+  };
 
   return (
     <section id="home" className="relative min-h-screen flex flex-col justify-center overflow-hidden">
@@ -92,31 +249,101 @@ export default function HeroSection({ onInquiryOpen }: HeroSectionProps) {
           transition={{ duration: 0.8, delay: 0.6 }}
           className="bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl p-4 sm:p-6 max-w-5xl"
         >
+          {step === "done" ? (
+            <div className="flex flex-col items-center text-center py-6">
+              <CheckCircle2 className="w-12 h-12 text-gold mb-4" />
+              <h3 className="font-display font-800 text-white text-xl mb-2">
+                Fare Request Received!
+              </h3>
+              <p className="text-white/70 font-body text-sm max-w-md mb-5">
+                Our ticketing desk will call you shortly with today&apos;s lowest fare for{" "}
+                <span className="text-gold font-semibold">
+                  {fromAirport ? formatAirport(fromAirport) : ""} → {toAirport ? formatAirport(toAirport) : ""}
+                </span>
+                . In a hurry?
+              </p>
+              <a
+                href="tel:+919914310333"
+                className="flex items-center gap-2 px-6 py-3 bg-gradient-gold text-navy font-display font-700 text-sm rounded-full shadow-gold hover:opacity-90 transition-all"
+              >
+                <Phone className="w-4 h-4" /> Call +91 99143 10333
+              </a>
+            </div>
+          ) : step === "phone" ? (
+            <div className="py-2">
+              <div className="flex flex-wrap items-center gap-2 mb-4">
+                <span className="text-white/60 font-body text-xs uppercase tracking-wide">Your search:</span>
+                <span className="flex items-center gap-2 bg-white/10 border border-white/20 rounded-full px-3.5 py-1.5 text-white font-body text-xs">
+                  <PlaneTakeoff className="w-3.5 h-3.5 text-gold" />
+                  {fromAirport ? formatAirport(fromAirport) : ""} → {toAirport ? formatAirport(toAirport) : ""}
+                  <span className="text-white/40">·</span>
+                  {departureDate ? format(departureDate, "d MMM") : ""}
+                  {returnDate ? ` – ${format(returnDate, "d MMM")}` : " (one-way)"}
+                  <span className="text-white/40">·</span>
+                  {travelers}
+                </span>
+                <button
+                  type="button"
+                  onClick={() => setStep("search")}
+                  className="text-gold font-body text-xs underline underline-offset-2 hover:opacity-80"
+                >
+                  Edit
+                </button>
+              </div>
+              <p className="text-white font-body text-sm mb-3">
+                <span className="font-semibold text-gold">Almost done —</span> where should we call you
+                with today&apos;s lowest fare?
+              </p>
+              <div className="flex flex-col sm:flex-row gap-3">
+                <div className="flex-1 bg-white/10 rounded-xl p-3">
+                  <div className="flex items-center gap-2 mb-1">
+                    <Phone className="w-3.5 h-3.5 text-gold" />
+                    <span className="text-gold text-xs font-body font-medium uppercase tracking-wide">Mobile Number</span>
+                  </div>
+                  <input
+                    type="tel"
+                    autoFocus
+                    placeholder="+91 98XXX XXXXX"
+                    value={phone}
+                    onChange={(e) => setPhone(e.target.value)}
+                    onKeyDown={(e) => e.key === "Enter" && handleSubmit()}
+                    className="bg-transparent text-white placeholder-white/50 text-sm font-body w-full outline-none"
+                  />
+                </div>
+                <button
+                  type="button"
+                  onClick={handleSubmit}
+                  disabled={submitting}
+                  className="flex items-center justify-center gap-2 px-7 py-3 sm:py-0 bg-gradient-gold text-navy font-display font-700 text-sm rounded-xl shadow-gold hover:opacity-90 transition-all disabled:opacity-60"
+                >
+                  {submitting ? <Loader2 className="w-4 h-4 animate-spin" /> : <Search className="w-4 h-4" />}
+                  Get Lowest Fare
+                </button>
+              </div>
+              <p className="text-white/50 font-body text-[11px] mt-3">
+                No spam, no obligation — one call from our Mohali ticketing desk with the best available fare.
+              </p>
+            </div>
+          ) : (
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3">
             {/* From */}
-            <div className="col-span-1 bg-white/10 hover:bg-white/20 rounded-xl p-3 cursor-pointer transition-colors">
-              <div className="flex items-center gap-2 mb-1">
-                <MapPin className="w-3.5 h-3.5 text-gold" />
-                <span className="text-gold text-xs font-body font-medium uppercase tracking-wide">From</span>
-              </div>
-              <input
-                type="text"
-                placeholder="City or airport"
-                className="bg-transparent text-white placeholder-white/50 text-sm font-body w-full outline-none"
-              />
-            </div>
+            <AirportField
+              label="From"
+              icon={PlaneTakeoff}
+              selected={fromAirport}
+              query={fromQuery}
+              onQueryChange={setFromQuery}
+              onSelect={setFromAirport}
+            />
             {/* To */}
-            <div className="col-span-1 bg-white/10 hover:bg-white/20 rounded-xl p-3 cursor-pointer transition-colors">
-              <div className="flex items-center gap-2 mb-1">
-                <MapPin className="w-3.5 h-3.5 text-gold" />
-                <span className="text-gold text-xs font-body font-medium uppercase tracking-wide">To</span>
-              </div>
-              <input
-                type="text"
-                placeholder="City or airport"
-                className="bg-transparent text-white placeholder-white/50 text-sm font-body w-full outline-none"
-              />
-            </div>
+            <AirportField
+              label="To"
+              icon={PlaneLanding}
+              selected={toAirport}
+              query={toQuery}
+              onQueryChange={setToQuery}
+              onSelect={setToAirport}
+            />
             {/* Departure */}
             <div className="col-span-1">
               <Popover>
@@ -176,18 +403,60 @@ export default function HeroSection({ onInquiryOpen }: HeroSectionProps) {
                   <Users className="w-3.5 h-3.5 text-gold" />
                   <span className="text-gold text-xs font-body font-medium uppercase tracking-wide">Travelers</span>
                 </div>
-                <select className="bg-transparent text-white/80 text-sm font-body w-full outline-none">
-                  <option value="1" className="text-navy">1 Adult</option>
-                  <option value="2" className="text-navy">2 Adults</option>
-                  <option value="3" className="text-navy">3 Adults</option>
-                  <option value="4" className="text-navy">4+ Adults</option>
+                <select
+                  value={travelers}
+                  onChange={(e) => setTravelers(e.target.value)}
+                  className="bg-transparent text-white/80 text-sm font-body w-full outline-none"
+                >
+                  <option value="1 Adult" className="text-navy">1 Adult</option>
+                  <option value="2 Adults" className="text-navy">2 Adults</option>
+                  <option value="3 Adults" className="text-navy">3 Adults</option>
+                  <option value="4+ Adults / Group" className="text-navy">4+ Adults / Group</option>
                 </select>
               </div>
-              <button className="px-4 py-3 bg-gradient-gold text-navy rounded-xl shadow-gold hover:opacity-90 transition-all hover:scale-105 flex items-center justify-center">
+              <button
+                type="button"
+                onClick={handleSearch}
+                aria-label="Search fares"
+                className="px-4 py-3 bg-gradient-gold text-navy rounded-xl shadow-gold hover:opacity-90 transition-all hover:scale-105 flex items-center justify-center"
+              >
                 <Search className="w-5 h-5" />
               </button>
             </div>
           </div>
+          )}
+
+          {/* Error */}
+          <AnimatePresence>
+            {error && (
+              <motion.p
+                initial={{ opacity: 0, y: -6 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0 }}
+                className="text-red-300 font-body text-xs mt-3"
+                role="alert"
+              >
+                {error}
+              </motion.p>
+            )}
+          </AnimatePresence>
+
+          {/* Popular routes */}
+          {step === "search" && (
+            <div className="flex flex-wrap items-center gap-2 mt-4">
+              <span className="text-white/50 font-body text-[11px] uppercase tracking-wide">Popular:</span>
+              {POPULAR_ROUTES.map((r) => (
+                <button
+                  key={r.label}
+                  type="button"
+                  onClick={() => applyRoute(r.from, r.to)}
+                  className="px-3 py-1.5 rounded-full bg-white/10 border border-white/15 text-white/80 font-body text-xs hover:bg-gold/20 hover:border-gold/40 hover:text-gold transition-all"
+                >
+                  {r.label}
+                </button>
+              ))}
+            </div>
+          )}
         </motion.div>
 
         {/* Trust Badges */}
