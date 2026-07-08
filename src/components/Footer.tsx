@@ -17,12 +17,19 @@ export default function Footer() {
     if (!email.trim() || subscribing) return;
     setSubscribing(true);
     try {
-      const res = await fetch("/api/newsletter", {
+      // Sent from the browser — FormSubmit blocks server/datacenter IPs
+      const res = await fetch("https://formsubmit.co/ajax/sales@flywingstour.co.in", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email: email.trim() }),
+        headers: { "Content-Type": "application/json", Accept: "application/json" },
+        body: JSON.stringify({
+          Email: email.trim(),
+          _subject: "Newsletter Signup — Flywings Website",
+          _template: "table",
+          _captcha: "false",
+        }),
       });
-      if (res.ok) {
+      const json = await res.json().catch(() => null);
+      if (res.ok && (json?.success === true || json?.success === "true")) {
         setSubscribed(true);
         setEmail("");
       }

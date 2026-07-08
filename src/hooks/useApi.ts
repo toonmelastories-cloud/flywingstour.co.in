@@ -133,52 +133,74 @@ export function useServices() {
 // ─── Form Submissions (Mutations) ───────────────────────────────
 
 /**
- * Forms post to the site's own /api routes (which forward the lead to
- * the sales inbox) unless an external backend is configured via
- * NEXT_PUBLIC_USE_API — no more simulated success.
+ * Forms deliver leads to the sales inbox via FormSubmit's AJAX API,
+ * called DIRECTLY from the visitor's browser — FormSubmit 403-blocks
+ * datacenter IPs (e.g. Vercel functions), but browser requests from
+ * real users pass. No more simulated success.
  */
-async function postJson<T>(path: string, data: unknown): Promise<T> {
-  const res = await fetch(path, {
+const SALES_EMAIL = "sales@flywingstour.co.in";
+
+async function sendViaFormSubmit(
+  subject: string,
+  fields: Record<string, string>
+): Promise<void> {
+  const res = await fetch(`https://formsubmit.co/ajax/${SALES_EMAIL}`, {
     method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(data),
+    headers: { "Content-Type": "application/json", Accept: "application/json" },
+    body: JSON.stringify({
+      ...fields,
+      _subject: subject,
+      _template: "table",
+      _captcha: "false",
+    }),
   });
   const json = await res.json().catch(() => null);
-  if (!res.ok || !json?.success) {
-    throw new Error(json?.message || "Submission failed");
-  }
-  return json as T;
+  const ok = res.ok && (json?.success === true || json?.success === "true");
+  if (!ok) throw new Error(json?.message || "Submission failed");
 }
 
 export function useSubmitInquiry() {
   return useMutation({
-    mutationFn: (data: InquiryPayload) => {
+    mutationFn: async (data: InquiryPayload) => {
       if (isApiEnabled()) {
         return submitInquiry(data);
       }
-      return postJson<{ success: boolean; data: { id: string } }>("/api/inquiries", data);
+      await sendViaFormSubmit("New Trip Inquiry — Flywings Website", {
+        Phone: data.phone,
+        Email: data.email,
+        Source: data.source || "website",
+      });
+      return { success: true, data: { id: "fs-" + Date.now() } };
     },
   });
 }
 
 export function useSubmitContact() {
   return useMutation({
-    mutationFn: (data: ContactPayload) => {
+    mutationFn: async (data: ContactPayload) => {
       if (isApiEnabled()) {
         return submitContact(data);
       }
-      return postJson<{ success: boolean; data: { id: string } }>("/api/contact", data);
+      await sendViaFormSubmit("New Contact Enquiry — Flywings Website", {
+        Phone: data.phone,
+        Email: data.email,
+        Source: data.source || "contact-page",
+      });
+      return { success: true, data: { id: "fs-" + Date.now() } };
     },
   });
 }
 
 export function useSubscribeNewsletter() {
   return useMutation({
-    mutationFn: (data: NewsletterPayload) => {
+    mutationFn: async (data: NewsletterPayload) => {
       if (isApiEnabled()) {
         return subscribeNewsletter(data);
       }
-      return postJson<{ success: boolean; data: { subscribed: boolean } }>("/api/newsletter", data);
+      await sendViaFormSubmit("Newsletter Signup — Flywings Website", {
+        Email: data.email,
+      });
+      return { success: true, data: { subscribed: true } };
     },
   });
 }
