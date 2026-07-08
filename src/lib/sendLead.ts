@@ -16,6 +16,9 @@ export async function sendLead(
     headers: {
       "Content-Type": "application/json",
       Accept: "application/json",
+      // FormSubmit rejects requests without a browser-like origin
+      Origin: "https://www.flywingstour.co.in",
+      Referer: "https://www.flywingstour.co.in/contact",
     },
     body: JSON.stringify({
       ...fields,
@@ -25,8 +28,17 @@ export async function sendLead(
     }),
   });
 
-  if (!res.ok) {
-    throw new Error(`Lead delivery failed: HTTP ${res.status}`);
+  // FormSubmit returns HTTP 200 even on failure — check the body flag
+  const json = (await res.json().catch(() => null)) as
+    | { success?: string | boolean; message?: string }
+    | null;
+  const ok =
+    res.ok && (json?.success === true || json?.success === "true");
+
+  if (!ok) {
+    throw new Error(
+      `Lead delivery failed: ${json?.message || `HTTP ${res.status}`}`
+    );
   }
 }
 
