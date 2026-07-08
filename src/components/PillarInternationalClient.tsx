@@ -11,12 +11,26 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import WhatsAppButton from "@/components/WhatsAppButton";
 import InquiryModal from "@/components/InquiryModal";
-import type { TourData } from "@/lib/tours";
 import {
   COMPARISON_ROWS,
   PILLAR_FAQS,
 } from "@/data/pillar-international";
 import { CONTACT } from "@/lib/seo";
+
+/**
+ * Slim projection of TourData — only the fields the cards render.
+ * Keeps prices and full itineraries out of the serialized RSC payload
+ * (no prices are shown anywhere on this page by business rule).
+ */
+export interface PillarPackage {
+  slug: string;
+  shortTitle: string;
+  duration: string;
+  heroImage: string;
+  badge?: string;
+  rating: number;
+  reviewCount: number;
+}
 
 const TRUST_STATS = [
   { value: "Since 2005", label: "Serving the Chandigarh Tricity" },
@@ -78,7 +92,7 @@ const BOOKING_STEPS = [
 ];
 
 function PillarPackageCard({ pkg, index, isInView, onBook }: {
-  pkg: TourData; index: number; isInView: boolean; onBook: () => void;
+  pkg: PillarPackage; index: number; isInView: boolean; onBook: () => void;
 }) {
   return (
     <motion.div
@@ -89,7 +103,7 @@ function PillarPackageCard({ pkg, index, isInView, onBook }: {
     >
       <Link href={`/packages/${pkg.slug}`} className="block relative h-48 overflow-hidden">
         <img
-          src={pkg.heroImages[0]}
+          src={pkg.heroImage}
           alt={`${pkg.shortTitle} from Chandigarh`}
           className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
           loading="lazy"
@@ -136,7 +150,7 @@ function PillarPackageCard({ pkg, index, isInView, onBook }: {
   );
 }
 
-export default function PillarInternationalClient({ packages }: { packages: TourData[] }) {
+export default function PillarInternationalClient({ packages }: { packages: PillarPackage[] }) {
   const [inquiryOpen, setInquiryOpen] = useState(false);
   const gridRef = useRef(null);
   const gridInView = useInView(gridRef, { once: true, margin: "-60px" });

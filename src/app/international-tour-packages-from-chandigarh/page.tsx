@@ -35,9 +35,20 @@ export const metadata: Metadata = pageMetadata({
 });
 
 export default async function InternationalToursFromChandigarhPage() {
-  const packages = (await getAllTours()).filter(
+  const tours = (await getAllTours()).filter(
     (pkg) => pkg.destinationSlug !== "kashmir"
   );
+  // Slim projection: only what the cards render (business rule — no
+  // prices anywhere on this page, not even in the serialized payload).
+  const packages = tours.map((pkg) => ({
+    slug: pkg.slug,
+    shortTitle: pkg.shortTitle,
+    duration: pkg.duration,
+    heroImage: pkg.heroImages[0],
+    badge: pkg.badge,
+    rating: pkg.rating,
+    reviewCount: pkg.reviewCount,
+  }));
 
   return (
     <>
@@ -45,7 +56,7 @@ export default async function InternationalToursFromChandigarhPage() {
         data={[
           itemListJsonLd(
             "International Tour Packages from Chandigarh",
-            packages.map((pkg) => ({
+            tours.map((pkg) => ({
               name: pkg.title,
               path: `/packages/${pkg.slug}`,
               image: pkg.heroImages[0],
