@@ -208,7 +208,7 @@ export default function HeroSection({ onInquiryOpen }: HeroSectionProps) {
       </div>
 
       {/* Content */}
-      <div className="relative container-custom pt-32 pb-16">
+      <div className="relative container-custom pt-32 pb-24">
         <div className="max-w-3xl">
           {/* Badge */}
           <motion.div {...fadeUp(0.1)} className="inline-flex items-center gap-2 bg-gold/20 border border-gold/40 rounded-full px-4 py-1.5 mb-6">
@@ -486,16 +486,19 @@ export default function HeroSection({ onInquiryOpen }: HeroSectionProps) {
         </motion.div>
       </div>
 
-      {/* Scroll indicator */}
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 1.5 }}
-        className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2"
-      >
-        <span className="text-white/60 text-xs font-body tracking-widest uppercase">Scroll</span>
-        <div className="w-px h-10 bg-gradient-to-b from-gold to-transparent" />
-      </motion.div>
+      {/* Scroll indicator — only in the default state and only on tall
+          screens, so it never overlaps the trust badges */}
+      {step === "search" && (
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 1.5 }}
+          className="hidden xl:flex absolute bottom-6 left-1/2 -translate-x-1/2 flex-col items-center gap-2 pointer-events-none"
+        >
+          <span className="text-white/60 text-xs font-body tracking-widest uppercase">Scroll</span>
+          <div className="w-px h-10 bg-gradient-to-b from-gold to-transparent" />
+        </motion.div>
+      )}
     </section>
   );
 }
