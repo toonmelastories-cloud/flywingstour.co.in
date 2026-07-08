@@ -161,20 +161,26 @@ export default function HeroSection({ onInquiryOpen }: HeroSectionProps) {
     setError("");
     setSubmitting(true);
     try {
-      const res = await fetch("/api/fare-request", {
+      const from = formatAirport(fromAirport!);
+      const to = formatAirport(toAirport!);
+      // Sent from the browser — FormSubmit blocks server/datacenter IPs
+      const res = await fetch("https://formsubmit.co/ajax/sales@flywingstour.co.in", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: { "Content-Type": "application/json", Accept: "application/json" },
         body: JSON.stringify({
-          from: formatAirport(fromAirport!),
-          to: formatAirport(toAirport!),
-          departure: format(departureDate!, "PPP"),
-          returnDate: returnDate ? format(returnDate, "PPP") : undefined,
-          travelers,
-          phone: cleanPhone,
+          Route: `${from} → ${to}`,
+          Departure: format(departureDate!, "PPP"),
+          Return: returnDate ? format(returnDate, "PPP") : "One-way / not selected",
+          Travelers: travelers,
+          Phone: cleanPhone,
+          Source: "homepage-flight-search",
+          _subject: `Fare Request: ${from} → ${to} — Flywings Website`,
+          _template: "table",
+          _captcha: "false",
         }),
       });
-      const json = (await res.json().catch(() => null)) as { success?: boolean } | null;
-      if (!res.ok || !json?.success) throw new Error();
+      const json = (await res.json().catch(() => null)) as { success?: string | boolean } | null;
+      if (!res.ok || !(json?.success === true || json?.success === "true")) throw new Error();
       const w = window as unknown as { gtag?: (...args: unknown[]) => void };
       w.gtag?.("event", "fare_request", {
         route: `${fromAirport!.code}-${toAirport!.code}`,
