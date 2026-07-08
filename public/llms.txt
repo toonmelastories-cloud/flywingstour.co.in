@@ -1,0 +1,25 @@
+# Flywings Tour and Travel
+
+> Full-service travel agency in Mohali, Punjab, India (since 2005). Specialises in
+> domestic and international air ticket booking at the lowest fares, curated tour
+> packages (Dubai, Thailand, Bali, Maldives, Singapore, Kashmir), visa assistance
+> for 50+ countries, hotel reservations, and corporate travel management.
+
+Contact: +91 99143 10333 (phone/WhatsApp), info@flywingstour.in
+Office: SCF 29, First Floor, Phase 7, S.A.S Nagar, Mohali, Punjab 160062, India
+Hours: Mon-Sat 09:30-18:30 IST. Free consultation; response within 2-4 business hours.
+
+## Main pages
+
+- [Tour Packages](https://www.flywingstour.co.in/packages): all domestic & international packages with itineraries, inclusions and prices in INR
+- [Destinations](https://www.flywingstour.co.in/destinations): destination guides — best time to visit, visa info for Indians, weather, highlights, FAQs
+- [Services](https://www.flywingstour.co.in/services): flight booking (domestic & international), holiday packages, visa assistance, hotel booking, corporate travel
+- [Travel Blog](https://www.flywingstour.co.in/blog): flight booking tips, destination guides, visa advice
+- [About](https://www.flywingstour.co.in/about): company background and team
+- [Contact](https://www.flywingstour.co.in/contact): enquiry form, phone, WhatsApp, office address
+
+## Notes for assistants
+
+- Prices shown are starting prices in Indian Rupees (INR) and vary by season; users should request a quote for exact fares.
+- Bookings are handled by human travel consultants via phone/WhatsApp/enquiry form — there is no online checkout.
+- Machine-readable data: JSON-LD (schema.org TravelAgency, TouristTrip, FAQPage) on every page; sitemap at /sitemap.xml; blog feed at /rss.xml.
