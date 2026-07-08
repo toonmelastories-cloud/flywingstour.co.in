@@ -89,7 +89,8 @@ async function getCategoryIdBySlug(slug: string): Promise<number | null> {
 export async function getTours(): Promise<WPPost[] | null> {
   const categoryId = await getCategoryIdBySlug(TOURS_CATEGORY_SLUG);
   if (categoryId === null) return null;
-  return wpFetch<WPPost[]>(`/posts?categories=${categoryId}&_embed&per_page=100&orderby=date&order=desc`);
+  // orderby=date&order=desc are the WP REST defaults, so they're omitted.
+  return wpFetch<WPPost[]>(`/posts?categories=${categoryId}&_embed&per_page=50`);
 }
 
 /** A single tour by slug — must actually belong to the `tours` category, otherwise null. */
@@ -110,7 +111,7 @@ export async function getTourBySlug(slug: string): Promise<WPPost | null> {
 export async function getPosts(): Promise<WPPost[] | null> {
   const categoryId = await getCategoryIdBySlug(TOURS_CATEGORY_SLUG);
   const exclude = categoryId !== null ? `&categories_exclude=${categoryId}` : "";
-  return wpFetch<WPPost[]>(`/posts?_embed&per_page=100&orderby=date&order=desc${exclude}`);
+  return wpFetch<WPPost[]>(`/posts?_embed&per_page=50${exclude}`);
 }
 
 /** A single blog post by slug (any category), or null if not found / WP unreachable. */
