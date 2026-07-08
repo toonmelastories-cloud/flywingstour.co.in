@@ -9,7 +9,7 @@ interface NavbarProps {
   onInquiryOpen: () => void;
 }
 
-const LOGO_URL = "https://wp.flywingstour.co.in/wp-content/uploads/2026/07/flywings-logo-white.png";
+const LOGO_URL = "https://wp.flywingstour.co.in/wp-content/uploads/2026/07/flywings-logo-white-1.png";
 
 const navLinks = [
   { label: "Home", href: "/", external: false },
@@ -46,7 +46,7 @@ export default function Navbar({ onInquiryOpen }: NavbarProps) {
         <div className="flex items-center justify-between h-20">
           {/* Logo */}
           <Link href="/" className="flex items-center group">
-            <img src={LOGO_URL} alt="Flywings Tour and Travel" className="h-12 w-auto" />
+            <img src={LOGO_URL} alt="Flywings Tour and Travel" className="h-[58px] w-auto" />
           </Link>
 
           {/* Desktop Nav */}
