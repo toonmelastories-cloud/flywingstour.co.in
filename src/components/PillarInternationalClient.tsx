@@ -114,12 +114,8 @@ function PillarPackageCard({ pkg, index, isInView, onBook }: {
         <h3 className="font-display font-700 text-primary text-base mb-3 leading-snug">
           {pkg.shortTitle}
         </h3>
-        <div className="flex items-end justify-between mb-4">
-          <div>
-            <span className="text-muted-foreground font-body text-xs block">Starting from</span>
-            <span className="font-display font-800 text-primary text-lg">{pkg.startingPrice}</span>
-            <span className="text-muted-foreground font-body text-xs"> / person</span>
-          </div>
+        <div className="flex items-center gap-1.5 mb-4 text-muted-foreground font-body text-xs">
+          <Phone className="w-3 h-3 text-secondary" /> Custom quote within 24 hours — no hidden charges
         </div>
         <div className="flex items-center gap-2">
           <Link
@@ -235,8 +231,8 @@ export default function PillarInternationalClient({ packages }: { packages: Tour
             Compare International Destinations from Chandigarh
           </h2>
           <p className="text-muted-foreground font-body text-sm text-center max-w-2xl mx-auto mb-8">
-            Starting prices are per person on twin sharing and include flights, hotels, transfers &
-            sightseeing. Updated July 2026.
+            Every package includes flights, hotels, transfers, sightseeing &amp; visa assistance —
+            get an itemised quote for your dates. Updated July 2026.
           </p>
           <div className="overflow-x-auto rounded-2xl border border-border shadow-card bg-card">
             <table className="w-full text-left font-body text-sm min-w-[760px]">
@@ -244,7 +240,6 @@ export default function PillarInternationalClient({ packages }: { packages: Tour
                 <tr className="bg-primary text-white">
                   <th className="px-5 py-4 font-display font-700">Destination</th>
                   <th className="px-5 py-4 font-display font-700">Duration</th>
-                  <th className="px-5 py-4 font-display font-700">Starting Price</th>
                   <th className="px-5 py-4 font-display font-700">Visa for Indians</th>
                   <th className="px-5 py-4 font-display font-700">Flight from Chandigarh</th>
                   <th className="px-5 py-4 font-display font-700">Best Months</th>
@@ -262,7 +257,6 @@ export default function PillarInternationalClient({ packages }: { packages: Tour
                       </Link>
                     </td>
                     <td className="px-5 py-4 text-muted-foreground">{row.duration}</td>
-                    <td className="px-5 py-4 font-display font-700 text-primary">{row.startingPrice}</td>
                     <td className="px-5 py-4 text-muted-foreground">{row.visa}</td>
                     <td className="px-5 py-4 text-muted-foreground">{row.flightFromChandigarh}</td>
                     <td className="px-5 py-4 text-muted-foreground">{row.bestMonths}</td>

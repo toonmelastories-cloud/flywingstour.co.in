@@ -50,6 +50,9 @@ export function getCategoryColor(name: string): string {
 export function stripWpHtml(html: string): string {
   return html
     .replace(/<[^>]*>/g, "")
+    // Numeric entities (e.g. &#038; for "&", &#8211; for "–") — decode
+    // generically before the named-entity fallbacks below.
+    .replace(/&#(\d+);/g, (_, code) => String.fromCodePoint(Number(code)))
     .replace(/&#8217;/g, "'")
     .replace(/&#8216;/g, "'")
     .replace(/&#8220;/g, "“")

@@ -2,13 +2,15 @@
  * Content for the "International Tour Packages from Chandigarh" pillar
  * page. Kept in a plain data module so the server page (JSON-LD) and the
  * client component render from the same source.
+ *
+ * Business rule: no prices are shown anywhere on the pillar page or in
+ * blogs — every price question routes to an enquiry/call instead.
  */
 
 export interface DestinationComparisonRow {
   destination: string;
   destinationSlug: string;
   duration: string;
-  startingPrice: string;
   visa: string;
   flightFromChandigarh: string;
   bestMonths: string;
@@ -19,7 +21,6 @@ export const COMPARISON_ROWS: DestinationComparisonRow[] = [
     destination: "Dubai",
     destinationSlug: "dubai",
     duration: "4–6 Days",
-    startingPrice: "₹49,999",
     visa: "UAE visa (we arrange it)",
     flightFromChandigarh: "Direct from IXC · ~3h 40m",
     bestMonths: "November – March",
@@ -28,7 +29,6 @@ export const COMPARISON_ROWS: DestinationComparisonRow[] = [
     destination: "Thailand",
     destinationSlug: "thailand",
     duration: "7–8 Days",
-    startingPrice: "₹52,999",
     visa: "Visa-free · up to 60 days",
     flightFromChandigarh: "Via Delhi · ~8–9h total",
     bestMonths: "November – February",
@@ -37,7 +37,6 @@ export const COMPARISON_ROWS: DestinationComparisonRow[] = [
     destination: "Bali",
     destinationSlug: "bali",
     duration: "6–7 Days",
-    startingPrice: "₹59,999",
     visa: "Visa on arrival · 30 days",
     flightFromChandigarh: "Via Delhi / KL · ~12h total",
     bestMonths: "April – October",
@@ -46,7 +45,6 @@ export const COMPARISON_ROWS: DestinationComparisonRow[] = [
     destination: "Singapore",
     destinationSlug: "singapore",
     duration: "4–5 Days",
-    startingPrice: "₹42,999",
     visa: "e-Visa (we file it for you)",
     flightFromChandigarh: "Via Delhi · ~9–10h total",
     bestMonths: "February – April",
@@ -55,7 +53,6 @@ export const COMPARISON_ROWS: DestinationComparisonRow[] = [
     destination: "Maldives",
     destinationSlug: "maldives",
     duration: "4–5 Days",
-    startingPrice: "₹89,999",
     visa: "Free visa on arrival · 30 days",
     flightFromChandigarh: "Via Delhi · ~7–8h total",
     bestMonths: "November – April",
@@ -67,7 +64,7 @@ export const PILLAR_FAQS: { question: string; answer: string }[] = [
     question:
       "How much does an international tour package from Chandigarh cost?",
     answer:
-      "International tour packages from Chandigarh start at around ₹42,999 per person for a 4 Nights / 5 Days Singapore trip and go up to ₹89,999+ for luxury Maldives and Dubai honeymoon packages. Prices typically include return flights, hotels, transfers, sightseeing, and visa assistance. Final cost depends on travel dates, hotel category, and how early you book.",
+      "The cost depends on your destination, travel dates, trip length, hotel category, and how early you book — which is why we quote every trip individually instead of publishing one-size-fits-all rates. Share your plan on +91 99143 10333 and you will receive a fully itemised quote (flights, hotels, transfers, sightseeing, and visa) within 24 hours, with no hidden charges.",
   },
   {
     question: "Is there a direct international flight from Chandigarh airport?",
@@ -84,7 +81,7 @@ export const PILLAR_FAQS: { question: string; answer: string }[] = [
     question:
       "Which is the best international honeymoon destination from Chandigarh?",
     answer:
-      "For most couples from Chandigarh and Punjab it comes down to three options: Maldives for overwater-villa luxury (from ₹89,999), Bali for a longer romantic trip at mid-range budgets (from ₹59,999 for 6 Nights / 7 Days), and Dubai for glamour plus the shortest, direct flight (honeymoon packages from ₹89,999). Tell us your budget and travel month and we will recommend the right fit.",
+      "For most couples from Chandigarh and Punjab it comes down to three options: Maldives for overwater-villa luxury, Bali for a longer romantic trip at mid-range budgets, and Dubai for glamour plus the shortest, direct flight. Tell us your budget and travel month and we will recommend the right fit with a customised quote.",
   },
   {
     question: "Do your packages include flights from Chandigarh?",

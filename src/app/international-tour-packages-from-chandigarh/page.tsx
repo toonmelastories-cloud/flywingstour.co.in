@@ -19,7 +19,7 @@ export const metadata: Metadata = pageMetadata({
     "International Tour Packages from Chandigarh 2026 | Dubai, Thailand, Bali | Flywings",
   titleAbsolute: true,
   description:
-    "Book international tour packages from Chandigarh — Dubai from ₹49,999, Thailand ₹52,999, Bali, Singapore & Maldives. Flights from IXC, hotels, transfers & visa assistance by a trusted Mohali agency since 2005.",
+    "Book international tour packages from Chandigarh — Dubai, Thailand, Bali, Singapore & Maldives. Flights from IXC, hotels, transfers & visa assistance by a trusted Mohali agency since 2005. Get a free custom quote in 24 hours.",
   path: PATH,
   keywords: [
     "international tour packages from Chandigarh",
