@@ -1,9 +1,11 @@
 import type { Metadata } from "next";
 import BlogPostClient from "@/components/BlogPostClient";
 import BlogPostNotFound from "@/components/BlogPostNotFound";
+import JsonLd from "@/components/JsonLd";
 import type { BlogPostSummary } from "@/components/BlogListClient";
 import { getPosts, getPostBySlug, getFeaturedImageUrl, getYoastMeta } from "@/lib/wordpress";
 import { sanitizeWpHtml, stripWpHtml, estimateReadTime } from "@/lib/sanitize";
+import { blogPostingJsonLd, breadcrumbJsonLd, pageMetadata } from "@/lib/seo";
 
 export const revalidate = 300;
 export const dynamicParams = true;
@@ -22,17 +24,24 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { slug } = await params;
   const post = await getPostBySlug(slug);
-  if (!post) return {};
+  if (!post) return { title: "Post Not Found" };
 
   const yoast = getYoastMeta(post);
-  const title = yoast.title || `${stripWpHtml(post.title.rendered)} | Flywings Blog`;
+  const title = yoast.title || stripWpHtml(post.title.rendered);
   const description = yoast.description || stripWpHtml(post.excerpt.rendered).slice(0, 160);
+  const image = yoast.ogImage || getFeaturedImageUrl(post) || FALLBACK_IMAGE;
 
-  return {
+  return pageMetadata({
     title,
+    // Yoast titles already include the site name; plain WP titles don't.
+    titleAbsolute: Boolean(yoast.title),
     description,
-    openGraph: { title, description, type: "article" },
-  };
+    path: `/blog/${post.slug}`,
+    image,
+    ogType: "article",
+    publishedTime: post.date,
+    modifiedTime: post.modified,
+  });
 }
 
 export default async function BlogPostPage({
@@ -61,17 +70,39 @@ export default async function BlogPostPage({
       date: new Date(p.date).toLocaleDateString("en-IN", { year: "numeric", month: "short", day: "numeric" }),
     }));
 
+  const title = stripWpHtml(post.title.rendered);
+  const image = getFeaturedImageUrl(post) ?? FALLBACK_IMAGE;
+
   return (
-    <BlogPostClient
-      post={{
-        title: stripWpHtml(post.title.rendered),
-        category: post._embedded?.["wp:term"]?.[0]?.[0]?.name,
-        image: getFeaturedImageUrl(post) ?? FALLBACK_IMAGE,
-        readTime: estimateReadTime(post.content.rendered),
-        date: new Date(post.date).toLocaleDateString("en-IN", { year: "numeric", month: "long", day: "numeric" }),
-      }}
-      contentHtml={sanitizeWpHtml(post.content.rendered)}
-      related={related}
-    />
+    <>
+      <JsonLd
+        data={[
+          blogPostingJsonLd({
+            slug: post.slug,
+            title,
+            description: stripWpHtml(post.excerpt.rendered).slice(0, 160),
+            image,
+            datePublished: post.date,
+            dateModified: post.modified,
+          }),
+          breadcrumbJsonLd([
+            { name: "Home", path: "/" },
+            { name: "Blog", path: "/blog" },
+            { name: title, path: `/blog/${post.slug}` },
+          ]),
+        ]}
+      />
+      <BlogPostClient
+        post={{
+          title,
+          category: post._embedded?.["wp:term"]?.[0]?.[0]?.name,
+          image,
+          readTime: estimateReadTime(post.content.rendered),
+          date: new Date(post.date).toLocaleDateString("en-IN", { year: "numeric", month: "long", day: "numeric" }),
+        }}
+        contentHtml={sanitizeWpHtml(post.content.rendered)}
+        related={related}
+      />
+    </>
   );
 }

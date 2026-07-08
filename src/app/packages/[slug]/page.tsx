@@ -1,7 +1,14 @@
 import type { Metadata } from "next";
 import PackageDetailClient from "@/components/PackageDetailClient";
 import PackageNotFound from "@/components/PackageNotFound";
+import JsonLd from "@/components/JsonLd";
 import { getAllTourSlugs, getRelatedTours, getTourData } from "@/lib/tours";
+import {
+  breadcrumbJsonLd,
+  faqJsonLd,
+  pageMetadata,
+  touristTripJsonLd,
+} from "@/lib/seo";
 
 export const revalidate = 300;
 export const dynamicParams = true;
@@ -18,17 +25,19 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { slug } = await params;
   const pkg = await getTourData(slug);
-  if (!pkg) return {};
+  if (!pkg) return { title: "Package Not Found" };
 
-  return {
+  return pageMetadata({
     title: pkg.metaTitle,
+    titleAbsolute: true,
     description: pkg.metaDescription,
-    openGraph: {
-      title: pkg.metaTitle,
-      description: pkg.metaDescription,
-      type: "website",
-    },
-  };
+    path: `/packages/${pkg.slug}`,
+    keywords:
+      pkg.keywords.length > 0
+        ? pkg.keywords
+        : [`${pkg.shortTitle} package`, `${pkg.shortTitle} from India`],
+    image: pkg.heroImages[0],
+  });
 }
 
 export default async function PackageDetailPage({
@@ -45,5 +54,20 @@ export default async function PackageDetailPage({
 
   const related = getRelatedTours(pkg);
 
-  return <PackageDetailClient pkg={pkg} related={related} />;
+  return (
+    <>
+      <JsonLd
+        data={[
+          touristTripJsonLd(pkg),
+          ...(pkg.faqs.length > 0 ? [faqJsonLd(pkg.faqs)] : []),
+          breadcrumbJsonLd([
+            { name: "Home", path: "/" },
+            { name: "Tour Packages", path: "/packages" },
+            { name: pkg.shortTitle, path: `/packages/${pkg.slug}` },
+          ]),
+        ]}
+      />
+      <PackageDetailClient pkg={pkg} related={related} />
+    </>
+  );
 }

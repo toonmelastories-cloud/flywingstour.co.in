@@ -31,12 +31,14 @@ export interface WPYoastHead {
   description?: string;
   og_title?: string;
   og_description?: string;
+  og_image?: Array<{ url: string; width?: number; height?: number }>;
 }
 
 export interface WPPost {
   id: number;
   slug: string;
   date: string;
+  modified?: string;
   title: WPRendered;
   content: WPRendered;
   excerpt: WPRendered;
@@ -122,10 +124,15 @@ export function getFeaturedImageUrl(post: WPPost): string | undefined {
   return post._embedded?.["wp:featuredmedia"]?.[0]?.source_url;
 }
 
-/** Yoast-managed SEO title/description, when the Yoast SEO plugin is active. */
-export function getYoastMeta(post: WPPost): { title?: string; description?: string } {
+/** Yoast-managed SEO title/description/OG image, when the Yoast SEO plugin is active. */
+export function getYoastMeta(post: WPPost): {
+  title?: string;
+  description?: string;
+  ogImage?: string;
+} {
   return {
     title: post.yoast_head_json?.title,
     description: post.yoast_head_json?.description,
+    ogImage: post.yoast_head_json?.og_image?.[0]?.url,
   };
 }

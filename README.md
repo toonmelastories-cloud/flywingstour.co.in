@@ -40,6 +40,11 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/bui
 | Variable | Required | Description |
 |---|---|---|
 | `WP_API_URL` | No (defaults to production URL) | Base URL of the headless WordPress REST API, e.g. `https://wp.flywingstour.co.in/wp-json/wp/v2`. Used server-side only by `src/lib/wordpress.ts` to fetch tours (`/tours`) and blog posts (`/posts`). If the "tours" custom post type doesn't exist yet or WordPress is unreachable, `/packages` pages automatically fall back to the local static data in `src/data/packages.ts` — no build/runtime crash. |
+| `NEXT_PUBLIC_SITE_URL` | No (defaults to `https://flywingstour.co.in`) | Canonical origin used for `<link rel="canonical">`, Open Graph URLs, JSON-LD, `sitemap.xml`, and `robots.txt` (see `src/lib/seo.ts`). Set it on preview deployments so canonicals point at the preview instead of production. |
+| `NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION` | No | Google Search Console verification token (renders as `<meta name="google-site-verification">`). |
+| `NEXT_PUBLIC_BING_SITE_VERIFICATION` | No | Bing Webmaster Tools verification token (`msvalidate.01`). |
+| `NEXT_PUBLIC_YANDEX_SITE_VERIFICATION` | No | Yandex Webmaster verification token. |
+| `NEXT_PUBLIC_GA_MEASUREMENT_ID` | No (defaults to `G-TLNBFYH8SZ`) | Google Analytics 4 measurement ID, loaded site-wide via `@next/third-parties` in `src/app/layout.tsx`. |
 
 **Local development:** already set in `.env.local` (gitignored).
 
