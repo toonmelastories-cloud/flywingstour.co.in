@@ -732,7 +732,7 @@ export default function PackageDetailClient({ pkg, related }: { pkg: TourData; r
                   <div className="mt-5 flex items-start gap-2 bg-muted/60 rounded-xl px-4 py-3">
                     <Info className="w-4 h-4 text-primary/60 flex-shrink-0 mt-0.5" />
                     <p className="text-muted-foreground font-body text-xs leading-relaxed">
-                      All cancellations must be submitted in writing to <a href="mailto:info@flywingstour.in" className="text-secondary hover:underline">info@flywingstour.in</a>. Refunds are processed within 7–14 business days to the original payment method.
+                      All cancellations must be submitted in writing to <a href="mailto:sales@flywingstour.co.in" className="text-secondary hover:underline">sales@flywingstour.co.in</a>. Refunds are processed within 7–14 business days to the original payment method.
                     </p>
                   </div>
                 </div>

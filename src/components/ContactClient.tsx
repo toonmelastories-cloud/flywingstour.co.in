@@ -103,9 +103,9 @@ function ContactInfoSection() {
   const isInView = useInView(ref, { once: true, margin: "-80px" });
 
   const cards = [
-    { icon: Phone, title: "Call Us", info: "+91 99143 10333", href: "tel:+919914310333", color: "bg-primary" },
+    { icon: Phone, title: "Call Us", info: "+91 99143 10333 · 0172-4736185", href: "tel:+919914310333", color: "bg-primary" },
     { icon: MessageCircle, title: "WhatsApp Us", info: "+91 99143 10333", href: "https://wa.me/919914310333?text=Hello%20Flywings!", color: "bg-[#25D366]" },
-    { icon: Mail, title: "Email Us", info: "info@flywingstour.in", href: "mailto:info@flywingstour.in", color: "bg-secondary" },
+    { icon: Mail, title: "Email Us", info: "sales@flywingstour.co.in", href: "mailto:sales@flywingstour.co.in", color: "bg-secondary" },
     { icon: MapPin, title: "Visit Our Office", info: "SCF 29, Phase 7, Mohali", href: "https://maps.google.com/?q=SCF+29+Phase+7+SAS+Nagar+Mohali+160062", color: "bg-primary" },
   ];
 
@@ -141,6 +141,8 @@ function ContactInfoSection() {
                 <div>
                   <h3 className="font-display font-700 text-primary text-base mb-1">Phone / WhatsApp</h3>
                   <a href="tel:+919914310333" className="text-muted-foreground hover:text-secondary transition-colors font-body text-sm">+91 99143 10333</a>
+                  <br />
+                  <a href="tel:+911724736185" className="text-muted-foreground hover:text-secondary transition-colors font-body text-sm">0172-4736185 (Landline)</a>
                 </div>
               </div>
               <div className="flex items-start gap-4">
@@ -149,7 +151,7 @@ function ContactInfoSection() {
                 </div>
                 <div>
                   <h3 className="font-display font-700 text-primary text-base mb-1">Email</h3>
-                  <a href="mailto:info@flywingstour.in" className="text-muted-foreground hover:text-secondary transition-colors font-body text-sm">info@flywingstour.in</a>
+                  <a href="mailto:sales@flywingstour.co.in" className="text-muted-foreground hover:text-secondary transition-colors font-body text-sm">sales@flywingstour.co.in</a>
                 </div>
               </div>
               <div className="flex items-start gap-4">

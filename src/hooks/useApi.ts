@@ -132,16 +132,31 @@ export function useServices() {
 
 // ─── Form Submissions (Mutations) ───────────────────────────────
 
+/**
+ * Forms post to the site's own /api routes (which forward the lead to
+ * the sales inbox) unless an external backend is configured via
+ * NEXT_PUBLIC_USE_API — no more simulated success.
+ */
+async function postJson<T>(path: string, data: unknown): Promise<T> {
+  const res = await fetch(path, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(data),
+  });
+  const json = await res.json().catch(() => null);
+  if (!res.ok || !json?.success) {
+    throw new Error(json?.message || "Submission failed");
+  }
+  return json as T;
+}
+
 export function useSubmitInquiry() {
   return useMutation({
     mutationFn: (data: InquiryPayload) => {
       if (isApiEnabled()) {
         return submitInquiry(data);
       }
-      // Fallback: simulate success (for dev/offline mode)
-      return new Promise<{ success: boolean; data: { id: string } }>((resolve) =>
-        setTimeout(() => resolve({ success: true, data: { id: "local-" + Date.now() } }), 1000)
-      );
+      return postJson<{ success: boolean; data: { id: string } }>("/api/inquiries", data);
     },
   });
 }
@@ -152,9 +167,7 @@ export function useSubmitContact() {
       if (isApiEnabled()) {
         return submitContact(data);
       }
-      return new Promise<{ success: boolean; data: { id: string } }>((resolve) =>
-        setTimeout(() => resolve({ success: true, data: { id: "local-" + Date.now() } }), 1000)
-      );
+      return postJson<{ success: boolean; data: { id: string } }>("/api/contact", data);
     },
   });
 }
@@ -165,9 +178,7 @@ export function useSubscribeNewsletter() {
       if (isApiEnabled()) {
         return subscribeNewsletter(data);
       }
-      return new Promise<{ success: boolean; data: { subscribed: boolean } }>((resolve) =>
-        setTimeout(() => resolve({ success: true, data: { subscribed: true } }), 800)
-      );
+      return postJson<{ success: boolean; data: { subscribed: boolean } }>("/api/newsletter", data);
     },
   });
 }

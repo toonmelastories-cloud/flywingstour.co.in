@@ -10,6 +10,26 @@ const services = ["Flight Booking", "Holiday Packages", "Visa Services", "Hotel 
 
 export default function Footer() {
   const [email, setEmail] = useState("");
+  const [subscribed, setSubscribed] = useState(false);
+  const [subscribing, setSubscribing] = useState(false);
+
+  const handleSubscribe = async () => {
+    if (!email.trim() || subscribing) return;
+    setSubscribing(true);
+    try {
+      const res = await fetch("/api/newsletter", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email: email.trim() }),
+      });
+      if (res.ok) {
+        setSubscribed(true);
+        setEmail("");
+      }
+    } finally {
+      setSubscribing(false);
+    }
+  };
 
   return (
     <footer id="footer" className="bg-navy-dark">
@@ -98,9 +118,15 @@ export default function Footer() {
                 </a>
               </li>
               <li className="flex items-center gap-3">
+                <Phone className="w-4 h-4 text-gold flex-shrink-0" />
+                <a href="tel:+911724736185" className="text-white/60 font-body text-sm hover:text-gold transition-colors">
+                  0172-4736185
+                </a>
+              </li>
+              <li className="flex items-center gap-3">
                 <Mail className="w-4 h-4 text-gold flex-shrink-0" />
-                <a href="mailto:info@flywingstour.in" className="text-white/60 font-body text-sm hover:text-gold transition-colors">
-                  info@flywingstour.in
+                <a href="mailto:sales@flywingstour.co.in" className="text-white/60 font-body text-sm hover:text-gold transition-colors">
+                  sales@flywingstour.co.in
                 </a>
               </li>
             </ul>
@@ -108,16 +134,24 @@ export default function Footer() {
             {/* Newsletter */}
             <div className="bg-white/5 rounded-xl p-4 border border-white/10">
               <div className="font-display font-600 text-white text-sm mb-2">Newsletter</div>
-              <p className="text-white/50 font-body text-xs mb-3">Get travel deals in your inbox.</p>
+              <p className="text-white/50 font-body text-xs mb-3">
+                {subscribed ? "Subscribed! ✓ You'll hear from us soon." : "Get travel deals in your inbox."}
+              </p>
               <div className="flex gap-2">
                 <input
                   type="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
+                  onKeyDown={(e) => e.key === "Enter" && handleSubscribe()}
                   placeholder="Your email"
                   className="flex-1 bg-white/10 border border-white/20 rounded-lg px-3 py-2 text-white text-xs font-body placeholder-white/40 outline-none focus:border-gold transition-colors"
                 />
-                <button className="w-9 h-9 rounded-lg bg-gradient-gold text-navy flex items-center justify-center hover:opacity-90 transition-opacity">
+                <button
+                  onClick={handleSubscribe}
+                  disabled={subscribing}
+                  aria-label="Subscribe to newsletter"
+                  className="w-9 h-9 rounded-lg bg-gradient-gold text-navy flex items-center justify-center hover:opacity-90 transition-opacity disabled:opacity-50"
+                >
                   <Send className="w-3.5 h-3.5" />
                 </button>
               </div>
