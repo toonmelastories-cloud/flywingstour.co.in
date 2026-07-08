@@ -16,9 +16,11 @@ export async function sendLead(
     headers: {
       "Content-Type": "application/json",
       Accept: "application/json",
-      // FormSubmit rejects requests without a browser-like origin
+      // FormSubmit rejects requests that don't look like a browser
       Origin: "https://www.flywingstour.co.in",
       Referer: "https://www.flywingstour.co.in/contact",
+      "User-Agent":
+        "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0 Safari/537.36",
     },
     body: JSON.stringify({
       ...fields,

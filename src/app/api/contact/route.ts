@@ -22,9 +22,13 @@ export async function POST(request: Request) {
       success: true,
       data: { id: `contact-${Date.now()}` },
     });
-  } catch {
+  } catch (err) {
     return NextResponse.json(
-      { success: false, message: "Could not send enquiry, please call us" },
+      {
+        success: false,
+        message: "Could not send enquiry, please call us",
+        detail: err instanceof Error ? err.message : String(err),
+      },
       { status: 502 }
     );
   }
