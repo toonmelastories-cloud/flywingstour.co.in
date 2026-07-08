@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { Phone, Mail, MapPin, Facebook, Instagram, Twitter, Youtube, Linkedin, ArrowRight, Send } from "lucide-react";
 
-const LOGO_URL = "https://wp.flywingstour.co.in/wp-content/uploads/2026/07/flywings-logo.png";
+const LOGO_URL = "https://wp.flywingstour.co.in/wp-content/uploads/2026/07/flywings-logo-white.png";
 
 const quickLinks = ["Home", "About Us", "Services", "Packages", "Destinations", "Contact"];
 const services = ["Flight Booking", "Holiday Packages", "Visa Services", "Hotel Booking", "Corporate Travel", "Group Tours", "Honeymoon Packages"];
@@ -18,9 +18,7 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">
           {/* Brand */}
           <div className="lg:col-span-1">
-            <div className="inline-block bg-white rounded-lg px-3 py-1.5 shadow-md mb-5">
-              <img src={LOGO_URL} alt="Flywings Tour and Travel" className="h-9 w-auto" />
-            </div>
+            <img src={LOGO_URL} alt="Flywings Tour and Travel" className="h-12 w-auto mb-5" />
             <p className="text-white/60 font-body text-sm leading-relaxed mb-6">
               India's trusted travel partner since 2005. Creating unforgettable journeys for 50,000+ travelers across 180+ destinations worldwide.
             </p>
