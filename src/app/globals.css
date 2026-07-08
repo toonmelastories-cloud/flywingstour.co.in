@@ -162,6 +162,11 @@
   }
 }
 
+/* Smooth in-page anchor scrolling (blog table of contents) */
+html {
+  scroll-behavior: smooth;
+}
+
 /* Scrollbar */
 ::-webkit-scrollbar {
   width: 6px;

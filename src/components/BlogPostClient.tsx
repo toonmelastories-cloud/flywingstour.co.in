@@ -262,22 +262,34 @@ export default function BlogPostClient({
   const { scrollYProgress } = useScroll();
   const { toc, firstHalf, secondHalf } = useArticle(contentHtml);
 
-  // Highlight the section currently in view in the table of contents.
+  // Highlight the section currently being read: the last heading that
+  // has scrolled past the top third of the viewport.
   useEffect(() => {
     if (toc.length < 2) return;
-    const observer = new IntersectionObserver(
-      (entries) => {
-        for (const entry of entries) {
-          if (entry.isIntersecting) setActiveId(entry.target.id);
-        }
-      },
-      { rootMargin: "-20% 0px -70% 0px" }
-    );
-    toc.forEach(({ id }) => {
-      const el = document.getElementById(id);
-      if (el) observer.observe(el);
-    });
-    return () => observer.disconnect();
+    let ticking = false;
+    const update = () => {
+      ticking = false;
+      const marker = window.innerHeight * 0.35;
+      let current = toc[0].id;
+      for (const { id } of toc) {
+        const el = document.getElementById(id);
+        if (el && el.getBoundingClientRect().top <= marker) current = id;
+      }
+      setActiveId(current);
+    };
+    const onScroll = () => {
+      if (!ticking) {
+        ticking = true;
+        requestAnimationFrame(update);
+      }
+    };
+    update();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onScroll, { passive: true });
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onScroll);
+    };
   }, [toc]);
 
   return (
