@@ -28,7 +28,7 @@ const servicesFaqs = [
   {
     question: "Do you provide visa assistance?",
     answer:
-      "Yes, Flywings provides professional visa assistance for tourist, business, and student visas to 50+ countries. Our experts guide you through documentation, appointment booking, and submission.",
+      "Yes, Flywings provides professional visa assistance for tourist and business visas to 50+ countries. Our experts guide you through documentation, appointment booking, and submission.",
   },
   {
     question: "Can I customize my holiday package?",

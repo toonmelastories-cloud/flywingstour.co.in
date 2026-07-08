@@ -197,7 +197,7 @@ export default function ServicesClient() {
       heading: "Visa Assistance & Documentation Support",
       description: "Navigating visa requirements can be overwhelming — but not with Flywings. Our certified visa consultants simplify the entire process, from documentation to appointment booking, ensuring maximum success rate for your visa application.",
       bullets: [
-        "Expert guidance on tourist, business & student visas",
+        "Expert guidance on tourist & business visas",
         "Complete document checklist and review support",
         "Appointment scheduling and slot booking assistance",
         "Fast-track processing for urgent travel",
@@ -260,7 +260,7 @@ export default function ServicesClient() {
     },
     {
       question: "Do you provide visa assistance?",
-      answer: "Yes, Flywings provides professional visa assistance for tourist, business, and student visas to 50+ countries. Our experts guide you through every step — documentation, appointment booking, and submission — ensuring a high success rate.",
+      answer: "Yes, Flywings provides professional visa assistance for tourist and business visas to 50+ countries. Our experts guide you through every step — documentation, appointment booking, and submission — ensuring a high success rate.",
     },
     {
       question: "Can I customize my holiday package?",
