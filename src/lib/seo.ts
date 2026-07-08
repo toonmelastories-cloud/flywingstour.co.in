@@ -14,8 +14,10 @@ import type { TourData } from "@/lib/tours";
  * code change.
  */
 
+// The www host is the primary domain on Vercel (the apex 308-redirects
+// to it), so canonicals/sitemap/JSON-LD must all use www.
 export const SITE_URL = (
-  process.env.NEXT_PUBLIC_SITE_URL || "https://flywingstour.co.in"
+  process.env.NEXT_PUBLIC_SITE_URL || "https://www.flywingstour.co.in"
 ).replace(/\/+$/, "");
 
 export const SITE_NAME = "Flywings Tour and Travel";
