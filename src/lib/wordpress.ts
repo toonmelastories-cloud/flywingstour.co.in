@@ -54,7 +54,11 @@ async function wpFetch<T>(path: string): Promise<T | null> {
   const url = `${WP_API_URL}${path}`;
   try {
     const res = await fetch(url, {
-      next: { revalidate: REVALIDATE_SECONDS },
+      // Tagged so /api/revalidate can invalidate every WP-derived page
+      // on demand (a WordPress save_post hook pings that endpoint).
+      // Time-based revalidation alone proved unreliable on Vercel for
+      // build-time-seeded entries.
+      next: { revalidate: REVALIDATE_SECONDS, tags: ["wordpress"] },
       headers: { Accept: "application/json" },
     });
 
