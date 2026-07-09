@@ -5,46 +5,23 @@ import { useRef } from "react";
 import Link from "next/link";
 import { Clock, ArrowRight } from "lucide-react";
 
-const thailandImg = "/assets/thailand.jpg";
-const maldivesImg = "/assets/maldives.jpg";
-const dubaiImg = "/assets/dest-dubai.jpg";
+/** Real posts from WordPress, mapped server-side in app/page.tsx. */
+export interface HomeBlogPost {
+  category: string;
+  categoryColor: string;
+  image: string;
+  readTime: string;
+  date: string;
+  title: string;
+  excerpt: string;
+  link: string;
+}
 
-const posts = [
-  {
-    category: "Travel Tips",
-    categoryColor: "bg-emerald-500/10 text-emerald-600",
-    image: thailandImg,
-    readTime: "5 min read",
-    date: "Feb 10, 2025",
-    title: "Hidden Gems of Southeast Asia You Must Explore in 2025",
-    excerpt: "Discover the untouched paradises beyond the tourist trail — from mystical jungle waterfalls to...",
-    link: "/blog",
-  },
-  {
-    category: "Honeymoon",
-    categoryColor: "bg-pink-500/10 text-pink-600",
-    image: maldivesImg,
-    readTime: "7 min read",
-    date: "Feb 05, 2025",
-    title: "The Perfect European Honeymoon: Santorini & Amalfi Coast Guide",
-    excerpt: "Plan the most romantic getaway of your life with our expertly curated Europe honeymoon guide...",
-    link: "/blog",
-  },
-  {
-    category: "Destination Guide",
-    categoryColor: "bg-blue-500/10 text-blue-600",
-    image: dubaiImg,
-    readTime: "6 min read",
-    date: "Jan 28, 2025",
-    title: "Ultimate Dubai Travel Guide: Luxury, Culture & Adventure",
-    excerpt: "From the Burj Al Arab to desert dunes at sunset — everything you need to know for an...",
-    link: "/blog",
-  },
-];
-
-export default function BlogSection() {
+export default function BlogSection({ posts }: { posts: HomeBlogPost[] }) {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-80px" });
+
+  if (posts.length === 0) return null;
 
   return (
     <section id="blog" className="section-padding bg-muted/30">

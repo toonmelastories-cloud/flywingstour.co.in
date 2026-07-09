@@ -1,12 +1,38 @@
 "use client";
 
 import { useState } from "react";
-import { Phone, Mail, MapPin, Facebook, Instagram, Twitter, Youtube, Linkedin, ArrowRight, Send } from "lucide-react";
+import Link from "next/link";
+import { Phone, Mail, MapPin, Facebook, Instagram, ArrowRight, Send } from "lucide-react";
+import { SOCIAL_PROFILES } from "@/lib/seo";
 
 const LOGO_URL = "https://wp.flywingstour.co.in/wp-content/uploads/2026/07/flywings-logo-white-1.png";
 
-const quickLinks = ["Home", "About Us", "Services", "Packages", "Destinations", "Contact"];
-const services = ["Flight Booking", "Holiday Packages", "Visa Services", "Hotel Booking", "Corporate Travel", "Group Tours", "Honeymoon Packages"];
+const quickLinks = [
+  { label: "Home", href: "/" },
+  { label: "About Us", href: "/about" },
+  { label: "Services", href: "/services" },
+  { label: "Packages", href: "/packages" },
+  { label: "Destinations", href: "/destinations" },
+  { label: "Contact", href: "/contact" },
+];
+const services = [
+  { label: "Flight Booking", href: "/services" },
+  { label: "Holiday Packages", href: "/packages" },
+  { label: "Visa Services", href: "/services" },
+  { label: "Hotel Booking", href: "/services" },
+  { label: "Corporate Travel", href: "/services" },
+  { label: "Group Tours", href: "/packages" },
+  { label: "Honeymoon Packages", href: "/packages" },
+];
+
+// lucide-react has no Pinterest glyph — simple-icons path, same 24px viewBox.
+function PinterestIcon({ className }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 24 24" fill="currentColor" className={className} aria-hidden="true">
+      <path d="M12.017 0C5.396 0 .029 5.367.029 11.987c0 5.079 3.158 9.417 7.618 11.162-.105-.949-.199-2.403.041-3.439.219-.937 1.406-5.957 1.406-5.957s-.359-.72-.359-1.781c0-1.663.967-2.911 2.168-2.911 1.024 0 1.518.769 1.518 1.688 0 1.029-.653 2.567-.992 3.992-.285 1.193.6 2.165 1.775 2.165 2.128 0 3.768-2.245 3.768-5.487 0-2.861-2.063-4.869-5.008-4.869-3.41 0-5.409 2.562-5.409 5.199 0 1.033.394 2.143.889 2.741.099.12.112.225.085.345-.09.375-.293 1.199-.334 1.363-.053.225-.172.271-.401.165-1.495-.69-2.433-2.878-2.433-4.646 0-3.776 2.748-7.252 7.92-7.252 4.158 0 7.392 2.967 7.392 6.923 0 4.135-2.607 7.462-6.233 7.462-1.214 0-2.354-.629-2.758-1.379l-.749 2.848c-.269 1.045-1.004 2.352-1.498 3.146 1.123.345 2.306.535 3.55.535 6.607 0 11.985-5.365 11.985-11.987C23.97 5.39 18.592.026 11.985.026L12.017 0z" />
+    </svg>
+  );
+}
 
 export default function Footer() {
   const [email, setEmail] = useState("");
@@ -52,15 +78,16 @@ export default function Footer() {
             {/* Social */}
             <div className="flex gap-2">
               {[
-                { icon: Facebook, href: "#" },
-                { icon: Instagram, href: "#" },
-                { icon: Twitter, href: "#" },
-                { icon: Youtube, href: "#" },
-                { icon: Linkedin, href: "#" },
-              ].map(({ icon: Icon, href }) => (
+                { icon: Facebook, href: SOCIAL_PROFILES.facebook, label: "Facebook" },
+                { icon: Instagram, href: SOCIAL_PROFILES.instagram, label: "Instagram" },
+                { icon: PinterestIcon, href: SOCIAL_PROFILES.pinterest, label: "Pinterest" },
+              ].map(({ icon: Icon, href, label }) => (
                 <a
-                  key={href + Icon.name}
+                  key={label}
                   href={href}
+                  target="_blank"
+                  rel="noopener"
+                  aria-label={`Flywings on ${label}`}
                   className="w-9 h-9 rounded-full bg-white/10 hover:bg-gold hover:text-navy text-white/60 flex items-center justify-center transition-all duration-200 hover:scale-110"
                 >
                   <Icon className="w-4 h-4" />
@@ -77,11 +104,11 @@ export default function Footer() {
             </h4>
             <ul className="space-y-2.5 mt-4">
               {quickLinks.map((link) => (
-                <li key={link}>
-                  <a href="#" className="text-white/60 font-body text-sm hover:text-gold transition-colors flex items-center gap-2 group">
+                <li key={link.label}>
+                  <Link href={link.href} className="text-white/60 font-body text-sm hover:text-gold transition-colors flex items-center gap-2 group">
                     <ArrowRight className="w-3 h-3 opacity-0 group-hover:opacity-100 -ml-1 transition-all text-gold" />
-                    {link}
-                  </a>
+                    {link.label}
+                  </Link>
                 </li>
               ))}
             </ul>
@@ -95,11 +122,11 @@ export default function Footer() {
             </h4>
             <ul className="space-y-2.5 mt-4">
               {services.map((svc) => (
-                <li key={svc}>
-                  <a href="#" className="text-white/60 font-body text-sm hover:text-gold transition-colors flex items-center gap-2 group">
+                <li key={svc.label}>
+                  <Link href={svc.href} className="text-white/60 font-body text-sm hover:text-gold transition-colors flex items-center gap-2 group">
                     <ArrowRight className="w-3 h-3 opacity-0 group-hover:opacity-100 -ml-1 transition-all text-gold" />
-                    {svc}
-                  </a>
+                    {svc.label}
+                  </Link>
                 </li>
               ))}
             </ul>
@@ -174,11 +201,11 @@ export default function Footer() {
             © 2025 Flywings Tour & Travel. All rights reserved.
           </p>
           <div className="flex items-center gap-4">
-            <a href="#" className="text-white/40 font-body text-xs hover:text-gold transition-colors">Privacy Policy</a>
+            <Link href="/contact" className="text-white/40 font-body text-xs hover:text-gold transition-colors">Contact</Link>
             <span className="text-white/20">|</span>
-            <a href="#" className="text-white/40 font-body text-xs hover:text-gold transition-colors">Terms of Service</a>
+            <Link href="/blog" className="text-white/40 font-body text-xs hover:text-gold transition-colors">Blog</Link>
             <span className="text-white/20">|</span>
-            <a href="#" className="text-white/40 font-body text-xs hover:text-gold transition-colors">Sitemap</a>
+            <a href="/sitemap.xml" className="text-white/40 font-body text-xs hover:text-gold transition-colors">Sitemap</a>
           </div>
         </div>
       </div>

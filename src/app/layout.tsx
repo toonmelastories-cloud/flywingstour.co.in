@@ -15,12 +15,11 @@ import {
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
-    default:
-      "Flywings Tour and Travel | Flight Tickets & Tour Packages from India",
+    default: "Flywings Tour and Travel | Flights & Tour Packages",
     template: `%s | ${SITE_NAME}`,
   },
   description:
-    "Book domestic & international flight tickets at the lowest fares, plus curated tour packages to Dubai, Thailand, Bali, Maldives & more. Trusted travel agency in Mohali since 2005 — visa assistance, hotels & 24/7 support.",
+    "Book domestic & international flights at the lowest fares, plus tour packages to Dubai, Thailand & Bali. Mohali agency since 2005.",
   keywords: ALL_KEYWORDS,
   applicationName: SITE_NAME,
   authors: [{ name: SITE_NAME, url: SITE_URL }],
@@ -41,6 +40,7 @@ export const metadata: Metadata = {
   },
   alternates: {
     canonical: "/",
+    languages: { "en-IN": "/", "x-default": "/" },
     types: { "application/rss+xml": "/rss.xml" },
   },
   openGraph: {
@@ -48,7 +48,7 @@ export const metadata: Metadata = {
     url: "/",
     siteName: SITE_NAME,
     locale: "en_IN",
-    title: "Flywings Tour and Travel | Flight Tickets & Tour Packages from India",
+    title: "Flywings Tour and Travel | Flights & Tour Packages",
     description:
       "Domestic & international air ticketing, tour packages, visa assistance, hotels & corporate travel — best fares, 24/7 support.",
     images: [

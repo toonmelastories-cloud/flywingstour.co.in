@@ -1,15 +1,20 @@
 import type { Metadata } from "next";
 import HomeClient from "@/components/HomeClient";
 import JsonLd from "@/components/JsonLd";
+import type { HomeBlogPost } from "@/components/BlogSection";
+import { getPosts, getFeaturedImageUrl } from "@/lib/wordpress";
+import { stripWpHtml, estimateReadTime, getCategoryColor } from "@/lib/sanitize";
 import { ALL_KEYWORDS, pageMetadata } from "@/lib/seo";
 
+export const revalidate = 300;
+
 export const metadata: Metadata = pageMetadata({
-  title:
-    "Flywings Tour and Travel | Flight Tickets & Tour Packages from India",
+  title: "Flywings Tour and Travel | Flights & Tour Packages",
   description:
-    "Book domestic & international flight tickets at the lowest fares, plus curated tour packages to Dubai, Thailand, Bali, Maldives, Singapore & Kashmir. Trusted travel agency in Mohali since 2005 — visa assistance, hotels & 24/7 support.",
+    "Book domestic & international flights at the lowest fares, plus tour packages to Dubai, Thailand & Bali. Mohali agency since 2005.",
   path: "/",
   keywords: ALL_KEYWORDS,
+  titleAbsolute: true,
 });
 
 const homeFaqs = [
@@ -35,7 +40,28 @@ const homeFaqs = [
   },
 ];
 
-export default function Home() {
+export default async function Home() {
+  // Latest 3 posts for the "Latest Travel Insights" section; the
+  // section hides itself if WordPress is unreachable.
+  const posts = await getPosts();
+  const latestPosts: HomeBlogPost[] = (posts ?? []).slice(0, 3).map((post) => {
+    const category = post._embedded?.["wp:term"]?.[0]?.[0]?.name ?? "Travel Guide";
+    return {
+      category,
+      categoryColor: getCategoryColor(category),
+      image: getFeaturedImageUrl(post) ?? "/assets/hero-bg.jpg",
+      readTime: estimateReadTime(post.content.rendered),
+      date: new Date(post.date).toLocaleDateString("en-IN", {
+        year: "numeric",
+        month: "short",
+        day: "numeric",
+      }),
+      title: stripWpHtml(post.title.rendered),
+      excerpt: stripWpHtml(post.excerpt.rendered),
+      link: `/blog/${post.slug}`,
+    };
+  });
+
   return (
     <>
       <JsonLd
@@ -49,7 +75,7 @@ export default function Home() {
           })),
         }}
       />
-      <HomeClient />
+      <HomeClient latestPosts={latestPosts} />
     </>
   );
 }

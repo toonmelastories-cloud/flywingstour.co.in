@@ -21,6 +21,11 @@ const WP_API_URL = process.env.WP_API_URL || "https://wp.flywingstour.co.in/wp-j
 const TOURS_CATEGORY_SLUG = "tours";
 const REVALIDATE_SECONDS = 300;
 
+// Vercel's data cache has been observed serving expired entries across
+// deployments, so cache keys are versioned per deploy: every build
+// fetches fresh WP data. WP REST ignores the extra query param.
+const CACHE_VERSION = process.env.VERCEL_GIT_COMMIT_SHA?.slice(0, 8) ?? "dev";
+
 export interface WPRendered {
   rendered: string;
 }
@@ -51,7 +56,7 @@ export interface WPPost {
 }
 
 async function wpFetch<T>(path: string): Promise<T | null> {
-  const url = `${WP_API_URL}${path}`;
+  const url = `${WP_API_URL}${path}${path.includes("?") ? "&" : "?"}_v=${CACHE_VERSION}`;
   try {
     const res = await fetch(url, {
       // Tagged so /api/revalidate can invalidate every WP-derived page

@@ -26,6 +26,18 @@ export const SITE_LOGO_URL =
   "https://wp.flywingstour.co.in/wp-content/uploads/2026/07/flywings-logo.png";
 export const DEFAULT_OG_IMAGE = "/assets/hero-bg.jpg";
 
+/**
+ * Verified social profiles — rendered in the footer and emitted as
+ * schema.org sameAs so search/AI engines link the profiles to the
+ * organization entity. Add new networks here only once the profile
+ * actually exists.
+ */
+export const SOCIAL_PROFILES = {
+  facebook: "https://www.facebook.com/Flywingstourpackages/",
+  instagram: "https://www.instagram.com/flywings_tour/",
+  pinterest: "https://in.pinterest.com/flywingstourpackagespvtltd/",
+} as const;
+
 export const CONTACT = {
   phoneDisplay: "+91 99143 10333",
   phoneE164: "+919914310333",
@@ -143,7 +155,10 @@ export function pageMetadata({
     title: titleAbsolute ? { absolute: title } : title,
     description,
     keywords: keywords ? [...keywords] : undefined,
-    alternates: { canonical: url },
+    alternates: {
+      canonical: url,
+      languages: { "en-IN": url, "x-default": url },
+    },
     robots: noIndex ? { index: false, follow: true } : undefined,
     openGraph: {
       type: ogType,
@@ -185,6 +200,7 @@ export function organizationJsonLd() {
     name: SITE_NAME,
     alternateName: SITE_SHORT_NAME,
     url: `${SITE_URL}/`,
+    sameAs: Object.values(SOCIAL_PROFILES),
     logo: {
       "@type": "ImageObject",
       url: SITE_LOGO_URL,

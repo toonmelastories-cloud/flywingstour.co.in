@@ -33,6 +33,7 @@ function handle(request: Request) {
   // while the fresh version renders in the background)
   revalidateTag("wordpress", "max");
   // …and the pages/routes built from that data.
+  revalidatePath("/");
   revalidatePath("/blog");
   revalidatePath("/blog/[slug]", "page");
   revalidatePath("/packages");
