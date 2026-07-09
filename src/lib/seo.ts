@@ -433,7 +433,14 @@ export function blogPostingJsonLd(post: {
     datePublished: post.datePublished,
     dateModified: post.dateModified || post.datePublished,
     inLanguage: "en-IN",
-    author: { "@id": ORG_ID },
+    author: {
+      "@type": "Person",
+      "@id": `${SITE_URL}/author/sukhjinder-kaur#person`,
+      name: "Sukhjinder Kaur",
+      url: `${SITE_URL}/author/sukhjinder-kaur`,
+      jobTitle: "Senior Travel Content Writer",
+      worksFor: { "@id": ORG_ID },
+    },
     publisher: { "@id": ORG_ID },
     mainEntityOfPage: {
       "@type": "WebPage",

@@ -198,7 +198,10 @@ export default function Footer() {
       <div className="border-t border-white/10">
         <div className="container-custom py-5 flex flex-col sm:flex-row items-center justify-between gap-3">
           <p className="text-white/40 font-body text-xs text-center">
-            © 2025 Flywings Tour & Travel. All rights reserved.
+            © 2026 Flywings Tour & Travel. All rights reserved.
+            <span className="text-white/20 mx-2">|</span>
+            Design &amp; Developed by{" "}
+            <span className="text-gold/80 font-semibold">S Kaur</span>
           </p>
           <div className="flex items-center gap-4">
             <Link href="/contact" className="text-white/40 font-body text-xs hover:text-gold transition-colors">Contact</Link>

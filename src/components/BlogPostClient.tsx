@@ -5,13 +5,14 @@ import Link from "next/link";
 import { motion, useScroll } from "framer-motion";
 import {
   ChevronRight, Clock, MessageCircle, Phone, Headphones,
-  ShieldCheck, BadgeCheck, List, Share2, Copy, Check, Stamp,
+  ShieldCheck, BadgeCheck, List, Share2, Copy, Check, Stamp, ArrowRight,
 } from "lucide-react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import WhatsAppButton from "@/components/WhatsAppButton";
 import InquiryModal from "@/components/InquiryModal";
 import type { BlogPostSummary } from "@/components/BlogListClient";
+import { AUTHOR, AUTHOR_PATH } from "@/data/author";
 import { CONTACT } from "@/lib/seo";
 
 export interface BlogPostDetail {
@@ -227,22 +228,32 @@ function MidArticleCta({ onInquiryOpen }: { onInquiryOpen: () => void }) {
 function AuthorBox() {
   return (
     <div className="not-prose mt-12 bg-muted/40 border border-border rounded-2xl p-6 flex flex-col sm:flex-row gap-5">
-      <div className="w-14 h-14 rounded-full bg-gradient-gold flex items-center justify-center flex-shrink-0 shadow-gold">
-        <span className="font-display font-900 text-primary text-lg">FW</span>
-      </div>
+      <Link
+        href={AUTHOR_PATH}
+        className="w-14 h-14 rounded-full bg-gradient-gold flex items-center justify-center flex-shrink-0 shadow-gold hover:scale-105 transition-transform"
+      >
+        <span className="font-display font-900 text-primary text-lg">{AUTHOR.initials}</span>
+      </Link>
       <div>
-        <div className="flex items-center gap-2 mb-1">
-          <span className="font-display font-700 text-primary text-sm">
-            Flywings Tour and Travel — Editorial Team
-          </span>
+        <div className="flex flex-wrap items-center gap-2 mb-1">
+          <Link
+            href={AUTHOR_PATH}
+            className="font-display font-700 text-primary text-sm hover:text-secondary transition-colors"
+          >
+            {AUTHOR.name}
+          </Link>
           <BadgeCheck className="w-4 h-4 text-secondary" />
+          <span className="text-muted-foreground font-body text-xs">{AUTHOR.role}</span>
         </div>
-        <p className="text-muted-foreground font-body text-xs leading-relaxed">
-          Written by the travel consultants at Flywings Tour and Travel, a full-service travel
-          agency in Phase 7, Mohali (Chandigarh Tricity) booking flights, visas and holidays
-          since 2005. Every guide is based on trips we plan and book for real customers, and is
-          reviewed for current fares, visa rules and schedules before publishing.
+        <p className="text-muted-foreground font-body text-xs leading-relaxed mb-2">
+          {AUTHOR.shortBio}
         </p>
+        <Link
+          href={AUTHOR_PATH}
+          className="inline-flex items-center gap-1 text-secondary font-body font-semibold text-xs hover:gap-1.5 transition-all"
+        >
+          View full profile <ArrowRight className="w-3 h-3" />
+        </Link>
       </div>
     </div>
   );
@@ -346,8 +357,18 @@ export default function BlogPostClient({
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.15 }}
-            className="flex items-center gap-2 text-white/70 font-body text-sm"
+            className="flex flex-wrap items-center gap-2 text-white/70 font-body text-sm"
           >
+            <Link
+              href={AUTHOR_PATH}
+              className="flex items-center gap-2 hover:text-secondary transition-colors"
+            >
+              <span className="w-7 h-7 rounded-full bg-gradient-gold flex items-center justify-center">
+                <span className="font-display font-800 text-primary text-[11px]">{AUTHOR.initials}</span>
+              </span>
+              By {AUTHOR.name}
+            </Link>
+            <span className="text-white/30">•</span>
             <Clock className="w-4 h-4" />
             {post.readTime}
             <span className="text-white/30">•</span>
