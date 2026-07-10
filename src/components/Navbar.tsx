@@ -9,7 +9,7 @@ interface NavbarProps {
   onInquiryOpen: () => void;
 }
 
-const LOGO_URL = "https://wp.flywingstour.co.in/wp-content/uploads/2026/07/flywings-logo-white-1.png";
+const LOGO_URL = "/assets/flywings-logo-white-1.webp";
 
 const navLinks = [
   { label: "Home", href: "/", external: false },

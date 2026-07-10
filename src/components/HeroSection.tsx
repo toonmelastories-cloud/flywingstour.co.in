@@ -253,7 +253,7 @@ export default function HeroSection({ onInquiryOpen }: HeroSectionProps) {
           initial={{ opacity: 0, y: 60 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.6 }}
-          className="bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl p-4 sm:p-6 max-w-5xl"
+          className="relative z-20 bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl p-4 sm:p-6 max-w-5xl"
         >
           {step === "done" ? (
             <div className="flex flex-col items-center text-center py-6">

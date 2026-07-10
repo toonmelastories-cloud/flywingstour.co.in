@@ -22,8 +22,7 @@ export const SITE_URL = (
 
 export const SITE_NAME = "Flywings Tour & Packages Pvt Ltd";
 export const SITE_SHORT_NAME = "Flywings";
-export const SITE_LOGO_URL =
-  "https://wp.flywingstour.co.in/wp-content/uploads/2026/07/flywings-logo.png";
+export const SITE_LOGO_URL = `${SITE_URL}/assets/flywings-logo-white-1.webp`;
 export const DEFAULT_OG_IMAGE = "/assets/hero-bg.jpg";
 
 /**

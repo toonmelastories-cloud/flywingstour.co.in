@@ -5,7 +5,7 @@ import Link from "next/link";
 import { Phone, Mail, MapPin, Facebook, Instagram, ArrowRight, Send } from "lucide-react";
 import { SOCIAL_PROFILES } from "@/lib/seo";
 
-const LOGO_URL = "https://wp.flywingstour.co.in/wp-content/uploads/2026/07/flywings-logo-white-1.png";
+const LOGO_URL = "/assets/flywings-logo-white-1.webp";
 
 const quickLinks = [
   { label: "Home", href: "/" },
