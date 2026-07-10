@@ -14,7 +14,7 @@ export const metadata: Metadata = pageMetadata({
   title: "Contact Flywings | Flight & Tour Package Enquiries",
   titleAbsolute: true,
   description:
-    "Contact Flywings Tour and Travel for domestic & international flight bookings, tour packages, and visa consultation. Call +91 99143 10333, WhatsApp us, or visit our Mohali (Punjab) office. Free consultation, response within 2–4 hours.",
+    "Contact Flywings Tour & Packages Pvt Ltd for domestic & international flight bookings, tour packages, and visa consultation. Call +91 99143 10333, WhatsApp us, or visit our Mohali (Punjab) office. Free consultation, response within 2–4 hours.",
   path: "/contact",
   keywords: [
     "contact travel agency Mohali",
@@ -37,7 +37,7 @@ export default function Contact() {
             "@type": "ContactPage",
             "@id": absoluteUrl("/contact#webpage"),
             url: absoluteUrl("/contact"),
-            name: "Contact Flywings Tour and Travel",
+            name: "Contact Flywings Tour & Packages Pvt Ltd",
             about: { "@id": ORG_ID },
             inLanguage: "en-IN",
           },

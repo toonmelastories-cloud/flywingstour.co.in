@@ -15,7 +15,7 @@ import {
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
-    default: "Flywings Tour and Travel | Flights & Tour Packages",
+    default: "Flywings Tour & Packages Pvt Ltd | Flights & Tour Packages",
     template: `%s | ${SITE_NAME}`,
   },
   description:
@@ -48,7 +48,7 @@ export const metadata: Metadata = {
     url: "/",
     siteName: SITE_NAME,
     locale: "en_IN",
-    title: "Flywings Tour and Travel | Flights & Tour Packages",
+    title: "Flywings Tour & Packages Pvt Ltd | Flights & Tour Packages",
     description:
       "Domestic & international air ticketing, tour packages, visa assistance, hotels & corporate travel — best fares, 24/7 support.",
     images: [
@@ -62,7 +62,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Flywings Tour and Travel | Flights & Tour Packages",
+    title: "Flywings Tour & Packages Pvt Ltd | Flights & Tour Packages",
     description:
       "Domestic & international air tickets at the lowest fares + curated tour packages. Trusted since 2005.",
     images: [DEFAULT_OG_IMAGE],

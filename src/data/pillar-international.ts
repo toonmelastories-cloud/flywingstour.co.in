@@ -91,7 +91,7 @@ export const PILLAR_FAQS: { question: string; answer: string }[] = [
   {
     question: "Do you provide visa assistance in Chandigarh and Mohali?",
     answer:
-      "Yes. Flywings Tour and Travel has been processing tourist visas since 2005 from our office in Phase 7, Mohali (Chandigarh Tricity). We handle documentation, appointment booking, and follow-up for UAE, Singapore, Thailand, Schengen, and most other tourist visas — included with our tour packages.",
+      "Yes. Flywings Tour & Packages Pvt Ltd has been processing tourist visas since 2005 from our office in Phase 7, Mohali (Chandigarh Tricity). We handle documentation, appointment booking, and follow-up for UAE, Singapore, Thailand, Schengen, and most other tourist visas — included with our tour packages.",
   },
   {
     question: "When should I book an international package for the best price?",

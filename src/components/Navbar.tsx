@@ -46,7 +46,7 @@ export default function Navbar({ onInquiryOpen }: NavbarProps) {
         <div className="flex items-center justify-between h-20">
           {/* Logo */}
           <Link href="/" className="flex items-center group">
-            <img src={LOGO_URL} alt="Flywings Tour and Travel" className="h-[58px] w-auto" />
+            <img src={LOGO_URL} alt="Flywings Tour & Packages Pvt Ltd" className="h-[58px] w-auto" />
           </Link>
 
           {/* Desktop Nav */}

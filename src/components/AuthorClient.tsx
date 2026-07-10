@@ -66,7 +66,7 @@ export default function AuthorClient({ posts }: { posts: BlogPostSummary[] }) {
                 {AUTHOR.name}
                 <BadgeCheck className="w-7 h-7 text-secondary" />
               </h1>
-              <p className="text-white/70 font-body text-lg mb-3">{AUTHOR.role} · Flywings Tour and Travel</p>
+              <p className="text-white/70 font-body text-lg mb-3">{AUTHOR.role} · Flywings Tour & Packages Pvt Ltd</p>
               <p className="flex items-center gap-1.5 text-white/50 font-body text-sm">
                 <MapPin className="w-4 h-4 text-secondary" /> {AUTHOR.location}
               </p>

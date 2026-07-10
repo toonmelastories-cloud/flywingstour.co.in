@@ -20,7 +20,7 @@ export const SITE_URL = (
   process.env.NEXT_PUBLIC_SITE_URL || "https://www.flywingstour.co.in"
 ).replace(/\/+$/, "");
 
-export const SITE_NAME = "Flywings Tour and Travel";
+export const SITE_NAME = "Flywings Tour & Packages Pvt Ltd";
 export const SITE_SHORT_NAME = "Flywings";
 export const SITE_LOGO_URL =
   "https://wp.flywingstour.co.in/wp-content/uploads/2026/07/flywings-logo.png";
@@ -207,7 +207,7 @@ export function organizationJsonLd() {
     },
     image: absoluteUrl(DEFAULT_OG_IMAGE),
     description:
-      "Flywings Tour and Travel is an IATA-style full-service travel agency in Mohali, Punjab, specialising in domestic and international air ticket booking, customised tour packages, visa assistance, hotel reservations, and corporate travel management.",
+      "Flywings Tour & Packages Pvt Ltd is an IATA-style full-service travel agency in Mohali, Punjab, specialising in domestic and international air ticket booking, customised tour packages, visa assistance, hotel reservations, and corporate travel management.",
     telephone: CONTACT.phoneE164,
     email: CONTACT.email,
     priceRange: "₹₹",

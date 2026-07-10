@@ -281,7 +281,7 @@ const packages: PackageData[] = [
       },
     ],
     relatedSlugs: ["thailand-explorer-7n8d", "maldives-luxury-4n5d", "bali-romance-6n7d"],
-    metaTitle: "Dubai 5 Nights Tour Package Price | Flywings Tour & Travel",
+    metaTitle: "Dubai 5 Nights Tour Package Price | Flywings Tour & Packages Pvt Ltd",
     metaDescription:
       "Book Dubai 5 Nights 6 Days luxury tour package from India ₹79,999. Includes 5★ hotel, flights, desert safari, Burj Khalifa & visa. Get a free quote today!",
     keywords: [

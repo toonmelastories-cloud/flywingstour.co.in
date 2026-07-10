@@ -62,7 +62,7 @@ export default function ContactClient() {
 function HeroSection() {
   return (
     <section className="relative h-[60vh] min-h-[450px] flex items-end pb-16 overflow-hidden">
-      <img src={contactHero} alt="Flywings Tour and Travel — contact our travel experts" className="absolute inset-0 w-full h-full object-cover" loading="eager" />
+      <img src={contactHero} alt="Flywings Tour & Packages Pvt Ltd — contact our travel experts" className="absolute inset-0 w-full h-full object-cover" loading="eager" />
       <div className="absolute inset-0 bg-gradient-to-b from-primary/60 via-primary/50 to-primary/80" />
       <div className="relative container-custom w-full">
         <motion.nav
@@ -168,7 +168,7 @@ function ContactInfoSection() {
             {/* Google Map */}
             <div className="rounded-2xl overflow-hidden shadow-lg border border-border">
               <iframe
-                title="Flywings Tour and Travel Office Location"
+                title="Flywings Tour & Packages Pvt Ltd Office Location"
                 src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3430.0!2d76.7!3d30.7!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2sSCF+29+Phase+7+SAS+Nagar+Mohali!5e0!3m2!1sen!2sin!4v1"
                 width="100%"
                 height="280"

@@ -61,7 +61,7 @@ const destinations: Destination[] = [
     weather: "Desert climate; mild winters (17–28°C), hot summers (38°C+)",
     about:
       "Dubai is a jewel of the Middle East — a city that rose from desert sands to become one of the most glamorous destinations on Earth. Home to the world's tallest building (Burj Khalifa), ultra-luxury malls, pristine beaches, and thrilling desert safaris, Dubai is the ultimate blend of tradition and ultra-modernity. Indian travelers love Dubai for its seamless visa process, direct flights, and welcoming culture. Whether you seek a honeymoon escape, a family holiday, or a solo adventure, Dubai delivers unforgettable experiences at every turn.",
-    metaTitle: "Dubai Tour Package from India | Flywings Tour & Travel",
+    metaTitle: "Dubai Tour Package from India | Flywings Tour & Packages Pvt Ltd",
     metaDescription:
       "Book the best Dubai tour packages from India starting at ₹49,999. Flights, 5★ hotels, desert safari, city tours, and visa assistance included. 24/7 support. Get a free quote today.",
     packages: [
@@ -190,7 +190,7 @@ const destinations: Destination[] = [
     weather: "Tropical; warm year-round (28–35°C). Rainy season May–October.",
     about:
       "Thailand is Southeast Asia's most beloved destination, enchanting travelers with ornate Buddhist temples, turquoise waters, vibrant street food scenes, and warm hospitality. From the bustling markets of Bangkok to the paradise beaches of Phuket and the emerald waters of Krabi, Thailand offers an extraordinary range of experiences at surprisingly affordable prices. Indian travelers enjoy visa-free access, making Thailand one of the easiest international destinations to explore.",
-    metaTitle: "Thailand Tour Package from India | Flywings Tour & Travel",
+    metaTitle: "Thailand Tour Package from India | Flywings Tour & Packages Pvt Ltd",
     metaDescription:
       "Book Thailand tour packages from India starting ₹34,999. Bangkok, Phuket & Krabi. Flights, hotels, island tours, and more included. Get free quote.",
     packages: [
@@ -320,7 +320,7 @@ const destinations: Destination[] = [
     weather: "Tropical; warm year-round (26–32°C). Dry season: April–October.",
     about:
       "Bali is more than a destination — it is a spiritual experience. This enchanting Indonesian island captivates travelers with emerald rice terraces, ancient Hindu temples perched on cliff edges, pristine surf beaches, and a wellness culture unlike anywhere else. From the cultural hub of Ubud to the beach paradise of Seminyak and the surfer's haven of Canggu, Bali suits every type of traveler. Indian visitors especially love Bali for its vegetarian-friendly cuisine, vibrant yoga retreats, and warm Balinese hospitality.",
-    metaTitle: "Bali Tour Package from India | Flywings Tour & Travel",
+    metaTitle: "Bali Tour Package from India | Flywings Tour & Packages Pvt Ltd",
     metaDescription:
       "Book Bali Indonesia tour packages from India starting ₹36,999. Temples, rice terraces, beaches, spa retreats, and more. Flights included. Get free quote.",
     packages: [
@@ -450,7 +450,7 @@ const destinations: Destination[] = [
     weather: "Alpine climate; pleasant summers (15–25°C), snowy winters (−5 to 5°C)",
     about:
       "Kashmir — aptly called 'Paradise on Earth' — is India's crown jewel of natural beauty. The Kashmir Valley stuns with mirror-like Dal Lake, flower-filled gardens, majestic Mughal architecture, and snow-draped Himalayan peaks. A shikara ride at sunrise, a stay on a traditional wooden houseboat, the meadows of Gulmarg, and the hill station charm of Pahalgam create memories that last a lifetime. Kashmir is the perfect domestic holiday for Indian families, couples, and solo travelers seeking dramatic landscapes.",
-    metaTitle: "Kashmir Tour Package | Flywings Tour & Travel",
+    metaTitle: "Kashmir Tour Package | Flywings Tour & Packages Pvt Ltd",
     metaDescription:
       "Book Kashmir tour packages starting ₹22,999. Dal Lake houseboats, Gulmarg, Pahalgam, Shikara rides, and more. Best prices guaranteed. Get a free quote.",
     packages: [
@@ -575,7 +575,7 @@ const destinations: Destination[] = [
     weather: "Tropical; warm year-round (26–30°C). Dry season: November–April.",
     about:
       "The Maldives is the definition of paradise — 1,200 tiny coral islands scattered like jewels across the Indian Ocean, each ringed with powdery white sand and crystal-clear turquoise waters. Here, the most iconic luxury experience is the overwater bungalow: a private villa perched above the lagoon with a glass floor panel revealing the coral reef below. Whether you dream of snorkeling with manta rays, dining under the stars, or simply disconnecting from the world in absolute tranquility, the Maldives delivers perfection.",
-    metaTitle: "Maldives Tour Package from India | Flywings Tour & Travel",
+    metaTitle: "Maldives Tour Package from India | Flywings Tour & Packages Pvt Ltd",
     metaDescription:
       "Book Maldives tour packages from India starting ₹89,999. Overwater villas, snorkeling, all-inclusive resorts, and more. Flights included. Get free quote.",
     packages: [
@@ -699,7 +699,7 @@ const destinations: Destination[] = [
     weather: "Tropical; warm year-round (26–32°C) with frequent short rain showers.",
     about:
       "Singapore is the ultimate modern city-state: a 719 km² island that punches far above its weight with world-class attractions, remarkable cleanliness, extraordinary food diversity, and seamless infrastructure. From the futuristic Gardens by the Bay to the thrilling Universal Studios, the cultural tapestry of Little India and Chinatown, and the rooftop infinity pool of Marina Bay Sands, Singapore offers something extraordinary at every turn. It's one of Asia's most family-friendly destinations and a favorite among Indian travelers.",
-    metaTitle: "Singapore Tour Package from India | Flywings Tour & Travel",
+    metaTitle: "Singapore Tour Package from India | Flywings Tour & Packages Pvt Ltd",
     metaDescription:
       "Book Singapore tour packages from India starting ₹42,999. Universal Studios, Gardens by the Bay, cable car, and more. Flights included. Get free quote.",
     packages: [

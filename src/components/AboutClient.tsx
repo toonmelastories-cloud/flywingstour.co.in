@@ -85,7 +85,7 @@ export default function AboutClient() {
 function HeroSection() {
   return (
     <section className="relative h-[65vh] min-h-[500px] flex items-end pb-16 overflow-hidden" id="about-hero">
-      <img src={aboutHero} alt="Flywings Tour and Travel — premium international airport" className="absolute inset-0 w-full h-full object-cover" />
+      <img src={aboutHero} alt="Flywings Tour & Packages Pvt Ltd — premium international airport" className="absolute inset-0 w-full h-full object-cover" />
       <div className="absolute inset-0 bg-gradient-to-b from-primary/60 via-primary/50 to-primary/80" />
 
       <div className="relative container-custom w-full">
@@ -148,7 +148,7 @@ function CompanyIntro() {
             className="relative"
           >
             <div className="rounded-2xl overflow-hidden shadow-2xl">
-              <img src={aboutTeam} alt="Flywings Tour and Travel team at our travel agency office" className="w-full h-[420px] object-cover" />
+              <img src={aboutTeam} alt="Flywings Tour & Packages Pvt Ltd team at our travel agency office" className="w-full h-[420px] object-cover" />
             </div>
             {/* Badge overlay */}
             <div className="absolute -bottom-6 -right-6 bg-secondary rounded-2xl px-6 py-4 shadow-gold">
@@ -176,7 +176,7 @@ function CompanyIntro() {
             </h2>
 
             <p className="font-body text-muted-foreground text-base leading-relaxed mb-4">
-              Founded in 2012, <strong className="text-primary">Flywings Tour and Travel</strong> was born out of a simple belief — that every traveler deserves a stress-free, memorable journey. From our humble beginnings as a local travel desk in New Delhi, we have grown into one of India's most trusted full-service travel agencies.
+              Founded in 2012, <strong className="text-primary">Flywings Tour & Packages Pvt Ltd</strong> was born out of a simple belief — that every traveler deserves a stress-free, memorable journey. From our humble beginnings as a local travel desk in New Delhi, we have grown into one of India's most trusted full-service travel agencies.
             </p>
             <p className="font-body text-muted-foreground text-base leading-relaxed mb-8">
               We serve thousands of satisfied travelers every year — from solo adventurers and honeymooners to corporate groups and family vacationers. Our team of passionate travel experts is committed to going the extra mile to craft journeys that exceed expectations, every single time.
@@ -417,7 +417,7 @@ function TeamSection() {
             >
               <div className="relative inline-block mb-5">
                 <div className="w-36 h-36 rounded-2xl overflow-hidden mx-auto shadow-lg group-hover:shadow-xl transition-shadow duration-300">
-                  <img src={img} alt={`${name} — ${role} at Flywings Tour and Travel`} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                  <img src={img} alt={`${name} — ${role} at Flywings Tour & Packages Pvt Ltd`} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
                 </div>
                 <div className="absolute -bottom-3 -right-3 w-10 h-10 rounded-full bg-secondary flex items-center justify-center shadow-gold">
                   <Star className="w-4 h-4 text-primary fill-primary" />

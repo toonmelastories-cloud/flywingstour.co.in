@@ -71,7 +71,7 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">
           {/* Brand */}
           <div className="lg:col-span-1">
-            <img src={LOGO_URL} alt="Flywings Tour and Travel" className="h-[58px] w-auto mb-5" />
+            <img src={LOGO_URL} alt="Flywings Tour & Packages Pvt Ltd" className="h-[58px] w-auto mb-5" />
             <p className="text-white/60 font-body text-sm leading-relaxed mb-6">
               India's trusted travel partner since 2005. Creating unforgettable journeys for 50,000+ travelers across 180+ destinations worldwide.
             </p>
@@ -198,7 +198,7 @@ export default function Footer() {
       <div className="border-t border-white/10">
         <div className="container-custom py-5 flex flex-col sm:flex-row items-center justify-between gap-3">
           <p className="text-white/40 font-body text-xs text-center">
-            © 2026 Flywings Tour & Travel. All rights reserved.
+            © 2026 Flywings Tour & Packages Pvt Ltd. All rights reserved.
             <span className="text-white/20 mx-2">|</span>
             Design &amp; Developed by{" "}
             <span className="text-gold/80 font-semibold">S Kaur</span>

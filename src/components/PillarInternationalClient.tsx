@@ -229,7 +229,7 @@ export default function PillarInternationalClient({ packages }: { packages: Pill
               your international trip can start right from home — and so can the planning.
             </p>
             <p>
-              Flywings Tour and Travel is a full-service travel agency in Phase 7, Mohali, booking
+              Flywings Tour & Packages Pvt Ltd is a full-service travel agency in Phase 7, Mohali, booking
               international air tickets and holiday packages since 2005. Every package below can be
               customised for honeymoons, families, and groups, and is quoted with return airfare,
               hotels, transfers, daily sightseeing, and visa assistance — one price, no surprises.

@@ -4,13 +4,13 @@ import JsonLd from "@/components/JsonLd";
 import { ORG_ID, absoluteUrl, breadcrumbJsonLd, pageMetadata } from "@/lib/seo";
 
 export const metadata: Metadata = pageMetadata({
-  title: "About Flywings Tour and Travel | Travel Experts Since 2005",
+  title: "About Flywings Tour & Packages Pvt Ltd | Travel Experts Since 2005",
   titleAbsolute: true,
   description:
-    "Flywings Tour and Travel is a Mohali-based travel agency trusted since 2005 for domestic & international air ticketing, tour packages, visa assistance and corporate travel. Meet the team behind 5,000+ happy travellers.",
+    "Flywings Tour & Packages Pvt Ltd is a Mohali-based travel agency trusted since 2005 for domestic & international air ticketing, tour packages, visa assistance and corporate travel. Meet the team behind 5,000+ happy travellers.",
   path: "/about",
   keywords: [
-    "about Flywings Tour and Travel",
+    "about Flywings Tour & Packages Pvt Ltd",
     "trusted travel agency Mohali",
     "air ticket booking experts",
     "tour package specialists India",
@@ -29,7 +29,7 @@ export default function About() {
             "@type": "AboutPage",
             "@id": absoluteUrl("/about#webpage"),
             url: absoluteUrl("/about"),
-            name: "About Flywings Tour and Travel",
+            name: "About Flywings Tour & Packages Pvt Ltd",
             about: { "@id": ORG_ID },
             inLanguage: "en-IN",
           },

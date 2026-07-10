@@ -9,7 +9,7 @@ import { ALL_KEYWORDS, pageMetadata } from "@/lib/seo";
 export const revalidate = 300;
 
 export const metadata: Metadata = pageMetadata({
-  title: "Flywings Tour and Travel | Flights & Tour Packages",
+  title: "Flywings Tour & Packages Pvt Ltd | Flights & Tour Packages",
   description:
     "Book domestic & international flights at the lowest fares, plus tour packages to Dubai, Thailand & Bali. Mohali agency since 2005.",
   path: "/",
@@ -21,7 +21,7 @@ const homeFaqs = [
   {
     question: "Does Flywings book both domestic and international flight tickets?",
     answer:
-      "Yes. Flywings Tour and Travel books domestic flights across India (Delhi, Mumbai, Bengaluru, Chandigarh and more) and international air tickets worldwide, always at the lowest available fares with free rebooking guidance.",
+      "Yes. Flywings Tour & Packages Pvt Ltd books domestic flights across India (Delhi, Mumbai, Bengaluru, Chandigarh and more) and international air tickets worldwide, always at the lowest available fares with free rebooking guidance.",
   },
   {
     question: "Which tour packages does Flywings offer?",

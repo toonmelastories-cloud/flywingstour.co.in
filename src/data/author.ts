@@ -14,7 +14,7 @@ export const AUTHOR = {
   shortBio:
     "Sukhjinder Kaur is a premium travel content writer specialising in the tourism industry. She writes Flywings' destination guides, fare-saving playbooks and visa explainers — every piece researched with the agency's ticketing and visa desks before it is published.",
   bio: [
-    "Sukhjinder Kaur is a premium travel content writer specialising in the tourism and aviation industry. At Flywings Tour and Travel, she turns two decades of the agency's on-the-ground booking experience into long-form guides that travellers from Chandigarh, Mohali and across Punjab actually use — what a trip really involves, when to book, and what the brochures leave out.",
+    "Sukhjinder Kaur is a premium travel content writer specialising in the tourism and aviation industry. At Flywings Tour & Packages Pvt Ltd, she turns two decades of the agency's on-the-ground booking experience into long-form guides that travellers from Chandigarh, Mohali and across Punjab actually use — what a trip really involves, when to book, and what the brochures leave out.",
     "Her writing process starts at the counter, not the keyboard: every guide is built on inputs from the ticketing desk that watches fares daily, the visa team that files real applications every week, and feedback from travellers after they return. Prices change, visa rules change — so every article carries a verified date and gets re-checked against current conditions.",
     "She believes premium travel content means honest travel content: naming the watch-outs, comparing options a reader might actually choose between, and never publishing a claim the team hasn't verified.",
   ],
