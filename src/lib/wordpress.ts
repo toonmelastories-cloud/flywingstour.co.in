@@ -134,15 +134,32 @@ export function getFeaturedImageUrl(post: WPPost): string | undefined {
   return post._embedded?.["wp:featuredmedia"]?.[0]?.source_url;
 }
 
-/** Yoast-managed SEO title/description/OG image, when the Yoast SEO plugin is active. */
+/**
+ * Yoast-managed SEO title/description/OG image, when the Yoast SEO plugin
+ * is active. Yoast emits these values HTML-encoded (the site-name suffix
+ * turns "&" into "&#038;"/"&amp;"); metadata consumers re-escape on render,
+ * so decode here or titles show a literal "&amp;" in tabs and link previews.
+ */
 export function getYoastMeta(post: WPPost): {
   title?: string;
   description?: string;
   ogImage?: string;
 } {
+  const decode = (s: string | undefined) =>
+    s === undefined
+      ? undefined
+      : s
+          .replace(/&#(\d+);/g, (_, code) => String.fromCodePoint(Number(code)))
+          .replace(/&amp;/g, "&")
+          .replace(/&quot;/g, '"')
+          .replace(/&#039;|&apos;/g, "'")
+          .replace(/&lt;/g, "<")
+          .replace(/&gt;/g, ">")
+          .replace(/&nbsp;/g, " ");
+
   return {
-    title: post.yoast_head_json?.title,
-    description: post.yoast_head_json?.description,
+    title: decode(post.yoast_head_json?.title),
+    description: decode(post.yoast_head_json?.description),
     ogImage: post.yoast_head_json?.og_image?.[0]?.url,
   };
 }
