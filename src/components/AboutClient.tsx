@@ -176,7 +176,7 @@ function CompanyIntro() {
             </h2>
 
             <p className="font-body text-muted-foreground text-base leading-relaxed mb-4">
-              Founded in 2012, <strong className="text-primary">Flywings Tour & Packages Pvt Ltd</strong> was born out of a simple belief — that every traveler deserves a stress-free, memorable journey. From our humble beginnings as a local travel desk in New Delhi, we have grown into one of India's most trusted full-service travel agencies.
+              Founded in 2012, <strong className="text-primary">Flywings Tour & Packages Pvt Ltd</strong> was born out of a simple belief — that every traveler deserves a stress-free, memorable journey. From our humble beginnings as a local travel desk in Mohali, we have grown into one of India's most trusted full-service travel agencies.
             </p>
             <p className="font-body text-muted-foreground text-base leading-relaxed mb-8">
               We serve thousands of satisfied travelers every year — from solo adventurers and honeymooners to corporate groups and family vacationers. Our team of passionate travel experts is committed to going the extra mile to craft journeys that exceed expectations, every single time.
