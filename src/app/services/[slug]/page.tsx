@@ -3,6 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ChevronRight, CheckCircle2, Phone, ArrowRight } from "lucide-react";
 import JsonLd from "@/components/JsonLd";
+import PageChrome from "@/components/PageChrome";
 import servicePages, { getServicePageBySlug } from "@/data/servicePages";
 import {
   ORG_ID,
@@ -73,6 +74,7 @@ export default async function ServicePage({
         ]}
       />
 
+      <PageChrome>
       <main>
         {/* ── Hero ── */}
         <section className="relative h-[55vh] min-h-[460px] flex items-end pb-14 overflow-hidden">
@@ -240,6 +242,7 @@ export default async function ServicePage({
           </div>
         </section>
       </main>
+      </PageChrome>
     </>
   );
 }

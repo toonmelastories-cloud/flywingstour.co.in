@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import JsonLd from "@/components/JsonLd";
+import PageChrome from "@/components/PageChrome";
 import { breadcrumbJsonLd, pageMetadata, SITE_NAME } from "@/lib/seo";
 
 export const metadata: Metadata = pageMetadata({
@@ -67,6 +68,7 @@ export default function RefundPolicyPage() {
           ]),
         ]}
       />
+      <PageChrome>
       <main className="section-padding pt-36">
         <div className="container-custom max-w-3xl">
           <span className="inline-block px-4 py-1 bg-gold/10 border border-gold/30 text-gold text-xs font-body font-medium tracking-widest uppercase rounded-full mb-4">
@@ -102,6 +104,7 @@ export default function RefundPolicyPage() {
           </p>
         </div>
       </main>
+      </PageChrome>
     </>
   );
 }
