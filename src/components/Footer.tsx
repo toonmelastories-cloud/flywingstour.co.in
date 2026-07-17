@@ -16,13 +16,13 @@ const quickLinks = [
   { label: "Contact", href: "/contact" },
 ];
 const services = [
-  { label: "Flight Booking", href: "/services" },
+  { label: "Flight Booking", href: "/services/flight-booking" },
   { label: "Holiday Packages", href: "/packages" },
-  { label: "Visa Services", href: "/services" },
-  { label: "Hotel Booking", href: "/services" },
-  { label: "Corporate Travel", href: "/services" },
-  { label: "Group Tours", href: "/packages" },
-  { label: "Honeymoon Packages", href: "/packages" },
+  { label: "Visa Services", href: "/services/visa-assistance" },
+  { label: "Hotel Booking", href: "/services/hotel-booking" },
+  { label: "Corporate Travel", href: "/services/corporate-travel" },
+  { label: "Group Tours", href: "/services/group-tours" },
+  { label: "Honeymoon Packages", href: "/services/honeymoon-packages" },
 ];
 
 // lucide-react has no Pinterest glyph — simple-icons path, same 24px viewBox.
@@ -203,8 +203,12 @@ export default function Footer() {
             Design &amp; Developed by{" "}
             <span className="text-gold/80 font-semibold">S Kaur</span>
           </p>
-          <div className="flex items-center gap-4">
-            <Link href="/contact" className="text-white/40 font-body text-xs hover:text-gold transition-colors">Contact</Link>
+          <div className="flex flex-wrap items-center justify-center gap-x-4 gap-y-1">
+            <Link href="/privacy-policy" className="text-white/40 font-body text-xs hover:text-gold transition-colors">Privacy Policy</Link>
+            <span className="text-white/20">|</span>
+            <Link href="/terms-and-conditions" className="text-white/40 font-body text-xs hover:text-gold transition-colors">Terms &amp; Conditions</Link>
+            <span className="text-white/20">|</span>
+            <Link href="/cancellation-refund-policy" className="text-white/40 font-body text-xs hover:text-gold transition-colors">Refund Policy</Link>
             <span className="text-white/20">|</span>
             <Link href="/blog" className="text-white/40 font-body text-xs hover:text-gold transition-colors">Blog</Link>
             <span className="text-white/20">|</span>
