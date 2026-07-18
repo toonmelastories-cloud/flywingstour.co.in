@@ -10,13 +10,14 @@ import WhatsAppButton from "@/components/WhatsAppButton";
 import InquiryModal from "@/components/InquiryModal";
 import destinations from "@/data/destinations";
 
-const REGIONS = ["All", "Middle East", "Southeast Asia", "South Asia", "Indian Ocean"];
+const REGIONS = ["All", "Middle East", "Southeast Asia", "South Asia", "Indian Ocean", "Central Asia"];
 
 const regionMap: Record<string, string[]> = {
   "Middle East": ["dubai"],
-  "Southeast Asia": ["thailand", "bali", "singapore"],
+  "Southeast Asia": ["thailand", "bali", "singapore", "malaysia"],
   "South Asia": ["kashmir"],
   "Indian Ocean": ["maldives"],
+  "Central Asia": ["almaty"],
 };
 
 export default function DestinationsListClient() {

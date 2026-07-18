@@ -14,7 +14,7 @@ import WhatsAppButton from "@/components/WhatsAppButton";
 import InquiryModal from "@/components/InquiryModal";
 import type { TourData } from "@/lib/tours";
 
-const FILTERS = ["All", "Dubai", "Thailand", "Bali", "Kashmir", "Maldives", "Singapore"];
+const FILTERS = ["All", "Dubai", "Thailand", "Bali", "Kashmir", "Maldives", "Singapore", "Malaysia", "Almaty"];
 
 function PackageCard({ pkg, index, isInView, onBook }: {
   pkg: TourData; index: number; isInView: boolean; onBook: () => void;

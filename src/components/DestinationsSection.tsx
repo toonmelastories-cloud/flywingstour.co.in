@@ -12,6 +12,8 @@ const baliImg = "/assets/bali.jpg";
 const kashmirImg = "/assets/kashmir.jpg";
 const singaporeImg = "/assets/singapore.jpg";
 const maldivesImg = "/assets/maldives.jpg";
+const malaysiaImg = "https://wp.flywingstour.co.in/wp-content/uploads/2026/07/dest-malaysia.jpg";
+const almatyImg = "https://wp.flywingstour.co.in/wp-content/uploads/2026/07/dest-almaty.jpg";
 
 const destinations = [
   { name: "Dubai", slug: "dubai", country: "UAE", image: dubaiImg, price: "₹45,999", description: "Luxury skyscrapers, golden desert safaris, and world-class shopping awaits.", badge: "Most Popular" },
@@ -20,6 +22,8 @@ const destinations = [
   { name: "Kashmir", slug: "kashmir", country: "India", image: kashmirImg, price: "₹18,999", description: "Heaven on earth — serene lakes, snow-capped peaks and blooming gardens.", badge: "Editor's Pick" },
   { name: "Singapore", slug: "singapore", country: "Southeast Asia", image: singaporeImg, price: "₹38,999", description: "A dazzling city-state blending futuristic architecture and multicultural charm.", badge: "" },
   { name: "Maldives", slug: "maldives", country: "Indian Ocean", image: maldivesImg, price: "₹85,999", description: "Overwater bungalows, crystalline lagoons and unparalleled luxury in paradise.", badge: "Luxury" },
+  { name: "Malaysia", slug: "malaysia", country: "Malaysia", image: malaysiaImg, price: "₹25,000", description: "Petronas skyline, hilltop Genting Highlands and Batu Caves in one quick escape.", badge: "Quick Getaway" },
+  { name: "Almaty", slug: "almaty", country: "Kazakhstan", image: almatyImg, price: "₹81,900", description: "Snow-dusted Tien Shan peaks, Silk Road charm and Central Asia's rising star.", badge: "Trending" },
 ];
 
 export default function DestinationsSection() {

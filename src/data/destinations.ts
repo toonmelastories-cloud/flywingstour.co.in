@@ -4,6 +4,8 @@ const destBali = "/assets/dest-bali.jpg";
 const destKashmir = "/assets/dest-kashmir.jpg";
 const destMaldives = "/assets/dest-maldives.jpg";
 const destSingapore = "/assets/dest-singapore.jpg";
+const destMalaysia = "https://wp.flywingstour.co.in/wp-content/uploads/2026/07/dest-malaysia.jpg";
+const destAlmaty = "https://wp.flywingstour.co.in/wp-content/uploads/2026/07/dest-almaty.jpg";
 
 export interface ItineraryDay {
   day: number;
@@ -807,7 +809,205 @@ const destinations: Destination[] = [
         answer: "February to April is relatively drier and ideal. Singapore is a year-round destination with consistent warm weather, so any time is fine. December brings festive Christmas lights along Orchard Road.",
       },
     ],
-    relatedSlugs: ["dubai", "thailand", "bali"],
+    relatedSlugs: ["dubai", "thailand", "malaysia"],
+  },
+  {
+    slug: "malaysia",
+    name: "Malaysia",
+    country: "Malaysia",
+    tagline: "Petronas skyline by day, Genting Highlands by cable car",
+    heroImage: destMalaysia,
+    startingPrice: "₹25,000",
+    bestTime: "December to February",
+    tripDuration: "3–4 Days",
+    currency: "MYR (Malaysian Ringgit)",
+    visaInfo: "Visa-free entry for Indian passport holders (short tourist stays)",
+    weather: "Tropical; warm and humid year-round (25–33°C), afternoon showers common",
+    about:
+      "Malaysia packs a remarkable range into a short flight from India — the futuristic Kuala Lumpur skyline anchored by the Petronas Twin Towers, the limestone temple caves at Batu Caves, and the cool hill-station air of Genting Highlands reached by Southeast Asia's longest cable car system. Kuala Lumpur's Bukit Bintang district blends shopping, street food, and nightlife, making it an easy, affordable international escape for first-time travelers, families, and quick weekend getaways.",
+    metaTitle: "Malaysia Tour Package from India | Flywings Tour & Packages Pvt Ltd",
+    metaDescription:
+      "Book Malaysia tour packages from India starting ₹25,000. Kuala Lumpur city tour, Genting Highlands, Batu Caves & 4★ hotel. TCS extra. Get a free quote today.",
+    packages: [
+      {
+        id: "malaysia-kl",
+        title: "Malaysia (Kuala Lumpur)",
+        duration: "3N / 4D",
+        price: "₹25,000",
+        originalPrice: "",
+        inclusions: ["Private Transfers", "4★ Hotel", "KL City Tour", "Genting Highlands", "Batu Caves", "Breakfast"],
+        badge: "Quick Getaway",
+      },
+    ],
+    highlights: [
+      { icon: "🏙️", title: "Petronas Twin Towers", description: "The iconic KL skyline and KLCC Park" },
+      { icon: "🗼", title: "KL Tower", description: "Observation deck views over the capital" },
+      { icon: "🚡", title: "Genting Skyway", description: "Two-way cable car to the hill-station resort" },
+      { icon: "🛕", title: "Batu Caves", description: "Limestone temple caves with the giant Lord Murugan statue" },
+      { icon: "🎢", title: "Genting Theme Park", description: "Indoor theme park admission included" },
+      { icon: "🛍️", title: "Bukit Bintang", description: "Shopping, street food & nightlife district" },
+    ],
+    itinerary: [
+      {
+        day: 1,
+        title: "Arrival in Kuala Lumpur",
+        description: "Land in KL and settle into Bukit Bintang, the city's shopping and entertainment district.",
+        activities: ["Private airport transfer", "Check-in at Furama Hotel Kuala Lumpur", "Evening at Bukit Bintang"],
+      },
+      {
+        day: 2,
+        title: "KL City Tour & KL Tower",
+        description: "Half-day city tour followed by panoramic views from KL Tower.",
+        activities: ["Petronas Twin Towers photo stop", "Merdeka Square", "KL Tower Observation Deck"],
+      },
+      {
+        day: 3,
+        title: "Genting Highlands & Batu Caves",
+        description: "A full day trip into the hills, via Southeast Asia's longest cable car system.",
+        activities: ["Batu Caves en-route", "Two-way Genting Skyway cable car", "Indoor theme park"],
+      },
+      {
+        day: 4,
+        title: "Departure",
+        description: "Final breakfast and private transfer to the airport.",
+        activities: ["Breakfast at hotel", "Hotel checkout", "Private airport transfer"],
+      },
+    ],
+    inclusions: [
+      "3 nights accommodation at a 4★ hotel in Bukit Bintang",
+      "Daily breakfast",
+      "Private airport transfers",
+      "Half-day KL city tour & KL Tower",
+      "Full-day Genting Highlands tour with Batu Caves",
+      "Two-way Genting Skyway cable car & theme park admission",
+    ],
+    exclusions: [
+      "International airfare",
+      "Travel insurance",
+      "Lunch & dinner",
+      "Personal expenses",
+      "Malaysia Tourism Tax (payable at hotel)",
+      "TCS extra as per Government of India regulations",
+    ],
+    faqs: [
+      {
+        question: "Do Indians need a visa for Malaysia?",
+        answer:
+          "Indian passport holders currently enjoy visa-free entry to Malaysia for short tourist stays. Our team confirms the latest entry requirements at the time of booking.",
+      },
+      {
+        question: "How much does a Malaysia tour package cost from India?",
+        answer:
+          "Malaysia packages from India start at ₹25,000 per person for 3N/4D covering Kuala Lumpur and Genting Highlands, with airfare quoted separately as a land package. TCS applies extra as per Government of India regulations.",
+      },
+      {
+        question: "Is Genting Highlands included in the base package?",
+        answer:
+          "Yes — the full-day Genting Highlands tour with the two-way Skyway cable car, Batu Caves en-route, and indoor theme park admission is included in every Malaysia package.",
+      },
+    ],
+    relatedSlugs: ["singapore", "thailand", "bali"],
+  },
+  {
+    slug: "almaty",
+    name: "Almaty",
+    country: "Kazakhstan",
+    tagline: "Central Asia's rising star — Tien Shan peaks meet Silk Road history",
+    heroImage: destAlmaty,
+    startingPrice: "₹81,900",
+    bestTime: "April to October (sightseeing) / December to March (skiing)",
+    tripDuration: "4–5 Days",
+    currency: "KZT (Kazakhstani Tenge)",
+    visaInfo: "e-Visa required for Indian passport holders — Flywings assists with the application",
+    weather: "Continental climate; warm summers (20–30°C), cold snowy winters (−10 to 0°C)",
+    about:
+      "Almaty is emerging as one of the most exciting new destinations for Indian travelers — a green, mountain-ringed city at the foot of the Tien Shan range, with Soviet-era architecture, leafy boulevards, and easy access to some of Central Asia's most dramatic landscapes. From the Kok-Tobe hilltop viewpoint to the high-altitude Medeu ice rink and the Shymbulak ski resort, Almaty offers a refreshingly offbeat alternative to the usual international circuit, reachable on a direct Air Astana flight from Delhi.",
+    metaTitle: "Almaty Kazakhstan Tour Package from India | Flywings Tour & Packages Pvt Ltd",
+    metaDescription:
+      "Book Almaty (Kazakhstan) tour packages from India starting ₹81,900. Return Air Astana flights ex-Delhi, hotel, sightseeing & transfers included. GST & TCS extra.",
+    packages: [
+      {
+        id: "almaty-kazakhstan",
+        title: "Almaty (Kazakhstan)",
+        duration: "4N / 5D",
+        price: "₹81,900",
+        originalPrice: "",
+        inclusions: ["Return Air Astana Flights", "Hotel", "Breakfast", "Sightseeing", "Transfers", "Tour Guide"],
+        badge: "Trending",
+      },
+    ],
+    highlights: [
+      { icon: "🚡", title: "Kok-Tobe Hill", description: "Cable car ride & panoramic city viewpoint" },
+      { icon: "⛸️", title: "Medeu", description: "The world's highest-altitude Olympic ice rink" },
+      { icon: "🏔️", title: "Shymbulak", description: "Cable car ride into the Tien Shan mountains" },
+      { icon: "🛕", title: "Zenkov Cathedral", description: "One of the world's tallest wooden buildings" },
+      { icon: "🏛️", title: "Panfilov Park", description: "War memorial and leafy city-centre park" },
+      { icon: "🏞️", title: "Charyn Canyon", description: "The 'Grand Canyon of Kazakhstan', a full-day excursion" },
+    ],
+    itinerary: [
+      {
+        day: 1,
+        title: "Arrival in Almaty",
+        description: "Land in Almaty and transfer to your hotel to rest before sightseeing begins.",
+        activities: ["Airport transfer & hotel check-in", "Evening walk at Arbat Street & Panfilov Park"],
+      },
+      {
+        day: 2,
+        title: "Almaty City Tour",
+        description: "Explore the city's landmarks, old and new.",
+        activities: ["Kok-Tobe Hill cable car", "Central State Museum", "Green Bazaar"],
+      },
+      {
+        day: 3,
+        title: "Medeu & Shymbulak",
+        description: "A day in the mountains at the region's most famous ice rink and ski resort.",
+        activities: ["Medeu ice rink", "Shymbulak cable car ride"],
+      },
+      {
+        day: 4,
+        title: "Full-Day Excursion",
+        description: "A full day to Charyn Canyon or Big Almaty Lake, subject to season.",
+        activities: ["Charyn Canyon or Big Almaty Lake excursion", "Professional tour guide"],
+      },
+      {
+        day: 5,
+        title: "Departure",
+        description: "Early transfer to the airport for your return flight to Delhi.",
+        activities: ["Hotel checkout", "Airport transfer & departure"],
+      },
+    ],
+    inclusions: [
+      "Return Air Astana flights ex-Delhi",
+      "4 nights hotel accommodation",
+      "Daily breakfast",
+      "All major sightseeing with professional guide",
+      "Airport transfers",
+    ],
+    exclusions: [
+      "GST & TCS (extra, as applicable)",
+      "Lunch & dinner",
+      "Travel insurance",
+      "Kazakhstan e-visa fee (assistance provided)",
+      "Personal expenses",
+    ],
+    faqs: [
+      {
+        question: "Do Indians need a visa for Kazakhstan?",
+        answer:
+          "Indian nationals typically require a Kazakhstan e-visa, applied for online in advance. Our team assists with the application and confirms current processing times and fees at booking.",
+      },
+      {
+        question: "How much does an Almaty tour package cost from India?",
+        answer:
+          "Almaty packages from India start at ₹81,900 per person for 4N/5D, including return Air Astana flights ex-Delhi, hotel, breakfast, and sightseeing. GST and TCS apply extra as per Government of India regulations.",
+      },
+      {
+        question: "What is the best time to visit Almaty?",
+        answer:
+          "April to October is ideal for sightseeing and mountain excursions, while December to March draws visitors for skiing at Shymbulak.",
+      },
+    ],
+    relatedSlugs: ["kashmir", "dubai", "thailand"],
   },
 ];
 
