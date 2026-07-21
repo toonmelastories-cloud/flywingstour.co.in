@@ -4,24 +4,21 @@ import { useRef, useState } from "react";
 import Link from "next/link";
 import { motion, useInView } from "framer-motion";
 import {
-  Plane, Clock, ArrowRight, Phone, ShieldCheck, BadgeCheck,
-  Stamp, Headphones, Wallet, MapPin, Star, BookOpen,
+  Mountain, Clock, ArrowRight, Phone, ShieldCheck, BadgeCheck,
+  IdCard, Headphones, Wallet, MapPin, Star, BookOpen,
 } from "lucide-react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import WhatsAppButton from "@/components/WhatsAppButton";
 import InquiryModal from "@/components/InquiryModal";
 import {
-  COMPARISON_ROWS,
-  PILLAR_FAQS,
-} from "@/data/pillar-international";
+  DOMESTIC_REGIONS,
+  DOMESTIC_GUIDES,
+  PILLAR_DOMESTIC_FAQS,
+} from "@/data/pillar-domestic";
 import { CONTACT } from "@/lib/seo";
 
-/**
- * Slim projection of TourData — only the fields the cards render.
- * Keeps prices and full itineraries out of the serialized RSC payload
- * (no prices are shown anywhere on this page by business rule).
- */
+/** Slim projection of TourData — only what the cards render, no prices. */
 export interface PillarPackage {
   slug: string;
   shortTitle: string;
@@ -34,9 +31,9 @@ export interface PillarPackage {
 
 const TRUST_STATS = [
   { value: "Since 2005", label: "Serving the Chandigarh Tricity" },
-  { value: "5+", label: "International destinations" },
-  { value: "Direct IXC → DXB", label: "Daily Dubai flight, ~3h 40m" },
-  { value: "Visa Included", label: "Documentation handled by us" },
+  { value: "4+", label: "Domestic circuits covered" },
+  { value: "No Visa Needed", label: "Just a photo ID" },
+  { value: "Custom Itineraries", label: "Built around your dates" },
 ];
 
 const WHY_US = [
@@ -47,28 +44,28 @@ const WHY_US = [
   },
   {
     icon: BadgeCheck,
-    title: "20+ years of ticketing expertise",
-    text: "Booking international airfare since 2005 — we watch fares daily and lock the lowest routing from IXC or Delhi.",
+    title: "20+ years of local knowledge",
+    text: "Hill routes, houseboat operators, and yatra logistics we've worked with since 2005 — not a scripted itinerary.",
   },
   {
-    icon: Stamp,
-    title: "Visa assistance included",
-    text: "UAE, Singapore, Thailand and more — documentation, appointments, and follow-up are handled for you.",
+    icon: IdCard,
+    title: "No visa paperwork",
+    text: "Domestic travel needs no visa or passport — just a photo ID for every traveller, which we help arrange documentation around when needed.",
   },
   {
     icon: Wallet,
     title: "Transparent pricing & EMI",
-    text: "Itemised quotes with no hidden charges, and EMI plans available on all major international packages.",
+    text: "Itemised quotes with no hidden charges, and EMI plans available on major packages.",
   },
   {
     icon: Headphones,
     title: "24/7 on-trip support",
-    text: "A Punjabi/Hindi/English-speaking team that picks up the phone while you are abroad.",
+    text: "A Punjabi/Hindi/English-speaking team that picks up the phone, from Kashmir to Katra.",
   },
   {
     icon: ShieldCheck,
     title: "Customised, not copy-paste",
-    text: "Every itinerary is adjusted to your dates, budget, and pace — honeymoon, family, or group.",
+    text: "Every itinerary is adjusted to your dates, budget, and pace — family, yatra group, or couple.",
   },
 ];
 
@@ -79,15 +76,15 @@ const BOOKING_STEPS = [
   },
   {
     title: "Get a custom quote in 24 hours",
-    text: "We compare fares from Chandigarh (IXC) and Delhi, shortlist hotels, and send an itemised itinerary.",
+    text: "We shortlist transport (flight, cab or helicopter), hotels, and build a day-wise itinerary.",
   },
   {
-    title: "We handle visa & bookings",
-    text: "Flights, hotels, transfers, sightseeing, and visa paperwork — confirmed and shared in one document.",
+    title: "We handle logistics & bookings",
+    text: "Transport, hotels, transfers, and sightseeing — confirmed and shared in one document.",
   },
   {
-    title: "Fly with 24/7 support",
-    text: "Travel with our team a phone call away, from departure at IXC to your return home.",
+    title: "Travel with 24/7 support",
+    text: "A phone call away throughout your trip, from departure to your return home.",
   },
 ];
 
@@ -150,7 +147,7 @@ function PillarPackageCard({ pkg, index, isInView, onBook }: {
   );
 }
 
-export default function PillarInternationalClient({ packages }: { packages: PillarPackage[] }) {
+export default function PillarDomesticClient({ packages }: { packages: PillarPackage[] }) {
   const [inquiryOpen, setInquiryOpen] = useState(false);
   const gridRef = useRef(null);
   const gridInView = useInView(gridRef, { once: true, margin: "-60px" });
@@ -170,20 +167,20 @@ export default function PillarInternationalClient({ packages }: { packages: Pill
             <nav className="flex items-center justify-center gap-2 text-white/50 font-body text-xs mb-6">
               <Link href="/" className="hover:text-secondary transition-colors">Home</Link>
               <span>/</span>
-              <span className="text-secondary">International Tour Packages from Chandigarh</span>
+              <span className="text-secondary">India Tour Packages from Chandigarh</span>
             </nav>
             <div className="inline-flex items-center gap-2 bg-secondary/20 border border-secondary/30 rounded-full px-4 py-1.5 mb-4">
-              <Plane className="w-3.5 h-3.5 text-secondary" />
+              <Mountain className="w-3.5 h-3.5 text-secondary" />
               <span className="text-secondary text-xs font-body font-semibold tracking-widest uppercase">
-                Dubai · Thailand · Bali · Singapore · Maldives
+                Kashmir · Vaishno Devi · Amritsar · Himachal
               </span>
             </div>
             <h1 className="font-display font-900 text-4xl sm:text-5xl text-white mb-4 leading-tight">
-              International Tour Packages from Chandigarh
+              India Tour Packages from Chandigarh
             </h1>
             <p className="text-white/65 font-body text-lg max-w-2xl mx-auto mb-8 leading-relaxed">
-              Flights from Chandigarh or Delhi, handpicked hotels, transfers, sightseeing, and complete
-              visa assistance — planned by a Mohali-based travel agency trusted since 2005.
+              Kashmir houseboats, Vaishno Devi yatras, the Golden Temple, and Himachal's hill circuit —
+              planned by a Mohali-based travel agency trusted since 2005. No visa, no passport, just pure India.
             </p>
             <div className="flex flex-wrap items-center justify-center gap-4">
               <button
@@ -219,20 +216,20 @@ export default function PillarInternationalClient({ packages }: { packages: Pill
       <section className="section-padding bg-background">
         <div className="container-custom max-w-3xl mx-auto">
           <h2 className="font-display font-800 text-2xl sm:text-3xl text-primary mb-5">
-            Plan Your International Holiday from the Chandigarh Tricity
+            Plan Your Domestic Holiday or Yatra from the Chandigarh Tricity
           </h2>
           <div className="space-y-4 text-muted-foreground font-body leading-relaxed">
             <p>
-              Travellers from Chandigarh, Mohali, Panchkula, and across Punjab no longer need to route
-              every holiday through a Delhi agency. With a direct IndiGo flight from Chandigarh
-              International Airport (IXC) to Dubai and quick connections via Delhi for Southeast Asia,
-              your international trip can start right from home — and so can the planning.
+              India&rsquo;s own mountains, lakes and shrines sit closer to Chandigarh than almost any
+              international destination — Kashmir a short flight away, Vaishno Devi a night&rsquo;s
+              journey via Katra, and the Golden Temple barely four hours down the highway. No visa,
+              no passport, no currency exchange — just planning done right.
             </p>
             <p>
-              Flywings Tour & Packages Pvt Ltd is a full-service travel agency in Phase 7, Mohali, booking
-              international air tickets and holiday packages since 2005. Every package below can be
-              customised for honeymoons, families, and groups, and is quoted with return airfare,
-              hotels, transfers, daily sightseeing, and visa assistance — one price, no surprises.
+              Flywings Tour & Packages Pvt Ltd is a full-service travel agency in Phase 7, Mohali,
+              planning domestic holidays and yatras since 2005. Every trip below is customised for
+              families, honeymooners, and pilgrimage groups, and quoted with transport, hotels,
+              transfers and sightseeing — one price, no surprises.
             </p>
           </div>
         </div>
@@ -242,37 +239,39 @@ export default function PillarInternationalClient({ packages }: { packages: Pill
       <section className="section-padding bg-muted/40 pt-0">
         <div className="container-custom">
           <h2 className="font-display font-800 text-2xl sm:text-3xl text-primary mb-3 text-center">
-            Compare International Destinations from Chandigarh
+            Compare Domestic Circuits from Chandigarh
           </h2>
           <p className="text-muted-foreground font-body text-sm text-center max-w-2xl mx-auto mb-8">
-            Every package includes flights, hotels, transfers, sightseeing &amp; visa assistance —
+            Every trip includes transport, hotels, transfers &amp; sightseeing —
             get an itemised quote for your dates. Updated July 2026.
           </p>
           <div className="overflow-x-auto rounded-2xl border border-border shadow-card bg-card">
-            <table className="w-full text-left font-body text-sm min-w-[760px]">
+            <table className="w-full text-left font-body text-sm min-w-[720px]">
               <thead>
                 <tr className="bg-primary text-white">
-                  <th className="px-5 py-4 font-display font-700">Destination</th>
+                  <th className="px-5 py-4 font-display font-700">Region</th>
                   <th className="px-5 py-4 font-display font-700">Duration</th>
-                  <th className="px-5 py-4 font-display font-700">Visa for Indians</th>
-                  <th className="px-5 py-4 font-display font-700">Flight from Chandigarh</th>
+                  <th className="px-5 py-4 font-display font-700">How to Reach</th>
                   <th className="px-5 py-4 font-display font-700">Best Months</th>
                 </tr>
               </thead>
               <tbody>
-                {COMPARISON_ROWS.map((row, i) => (
-                  <tr key={row.destination} className={i % 2 ? "bg-muted/40" : "bg-card"}>
+                {DOMESTIC_REGIONS.map((row, i) => (
+                  <tr key={row.region} className={i % 2 ? "bg-muted/40" : "bg-card"}>
                     <td className="px-5 py-4">
-                      <Link
-                        href={`/destinations/${row.destinationSlug}`}
-                        className="font-display font-700 text-primary hover:text-secondary transition-colors"
-                      >
-                        {row.destination}
-                      </Link>
+                      {row.destinationSlug ? (
+                        <Link
+                          href={`/destinations/${row.destinationSlug}`}
+                          className="font-display font-700 text-primary hover:text-secondary transition-colors"
+                        >
+                          {row.region}
+                        </Link>
+                      ) : (
+                        <span className="font-display font-700 text-primary">{row.region}</span>
+                      )}
                     </td>
                     <td className="px-5 py-4 text-muted-foreground">{row.duration}</td>
-                    <td className="px-5 py-4 text-muted-foreground">{row.visa}</td>
-                    <td className="px-5 py-4 text-muted-foreground">{row.flightFromChandigarh}</td>
+                    <td className="px-5 py-4 text-muted-foreground">{row.howToReach}</td>
                     <td className="px-5 py-4 text-muted-foreground">{row.bestMonths}</td>
                   </tr>
                 ))}
@@ -283,33 +282,67 @@ export default function PillarInternationalClient({ packages }: { packages: Pill
       </section>
 
       {/* ── PACKAGES GRID ──────────────────────────────────────── */}
-      <section className="section-padding bg-background">
-        <div className="container-custom" ref={gridRef}>
+      {packages.length > 0 && (
+        <section className="section-padding bg-background">
+          <div className="container-custom" ref={gridRef}>
+            <h2 className="font-display font-800 text-2xl sm:text-3xl text-primary mb-3 text-center">
+              Our Best-Selling Domestic Package
+            </h2>
+            <p className="text-muted-foreground font-body text-sm text-center max-w-2xl mx-auto mb-10">
+              Ready-to-book itineraries — customisable for your dates and budget.
+            </p>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-7">
+              {packages.map((pkg, i) => (
+                <PillarPackageCard
+                  key={pkg.slug}
+                  pkg={pkg}
+                  index={i}
+                  isInView={gridInView}
+                  onBook={() => setInquiryOpen(true)}
+                />
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
+
+      {/* ── REGIONS WE COVER (guides) ──────────────────────────── */}
+      <section className="section-padding bg-muted/40">
+        <div className="container-custom">
           <h2 className="font-display font-800 text-2xl sm:text-3xl text-primary mb-3 text-center">
-            Our Best-Selling International Packages
+            More Regions We Plan — Custom Quote on Request
           </h2>
           <p className="text-muted-foreground font-body text-sm text-center max-w-2xl mx-auto mb-10">
-            Ready-to-book itineraries — every one of them customisable for your dates and budget.
+            Not every circuit has a fixed package yet — read the in-depth guide, then call for a
+            custom itinerary and quote.
           </p>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-7">
-            {packages.map((pkg, i) => (
-              <PillarPackageCard
-                key={pkg.slug}
-                pkg={pkg}
-                index={i}
-                isInView={gridInView}
-                onBook={() => setInquiryOpen(true)}
-              />
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            {DOMESTIC_GUIDES.map((g) => (
+              <Link
+                key={g.href}
+                href={g.href}
+                className="group bg-card rounded-2xl border border-border shadow-card p-6 hover:-translate-y-1 hover:shadow-navy transition-all duration-300"
+              >
+                <h3 className="font-display font-700 text-primary text-base mb-2 group-hover:text-secondary transition-colors">
+                  {g.title}
+                </h3>
+                <p className="text-muted-foreground font-body text-sm leading-relaxed mb-4">
+                  {g.description}
+                </p>
+                <span className="inline-flex items-center gap-1.5 text-secondary font-display font-600 text-xs">
+                  {g.cta} <ArrowRight className="w-3.5 h-3.5" />
+                </span>
+              </Link>
             ))}
           </div>
         </div>
       </section>
 
       {/* ── WHY US ─────────────────────────────────────────────── */}
-      <section className="section-padding bg-muted/40">
+      <section className="section-padding bg-background">
         <div className="container-custom">
           <h2 className="font-display font-800 text-2xl sm:text-3xl text-primary mb-10 text-center">
-            Why Book Your International Trip with a Chandigarh-Based Agency
+            Why Book Your India Trip with a Chandigarh-Based Agency
           </h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {WHY_US.map(({ icon: Icon, title, text }) => (
@@ -326,7 +359,7 @@ export default function PillarInternationalClient({ packages }: { packages: Pill
       </section>
 
       {/* ── HOW IT WORKS ───────────────────────────────────────── */}
-      <section className="section-padding bg-background">
+      <section className="section-padding bg-muted/40">
         <div className="container-custom max-w-3xl mx-auto">
           <h2 className="font-display font-800 text-2xl sm:text-3xl text-primary mb-10 text-center">
             How Booking Works
@@ -348,13 +381,13 @@ export default function PillarInternationalClient({ packages }: { packages: Pill
       </section>
 
       {/* ── FAQ ────────────────────────────────────────────────── */}
-      <section className="section-padding bg-muted/40">
+      <section className="section-padding bg-background">
         <div className="container-custom max-w-3xl mx-auto">
           <h2 className="font-display font-800 text-2xl sm:text-3xl text-primary mb-10 text-center">
-            International Tour Packages from Chandigarh — FAQs
+            India Tour Packages from Chandigarh — FAQs
           </h2>
           <div className="space-y-3">
-            {PILLAR_FAQS.map((faq) => (
+            {PILLAR_DOMESTIC_FAQS.map((faq) => (
               <details
                 key={faq.question}
                 className="group bg-card rounded-2xl border border-border shadow-card px-6 py-4"
@@ -375,7 +408,7 @@ export default function PillarInternationalClient({ packages }: { packages: Pill
       </section>
 
       {/* ── GUIDES ─────────────────────────────────────────────── */}
-      <section className="section-padding bg-background">
+      <section className="section-padding bg-muted/40">
         <div className="container-custom max-w-3xl mx-auto text-center">
           <div className="inline-flex items-center gap-2 bg-secondary/15 border border-secondary/25 rounded-full px-4 py-1.5 mb-4">
             <BookOpen className="w-3.5 h-3.5 text-secondary" />
@@ -385,21 +418,21 @@ export default function PillarInternationalClient({ packages }: { packages: Pill
             Research Your Trip Like a Pro
           </h2>
           <p className="text-muted-foreground font-body text-sm max-w-xl mx-auto mb-8">
-            In-depth, regularly updated guides written by our travel consultants — costs, visas,
-            itineraries, and money-saving tips for travellers from Chandigarh and Punjab.
+            In-depth, regularly updated guides written by our travel consultants — routes, itineraries,
+            and money-saving tips for travellers from Chandigarh and Punjab.
           </p>
           <div className="flex flex-wrap items-center justify-center gap-4">
             <Link
-              href="/blog/dubai-tour-package-from-chandigarh"
+              href="/blog/kashmir-tour-package-from-chandigarh"
               className="px-6 py-3 border border-border text-primary font-display font-600 text-sm rounded-full hover:bg-muted/50 transition-all"
             >
-              Dubai Tour Package from Chandigarh: Complete Guide
+              Kashmir Tour Package: Complete Guide
             </Link>
             <Link
-              href="/india-tour-packages-from-chandigarh"
+              href="/international-tour-packages-from-chandigarh"
               className="px-6 py-3 border border-border text-primary font-display font-600 text-sm rounded-full hover:bg-muted/50 transition-all"
             >
-              India Tour Packages from Chandigarh
+              International Packages from Chandigarh
             </Link>
             <Link
               href="/blog"
@@ -418,10 +451,10 @@ export default function PillarInternationalClient({ packages }: { packages: Pill
         </div>
         <div className="container-custom relative text-center">
           <h2 className="font-display font-800 text-3xl sm:text-4xl text-white mb-4">
-            Ready for Your Next International Trip?
+            Ready for Your Next India Trip?
           </h2>
           <p className="text-white/60 font-body max-w-xl mx-auto mb-8">
-            Get a customised itinerary with flights from Chandigarh, hotels, and visa — free of cost,
+            Get a customised itinerary with transport, hotels, and sightseeing — free of cost,
             within 24 hours.
           </p>
           <div className="flex flex-wrap items-center justify-center gap-4">
