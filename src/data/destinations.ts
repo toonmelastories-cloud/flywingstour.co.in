@@ -918,7 +918,7 @@ const destinations: Destination[] = [
     bestTime: "April to October (sightseeing) / December to March (skiing)",
     tripDuration: "4–5 Days",
     currency: "KZT (Kazakhstani Tenge)",
-    visaInfo: "e-Visa required for Indian passport holders — Flywings assists with the application",
+    visaInfo: "Visa-free for Indian passport holders — up to 14 days per visit (max 42 days per rolling 180-day period); e-Visa available for longer stays",
     weather: "Continental climate; warm summers (20–30°C), cold snowy winters (−10 to 0°C)",
     about:
       "Almaty is emerging as one of the most exciting new destinations for Indian travelers — a green, mountain-ringed city at the foot of the Tien Shan range, with Soviet-era architecture, leafy boulevards, and easy access to some of Central Asia's most dramatic landscapes. From the Kok-Tobe hilltop viewpoint to the high-altitude Medeu ice rink and the Shymbulak ski resort, Almaty offers a refreshingly offbeat alternative to the usual international circuit, reachable on a direct Air Astana flight from Delhi.",
