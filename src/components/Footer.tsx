@@ -201,7 +201,14 @@ export default function Footer() {
             © 2026 Flywings Tour & Packages Pvt Ltd. All rights reserved.
             <span className="text-white/20 mx-2">|</span>
             Design &amp; Developed by{" "}
-            <span className="text-gold/80 font-semibold">S Kaur</span>
+            <a
+              href="https://wa.me/917888997622"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-gold/80 font-semibold hover:text-gold transition-colors"
+            >
+              S Kaur
+            </a>
           </p>
           <div className="flex flex-wrap items-center justify-center gap-x-4 gap-y-1">
             <Link href="/privacy-policy" className="text-white/40 font-body text-xs hover:text-gold transition-colors">Privacy Policy</Link>
