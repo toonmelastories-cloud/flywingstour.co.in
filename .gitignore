@@ -42,3 +42,6 @@ next-env.d.ts
 
 .vercel
 .env*
+
+# generated keyword research output (regenerate with scripts/keyword-research.mjs)
+/keyword-research/
