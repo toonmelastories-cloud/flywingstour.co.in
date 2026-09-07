@@ -11,6 +11,7 @@ import { cn } from "@/lib/utils";
 import { Calendar } from "@/components/ui/calendar";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { AIRPORTS, searchAirports, formatAirport, type Airport } from "@/data/airports";
+import { trackLead, logLead, getAttribution } from "@/lib/analytics";
 
 const heroBg = "/assets/hero-bg.jpg";
 
@@ -181,9 +182,18 @@ export default function HeroSection({ onInquiryOpen }: HeroSectionProps) {
       });
       const json = (await res.json().catch(() => null)) as { success?: string | boolean } | null;
       if (!res.ok || !(json?.success === true || json?.success === "true")) throw new Error();
-      const w = window as unknown as { gtag?: (...args: unknown[]) => void };
-      w.gtag?.("event", "fare_request", {
-        route: `${fromAirport!.code}-${toAirport!.code}`,
+      const route = `${fromAirport!.code}-${toAirport!.code}`;
+      trackLead("fare_request", { route, travellers: travelers });
+      logLead({
+        type: "fare_request",
+        phone: cleanPhone,
+        destination: `${from} → ${to}`,
+        travelMonth: format(departureDate!, "MMMM yyyy"),
+        source: "homepage-flight-search",
+        notes: `Route ${route}, ${travelers} traveller(s), return: ${
+          returnDate ? format(returnDate, "PPP") : "one-way"
+        }`,
+        ...getAttribution(),
       });
       setStep("done");
     } catch {

@@ -3,6 +3,7 @@
 import { useState, useRef } from "react";
 import { motion, useInView } from "framer-motion";
 import { useSubmitContact } from "@/hooks/useApi";
+import { travelMonthOptions, destinationSuggestions } from "@/lib/leadForm";
 import Link from "next/link";
 import {
   ChevronRight, Phone, Mail, MapPin, Clock, MessageCircle,
@@ -214,7 +215,10 @@ function ContactFormSection() {
   const isInView = useInView(ref, { once: true, margin: "-80px" });
   const [submitted, setSubmitted] = useState(false);
   const contactMutation = useSubmitContact();
-  const [form, setForm] = useState({ phone: "", email: "" });
+  const EMPTY = { name: "", phone: "", email: "", destination: "", travelMonth: "" };
+  const [form, setForm] = useState(EMPTY);
+  const months = travelMonthOptions();
+  const destinationList = destinationSuggestions();
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -225,7 +229,7 @@ function ContactFormSection() {
           setSubmitted(true);
           setTimeout(() => {
             setSubmitted(false);
-            setForm({ phone: "", email: "" });
+            setForm(EMPTY);
           }, 4000);
         },
       }
@@ -244,7 +248,7 @@ function ContactFormSection() {
             <span className="text-secondary text-xs font-body font-semibold tracking-widest uppercase">Free Consultation</span>
           </div>
           <h2 className="font-display font-800 text-3xl sm:text-4xl text-primary mb-4 leading-tight">Get Your Free Travel Consultation</h2>
-          <p className="text-muted-foreground font-body text-lg max-w-2xl mx-auto">Leave your phone number and email and our travel expert will contact you within a few hours.</p>
+          <p className="text-muted-foreground font-body text-lg max-w-2xl mx-auto">Tell us where and roughly when, and our travel expert will call you back with real options and prices. Only your phone and email are required.</p>
         </div>
 
         <motion.div
@@ -271,15 +275,42 @@ function ContactFormSection() {
             ) : (
               <form onSubmit={handleSubmit} className="space-y-5">
                 <div>
-                  <label className="block text-primary font-body font-medium text-xs mb-1.5">Phone Number *</label>
-                  <input required type="tel" value={form.phone} onChange={e => set("phone", e.target.value)} placeholder="+91 XXXXX XXXXX" maxLength={15}
+                  <label htmlFor="contact-name" className="block text-primary font-body font-medium text-xs mb-1.5">Your Name</label>
+                  <input id="contact-name" type="text" autoComplete="name" value={form.name} onChange={e => set("name", e.target.value)} placeholder="So we know who we are calling" maxLength={80}
                     className="w-full px-4 py-3 border border-border rounded-xl text-primary font-body text-sm outline-none focus:border-secondary transition-colors" />
                 </div>
 
                 <div>
-                  <label className="block text-primary font-body font-medium text-xs mb-1.5">Email Address *</label>
-                  <input required type="email" value={form.email} onChange={e => set("email", e.target.value)} placeholder="you@example.com" maxLength={255}
+                  <label htmlFor="contact-phone" className="block text-primary font-body font-medium text-xs mb-1.5">Phone Number *</label>
+                  <input id="contact-phone" required type="tel" autoComplete="tel" value={form.phone} onChange={e => set("phone", e.target.value)} placeholder="+91 XXXXX XXXXX" maxLength={15}
                     className="w-full px-4 py-3 border border-border rounded-xl text-primary font-body text-sm outline-none focus:border-secondary transition-colors" />
+                </div>
+
+                <div>
+                  <label htmlFor="contact-email" className="block text-primary font-body font-medium text-xs mb-1.5">Email Address *</label>
+                  <input id="contact-email" required type="email" autoComplete="email" value={form.email} onChange={e => set("email", e.target.value)} placeholder="you@example.com" maxLength={255}
+                    className="w-full px-4 py-3 border border-border rounded-xl text-primary font-body text-sm outline-none focus:border-secondary transition-colors" />
+                </div>
+
+                {/* Free text with suggestions, not a dropdown: someone
+                    asking about Baku or a multi-city Europe trip must
+                    still be able to type it. */}
+                <div>
+                  <label htmlFor="contact-destination" className="block text-primary font-body font-medium text-xs mb-1.5">Where do you want to go?</label>
+                  <input id="contact-destination" type="text" list="fw-destinations" value={form.destination} onChange={e => set("destination", e.target.value)} placeholder="Dubai, Kashmir, Bali, or just ask us" maxLength={80}
+                    className="w-full px-4 py-3 border border-border rounded-xl text-primary font-body text-sm outline-none focus:border-secondary transition-colors" />
+                  <datalist id="fw-destinations">
+                    {destinationList.map(d => <option key={d} value={d} />)}
+                  </datalist>
+                </div>
+
+                <div>
+                  <label htmlFor="contact-month" className="block text-primary font-body font-medium text-xs mb-1.5">When are you travelling?</label>
+                  <select id="contact-month" value={form.travelMonth} onChange={e => set("travelMonth", e.target.value)}
+                    className="w-full px-4 py-3 border border-border rounded-xl text-primary font-body text-sm outline-none focus:border-secondary transition-colors bg-card">
+                    <option value="">Select a month</option>
+                    {months.map(m => <option key={m} value={m}>{m}</option>)}
+                  </select>
                 </div>
 
                 <button

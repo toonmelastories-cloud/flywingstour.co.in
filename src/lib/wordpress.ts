@@ -55,7 +55,23 @@ export interface WPPost {
   };
 }
 
-async function wpFetch<T>(path: string): Promise<T | null> {
+interface WpFetchOptions {
+  /**
+   * Bypass the Next data cache entirely.
+   *
+   * Route-level `dynamic = "force-dynamic"` does not win against an
+   * explicit `next: { revalidate }` on the fetch itself, so the sitemap
+   * and feed kept serving whatever was cached at build time even after
+   * they were made dynamic. Those two routes pass `fresh` so the post
+   * list is always read live from WordPress.
+   */
+  fresh?: boolean;
+}
+
+async function wpFetch<T>(
+  path: string,
+  { fresh = false }: WpFetchOptions = {}
+): Promise<T | null> {
   const url = `${WP_API_URL}${path}${path.includes("?") ? "&" : "?"}_v=${CACHE_VERSION}`;
   try {
     const res = await fetch(url, {
@@ -63,7 +79,9 @@ async function wpFetch<T>(path: string): Promise<T | null> {
       // on demand (a WordPress save_post hook pings that endpoint).
       // Time-based revalidation alone proved unreliable on Vercel for
       // build-time-seeded entries.
-      next: { revalidate: REVALIDATE_SECONDS, tags: ["wordpress"] },
+      ...(fresh
+        ? { cache: "no-store" as const }
+        : { next: { revalidate: REVALIDATE_SECONDS, tags: ["wordpress"] } }),
       headers: { Accept: "application/json" },
     });
 
@@ -83,9 +101,13 @@ async function wpFetch<T>(path: string): Promise<T | null> {
 }
 
 /** Resolves a category slug to its numeric WP term ID, or null if it doesn't exist / WP is unreachable. */
-async function getCategoryIdBySlug(slug: string): Promise<number | null> {
+async function getCategoryIdBySlug(
+  slug: string,
+  options?: WpFetchOptions
+): Promise<number | null> {
   const categories = await wpFetch<Array<{ id: number; slug: string }>>(
-    `/categories?slug=${encodeURIComponent(slug)}`
+    `/categories?slug=${encodeURIComponent(slug)}`,
+    options
   );
   return categories && categories.length > 0 ? categories[0].id : null;
 }
@@ -117,10 +139,42 @@ export async function getTourBySlug(slug: string): Promise<WPPost | null> {
  * All published blog posts, excluding anything tagged `tours` so the
  * two content types don't mix in listings.
  */
-export async function getPosts(): Promise<WPPost[] | null> {
-  const categoryId = await getCategoryIdBySlug(TOURS_CATEGORY_SLUG);
+export async function getPosts(
+  options?: WpFetchOptions
+): Promise<WPPost[] | null> {
+  const categoryId = await getCategoryIdBySlug(TOURS_CATEGORY_SLUG, options);
   const exclude = categoryId !== null ? `&categories_exclude=${categoryId}` : "";
-  return wpFetch<WPPost[]>(`/posts?_embed&per_page=50${exclude}`);
+  return wpFetch<WPPost[]>(`/posts?_embed&per_page=100${exclude}`, options);
+}
+
+/** Just what the sitemap needs about a post. */
+export interface WPPostRef {
+  slug: string;
+  date: string;
+  modified?: string;
+}
+
+/**
+ * Slim post list for the sitemap.
+ *
+ * `getPosts()` asks for `_embed`, which pulls featured images, authors
+ * and terms for every post and currently returns about 2.8 MB. The
+ * sitemap needs three fields. Requesting only those keeps the response
+ * a few kilobytes, well under the size at which Next stops caching a
+ * response, and makes the route fast enough to render per request.
+ *
+ * Read fresh on every call: a sitemap that lags behind what is
+ * published is worse than no sitemap, because Google trusts it.
+ */
+export async function getPostRefs(): Promise<WPPostRef[] | null> {
+  const categoryId = await getCategoryIdBySlug(TOURS_CATEGORY_SLUG, {
+    fresh: true,
+  });
+  const exclude = categoryId !== null ? `&categories_exclude=${categoryId}` : "";
+  return wpFetch<WPPostRef[]>(
+    `/posts?per_page=100&_fields=slug,date,modified${exclude}`,
+    { fresh: true }
+  );
 }
 
 /** A single blog post by slug (any category), or null if not found / WP unreachable. */

@@ -38,8 +38,12 @@ function handle(request: Request) {
   revalidatePath("/blog/[slug]", "page");
   revalidatePath("/packages");
   revalidatePath("/packages/[slug]", "page");
-  revalidatePath("/sitemap.xml");
-  revalidatePath("/rss.xml");
+  // /sitemap.xml and /rss.xml are no longer listed here: both are now
+  // `dynamic = "force-dynamic"` and rebuild on every request. They used
+  // to be ISR routes, and because almost nobody visits them, the one
+  // visitor who did (Googlebot) was always served the stale copy while
+  // the refresh ran in the background. Ten posts stayed out of the
+  // sitemap for weeks that way.
 
   return NextResponse.json({ revalidated: true, now: Date.now() });
 }

@@ -45,6 +45,8 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/bui
 | `NEXT_PUBLIC_BING_SITE_VERIFICATION` | No | Bing Webmaster Tools verification token (`msvalidate.01`). |
 | `NEXT_PUBLIC_YANDEX_SITE_VERIFICATION` | No | Yandex Webmaster verification token. |
 | `NEXT_PUBLIC_GA_MEASUREMENT_ID` | No (defaults to `G-TLNBFYH8SZ`) | Google Analytics 4 measurement ID, loaded site-wide via `@next/third-parties` in `src/app/layout.tsx`. |
+| `LEAD_SHEET_URL` | No (logging is skipped when unset) | Google Apps Script web app URL that appends each enquiry to a Google Sheet. See [Lead capture](#lead-capture) below. Server-side only, never exposed to the browser. |
+| `SALES_EMAIL` | No (defaults to `sales@flywingstour.co.in`) | Inbox that enquiry emails are delivered to. |
 
 **Local development:** already set in `.env.local` (gitignored).
 
@@ -53,6 +55,51 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/bui
 ```
 WP_API_URL=https://wp.flywingstour.co.in/wp-json/wp/v2
 ```
+
+## Lead capture
+
+Enquiries are the point of this site, so they are delivered twice and measured once.
+
+**Delivery.** Forms post straight from the visitor's browser to FormSubmit, which emails
+`SALES_EMAIL` (FormSubmit blocks datacenter IPs, so this cannot run server-side). The
+`/api/contact` and `/api/inquiries` route handlers implement the same flow for when
+`NEXT_PUBLIC_USE_API=true`.
+
+**Backup record.** Every successful submission is also sent to `/api/lead-log`, which
+appends a row to a Google Sheet. Without this a lead exists only as one email: if the
+relay throttles or a spam filter eats it, the enquiry is gone with no record it arrived.
+
+One-time free setup:
+
+1. Create a Google Sheet with this header row:
+   `Timestamp | Type | Name | Phone | Email | Destination | TravelMonth | Source | PageUrl | Referrer | utm_source | utm_medium | utm_campaign | Notes`
+2. Extensions → Apps Script, paste the `doPost` function documented at the top of
+   [`src/lib/leadLog.ts`](src/lib/leadLog.ts).
+3. Deploy → New deployment → Web app → *Execute as: Me*, *Who has access: Anyone*.
+4. Copy the `/exec` URL into `LEAD_SHEET_URL` in Vercel → Project Settings →
+   Environment Variables.
+
+Until step 4 is done, logging is a no-op and nothing breaks.
+
+**Measurement.** `src/lib/analytics.ts` fires one GA4 event per lead action, and
+`src/components/LeadTracking.tsx` (mounted in the root layout) catches every `tel:`,
+`wa.me` and `mailto:` click site-wide, so links added later are tracked automatically.
+
+Mark these as **Key Events** in GA4 (Admin → Events → Mark as key event), otherwise they
+are recorded but never reported as conversions:
+
+| Event | Fires when |
+|---|---|
+| `whatsapp_click` | Any WhatsApp link is clicked (blog share buttons are excluded) |
+| `phone_click` | Any `tel:` link is clicked |
+| `contact_submit` | Contact page form submits successfully |
+| `inquiry_submit` | Inquiry modal submits successfully |
+| `fare_request` | Homepage flight search submits successfully |
+| `newsletter_signup` | Newsletter form submits successfully |
+
+UTM tags and the referrer are captured from the landing URL into `sessionStorage` on first
+page view and attached to the lead, because the tags are on the entry page while the
+enquiry usually happens several pages later.
 
 ### WordPress content model this integration expects
 

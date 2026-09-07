@@ -2,7 +2,10 @@ import { getPosts, getFeaturedImageUrl } from "@/lib/wordpress";
 import { stripWpHtml } from "@/lib/sanitize";
 import { SITE_NAME, SITE_URL, absoluteUrl } from "@/lib/seo";
 
-export const revalidate = 3600;
+// Same reasoning as the sitemap: a feed nobody visits never refreshes
+// itself, so feed readers and Google's discovery crawl were seeing an
+// old post list. Rendered per request instead.
+export const dynamic = "force-dynamic";
 
 function xmlEscape(s: string): string {
   return s
@@ -15,7 +18,9 @@ function xmlEscape(s: string): string {
 
 /** RSS 2.0 feed of blog posts — fails soft to an empty channel if WP is unreachable. */
 export async function GET() {
-  const posts = (await getPosts()) ?? [];
+  // `fresh` because an explicit per-fetch revalidate would otherwise
+  // outrank this route's force-dynamic and serve a stale post list.
+  const posts = (await getPosts({ fresh: true })) ?? [];
 
   const items = posts
     .map((post) => {

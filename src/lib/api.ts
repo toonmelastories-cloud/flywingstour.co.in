@@ -61,6 +61,17 @@ export interface InquiryPayload {
   phone: string;
   email: string;
   source?: string; // e.g., "contact-page", "inquiry-modal", "package-detail"
+
+  /**
+   * Qualification fields. Phone and email alone leave the sales team
+   * cold-calling a bare number with no idea what the person wants. For
+   * travel, destination plus travel month is the entire qualification,
+   * so these are asked for but kept optional: a required field costs
+   * more conversions than an unanswered one costs context.
+   */
+  name?: string;
+  destination?: string;
+  travelMonth?: string;
 }
 
 export interface ContactPayload extends InquiryPayload {

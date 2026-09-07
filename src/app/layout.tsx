@@ -3,6 +3,7 @@ import { GoogleAnalytics } from "@next/third-parties/google";
 import "./globals.css";
 import Providers from "./providers";
 import JsonLd from "@/components/JsonLd";
+import LeadTracking from "@/components/LeadTracking";
 import {
   ALL_KEYWORDS,
   DEFAULT_OG_IMAGE,
@@ -90,6 +91,8 @@ export default function RootLayout({
     <html lang="en-IN">
       <body>
         <JsonLd data={[organizationJsonLd(), webSiteJsonLd()]} />
+        {/* Tracks every phone / WhatsApp / mailto click site-wide. */}
+        <LeadTracking />
         <Providers>{children}</Providers>
       </body>
       <GoogleAnalytics

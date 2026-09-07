@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { sendLead } from "@/lib/sendLead";
+import { logLeadToSheet } from "@/lib/leadLog";
 
 export async function POST(request: Request) {
   const body = await request.json().catch(() => null);
@@ -15,6 +16,7 @@ export async function POST(request: Request) {
 
   try {
     await sendLead("Newsletter Signup — Flywings Website", { Email: email });
+    await logLeadToSheet({ type: "newsletter_signup", email, source: "newsletter" });
     return NextResponse.json({ success: true, data: { subscribed: true } });
   } catch {
     return NextResponse.json(

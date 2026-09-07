@@ -44,14 +44,21 @@ export async function sendLead(
   }
 }
 
-/** Shared validation for the lead forms (phone + email). */
-export function validateLead(body: unknown): {
+export interface ValidatedLead {
   phone: string;
   email: string;
   source: string;
-} | null {
+  /** Qualification fields: asked for, never required. */
+  name: string;
+  destination: string;
+  travelMonth: string;
+}
+
+/** Shared validation for the lead forms. Phone and email are required. */
+export function validateLead(body: unknown): ValidatedLead | null {
   if (typeof body !== "object" || body === null) return null;
-  const { phone, email, source } = body as Record<string, unknown>;
+  const { phone, email, source, name, destination, travelMonth } =
+    body as Record<string, unknown>;
 
   if (typeof phone !== "string" || typeof email !== "string") return null;
   const cleanPhone = phone.trim();
@@ -61,9 +68,31 @@ export function validateLead(body: unknown): {
   if (!/^[+\d\s()-]+$/.test(cleanPhone)) return null;
   if (cleanEmail.length > 100 || !/^\S+@\S+\.\S+$/.test(cleanEmail)) return null;
 
+  const optional = (value: unknown, max: number) =>
+    typeof value === "string" ? value.trim().slice(0, max) : "";
+
   return {
     phone: cleanPhone,
     email: cleanEmail,
     source: typeof source === "string" ? source.slice(0, 50) : "website",
+    name: optional(name, 80),
+    destination: optional(destination, 80),
+    travelMonth: optional(travelMonth, 40),
   };
+}
+
+/**
+ * Builds the email body for a lead, omitting qualification fields the
+ * visitor left blank so the sales email stays readable.
+ */
+export function leadFields(lead: ValidatedLead): Record<string, string> {
+  const fields: Record<string, string> = {
+    Phone: lead.phone,
+    Email: lead.email,
+    Source: lead.source,
+  };
+  if (lead.name) fields.Name = lead.name;
+  if (lead.destination) fields.Destination = lead.destination;
+  if (lead.travelMonth) fields["Travel month"] = lead.travelMonth;
+  return fields;
 }

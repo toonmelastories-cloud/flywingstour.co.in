@@ -2,10 +2,23 @@ import type { MetadataRoute } from "next";
 import destinations from "@/data/destinations";
 import servicePages from "@/data/servicePages";
 import { getAllTours } from "@/lib/tours";
-import { getPosts } from "@/lib/wordpress";
+import { getPostRefs } from "@/lib/wordpress";
 import { absoluteUrl } from "@/lib/seo";
 
-export const revalidate = 3600;
+/**
+ * Always generated fresh.
+ *
+ * With ISR (`revalidate = 3600`) this route went stale in the one way
+ * that matters: almost nobody visits /sitemap.xml, so under
+ * stale-while-revalidate the rare visitor who does — Googlebot — was
+ * served the expired copy while the refresh happened in the background.
+ * Ten published posts sat outside the sitemap for weeks because of it.
+ *
+ * A sitemap is fetched a handful of times a day by crawlers, so
+ * rendering it per request costs almost nothing and guarantees every
+ * published post is announced the day it goes live.
+ */
+export const dynamic = "force-dynamic";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const now = new Date();
@@ -44,7 +57,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   // Tour packages (WordPress + local fallback) and blog posts fail soft:
   // if WP is unreachable the sitemap still ships with everything else.
-  const [tours, posts] = await Promise.all([getAllTours(), getPosts()]);
+  const [tours, posts] = await Promise.all([getAllTours(), getPostRefs()]);
 
   const packageRoutes: MetadataRoute.Sitemap = tours.map((pkg) => ({
     url: absoluteUrl(`/packages/${pkg.slug}`),

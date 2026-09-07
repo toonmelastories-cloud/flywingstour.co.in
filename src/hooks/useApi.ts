@@ -24,6 +24,7 @@ import {
   type InquiryPayload, type ContactPayload, type NewsletterPayload,
   type FlightSearchParams, type HotelSearchParams,
 } from "@/lib/api";
+import { trackLead, logLead, getAttribution } from "@/lib/analytics";
 
 // Static data imports (fallbacks)
 import staticDestinations, { getDestinationBySlug, type Destination } from "@/data/destinations";
@@ -159,19 +160,65 @@ async function sendViaFormSubmit(
   if (!ok) throw new Error(json?.message || "Submission failed");
 }
 
+/**
+ * Builds the FormSubmit body for an enquiry.
+ *
+ * Qualification fields are only included when the visitor filled them
+ * in, so the sales email stays readable instead of listing five empty
+ * rows on a minimal submission.
+ */
+function enquiryFields(data: InquiryPayload, defaultSource: string) {
+  const fields: Record<string, string> = {
+    Phone: data.phone,
+    Email: data.email,
+    Source: data.source || defaultSource,
+  };
+  if (data.name) fields.Name = data.name;
+  if (data.destination) fields.Destination = data.destination;
+  if (data.travelMonth) fields["Travel month"] = data.travelMonth;
+  return fields;
+}
+
+/**
+ * Fires the GA4 conversion event and writes the lead to the Google
+ * Sheet. Runs after delivery succeeds, so the numbers in GA4 and the
+ * sheet only ever count leads that actually reached the inbox.
+ */
+function recordLead(
+  event: "inquiry_submit" | "contact_submit" | "newsletter_signup",
+  data: Partial<InquiryPayload> & { email: string },
+  source: string
+) {
+  trackLead(event, {
+    source,
+    destination: data.destination || "not specified",
+  });
+  logLead({
+    type: event,
+    name: data.name || "",
+    phone: data.phone || "",
+    email: data.email,
+    destination: data.destination || "",
+    travelMonth: data.travelMonth || "",
+    source,
+    ...getAttribution(),
+  });
+}
+
 export function useSubmitInquiry() {
   return useMutation({
     mutationFn: async (data: InquiryPayload) => {
       if (isApiEnabled()) {
         return submitInquiry(data);
       }
-      await sendViaFormSubmit("New Trip Inquiry — Flywings Website", {
-        Phone: data.phone,
-        Email: data.email,
-        Source: data.source || "website",
-      });
+      await sendViaFormSubmit(
+        "New Trip Inquiry — Flywings Website",
+        enquiryFields(data, "website")
+      );
       return { success: true, data: { id: "fs-" + Date.now() } };
     },
+    onSuccess: (_result, data) =>
+      recordLead("inquiry_submit", data, data.source || "website"),
   });
 }
 
@@ -181,13 +228,14 @@ export function useSubmitContact() {
       if (isApiEnabled()) {
         return submitContact(data);
       }
-      await sendViaFormSubmit("New Contact Enquiry — Flywings Website", {
-        Phone: data.phone,
-        Email: data.email,
-        Source: data.source || "contact-page",
-      });
+      await sendViaFormSubmit(
+        "New Contact Enquiry — Flywings Website",
+        enquiryFields(data, "contact-page")
+      );
       return { success: true, data: { id: "fs-" + Date.now() } };
     },
+    onSuccess: (_result, data) =>
+      recordLead("contact_submit", data, data.source || "contact-page"),
   });
 }
 
@@ -202,6 +250,8 @@ export function useSubscribeNewsletter() {
       });
       return { success: true, data: { subscribed: true } };
     },
+    onSuccess: (_result, data) =>
+      recordLead("newsletter_signup", data, "newsletter"),
   });
 }
 

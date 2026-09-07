@@ -2,29 +2,52 @@
 
 import { useState } from "react";
 import { useSubmitInquiry } from "@/hooks/useApi";
+import { travelMonthOptions, destinationSuggestions } from "@/lib/leadForm";
 import { motion, AnimatePresence } from "framer-motion";
-import { X, Mail, Phone, Send, CheckCircle } from "lucide-react";
+import { X, Mail, Phone, User, MapPin, Calendar, Send, CheckCircle } from "lucide-react";
 
 interface InquiryModalProps {
   isOpen: boolean;
   onClose: () => void;
+  /**
+   * Pre-fills the destination when the modal is opened from a page that
+   * already implies one, e.g. a package or destination detail page. The
+   * visitor can still change it.
+   */
+  defaultDestination?: string;
+  /** Overrides the lead source so GA4 and the sheet show where it opened. */
+  source?: string;
 }
 
-export default function InquiryModal({ isOpen, onClose }: InquiryModalProps) {
+export default function InquiryModal({
+  isOpen,
+  onClose,
+  defaultDestination = "",
+  source = "inquiry-modal",
+}: InquiryModalProps) {
   const [submitted, setSubmitted] = useState(false);
   const inquiryMutation = useSubmitInquiry();
-  const [form, setForm] = useState({ phone: "", email: "" });
+  const emptyForm = {
+    name: "",
+    phone: "",
+    email: "",
+    destination: defaultDestination,
+    travelMonth: "",
+  };
+  const [form, setForm] = useState(emptyForm);
+  const months = travelMonthOptions();
+  const destinationList = destinationSuggestions();
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     inquiryMutation.mutate(
-      { ...form, source: "inquiry-modal" },
+      { ...form, source },
       {
         onSuccess: () => {
           setSubmitted(true);
           setTimeout(() => {
             setSubmitted(false);
-            setForm({ phone: "", email: "" });
+            setForm(emptyForm);
             onClose();
           }, 2500);
         },
@@ -88,12 +111,31 @@ export default function InquiryModal({ isOpen, onClose }: InquiryModalProps) {
               ) : (
                 <form onSubmit={handleSubmit} className="space-y-4">
                   <div>
-                    <label className="block text-navy font-body font-medium text-xs mb-1.5">Phone Number *</label>
+                    <label htmlFor="inq-name" className="block text-navy font-body font-medium text-xs mb-1.5">Your Name</label>
+                    <div className="relative">
+                      <User className="absolute left-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-muted-foreground" />
+                      <input
+                        id="inq-name"
+                        type="text"
+                        autoComplete="name"
+                        value={form.name}
+                        onChange={(e) => setForm({ ...form, name: e.target.value })}
+                        placeholder="So we know who we are calling"
+                        maxLength={80}
+                        className="w-full pl-9 pr-3 py-2.5 border border-border rounded-xl text-navy font-body text-sm outline-none focus:border-gold transition-colors"
+                      />
+                    </div>
+                  </div>
+
+                  <div>
+                    <label htmlFor="inq-phone" className="block text-navy font-body font-medium text-xs mb-1.5">Phone Number *</label>
                     <div className="relative">
                       <Phone className="absolute left-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-muted-foreground" />
                       <input
+                        id="inq-phone"
                         required
                         type="tel"
+                        autoComplete="tel"
                         value={form.phone}
                         onChange={(e) => setForm({ ...form, phone: e.target.value })}
                         placeholder="+91 XXXXX XXXXX"
@@ -103,17 +145,55 @@ export default function InquiryModal({ isOpen, onClose }: InquiryModalProps) {
                   </div>
 
                   <div>
-                    <label className="block text-navy font-body font-medium text-xs mb-1.5">Email Address *</label>
+                    <label htmlFor="inq-email" className="block text-navy font-body font-medium text-xs mb-1.5">Email Address *</label>
                     <div className="relative">
                       <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-muted-foreground" />
                       <input
+                        id="inq-email"
                         required
                         type="email"
+                        autoComplete="email"
                         value={form.email}
                         onChange={(e) => setForm({ ...form, email: e.target.value })}
                         placeholder="you@example.com"
                         className="w-full pl-9 pr-3 py-2.5 border border-border rounded-xl text-navy font-body text-sm outline-none focus:border-gold transition-colors"
                       />
+                    </div>
+                  </div>
+
+                  <div>
+                    <label htmlFor="inq-destination" className="block text-navy font-body font-medium text-xs mb-1.5">Where do you want to go?</label>
+                    <div className="relative">
+                      <MapPin className="absolute left-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-muted-foreground" />
+                      <input
+                        id="inq-destination"
+                        type="text"
+                        list="fw-inq-destinations"
+                        value={form.destination}
+                        onChange={(e) => setForm({ ...form, destination: e.target.value })}
+                        placeholder="Dubai, Kashmir, Bali, or just ask us"
+                        maxLength={80}
+                        className="w-full pl-9 pr-3 py-2.5 border border-border rounded-xl text-navy font-body text-sm outline-none focus:border-gold transition-colors"
+                      />
+                      <datalist id="fw-inq-destinations">
+                        {destinationList.map((d) => <option key={d} value={d} />)}
+                      </datalist>
+                    </div>
+                  </div>
+
+                  <div>
+                    <label htmlFor="inq-month" className="block text-navy font-body font-medium text-xs mb-1.5">When are you travelling?</label>
+                    <div className="relative">
+                      <Calendar className="absolute left-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-muted-foreground pointer-events-none" />
+                      <select
+                        id="inq-month"
+                        value={form.travelMonth}
+                        onChange={(e) => setForm({ ...form, travelMonth: e.target.value })}
+                        className="w-full pl-9 pr-3 py-2.5 border border-border rounded-xl text-navy font-body text-sm outline-none focus:border-gold transition-colors bg-white"
+                      >
+                        <option value="">Select a month</option>
+                        {months.map((m) => <option key={m} value={m}>{m}</option>)}
+                      </select>
                     </div>
                   </div>
 
