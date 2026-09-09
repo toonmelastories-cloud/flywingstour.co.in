@@ -36,9 +36,31 @@ export const DOMESTIC_REGIONS: DomesticRegionRow[] = [
   },
   {
     region: "Shimla–Manali Himachal Circuit",
-    duration: "4–6 Days",
-    howToReach: "Road from Chandigarh, 3–7 hours depending on the stop",
+    destinationSlug: "shimla-manali",
+    duration: "5–7 Days",
+    howToReach: "Road from Chandigarh: Shimla 115 km, Manali a further 250 km",
     bestMonths: "March – June, September – November; December – February for snow",
+  },
+  {
+    region: "Manali & Lahaul",
+    destinationSlug: "manali",
+    duration: "3–5 Days",
+    howToReach: "Overnight Volvo or private cab from Chandigarh, 310 km",
+    bestMonths: "March – June; December – February for snow. Avoid July – August",
+  },
+  {
+    region: "Spiti Valley",
+    destinationSlug: "spiti-valley",
+    duration: "7–10 Days",
+    howToReach: "Road via Shimla and Kinnaur, returning over Kunzum to Manali",
+    bestMonths: "Mid-June – early October for the full circuit",
+  },
+  {
+    region: "Goa",
+    destinationSlug: "goa",
+    duration: "4–6 Days",
+    howToReach: "Flight from Chandigarh, usually connecting via Delhi or Mumbai",
+    bestMonths: "November – February; June – September for monsoon rates",
   },
 ];
 

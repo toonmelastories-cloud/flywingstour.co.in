@@ -16,11 +16,15 @@ import {
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
-    default: "Flywings Tour & Packages Pvt Ltd | Flights & Tour Packages",
+    // Leads with "travel agency in chandigarh" (3.6k searches, difficulty
+    // 29) and "travel agent mohali" (390, difficulty 12): the two local
+    // terms this site can realistically win. The previous title, "Flights
+    // & Tour Packages", carried no local keyword at all.
+    default: "Travel Agency in Chandigarh & Mohali | Flywings Tour & Packages",
     template: `%s | ${SITE_NAME}`,
   },
   description:
-    "Book domestic & international flights at the lowest fares, plus tour packages to Dubai, Thailand & Bali. Mohali agency since 2005.",
+    "Trusted travel agency in Chandigarh and Mohali since 2005. Tour packages, domestic & international flight booking, tourist visa assistance and hotels. Free consultation, quote in 24 hours.",
   keywords: ALL_KEYWORDS,
   applicationName: SITE_NAME,
   authors: [{ name: SITE_NAME, url: SITE_URL }],
@@ -49,9 +53,9 @@ export const metadata: Metadata = {
     url: "/",
     siteName: SITE_NAME,
     locale: "en_IN",
-    title: "Flywings Tour & Packages Pvt Ltd | Flights & Tour Packages",
+    title: "Travel Agency in Chandigarh & Mohali | Flywings Tour & Packages",
     description:
-      "Domestic & international air ticketing, tour packages, visa assistance, hotels & corporate travel — best fares, 24/7 support.",
+      "Tour packages, domestic & international flight booking, tourist visa assistance, hotels and corporate travel. Mohali office, trading since 2005.",
     images: [
       {
         url: DEFAULT_OG_IMAGE,
@@ -63,9 +67,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Flywings Tour & Packages Pvt Ltd | Flights & Tour Packages",
+    title: "Travel Agency in Chandigarh & Mohali | Flywings Tour & Packages",
     description:
-      "Domestic & international air tickets at the lowest fares + curated tour packages. Trusted since 2005.",
+      "Tour packages, flight booking and tourist visa assistance from a Mohali travel agency trading since 2005.",
     images: [DEFAULT_OG_IMAGE],
   },
   verification: {

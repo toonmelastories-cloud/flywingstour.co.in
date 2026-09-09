@@ -8,10 +8,16 @@ import { ALL_KEYWORDS, pageMetadata } from "@/lib/seo";
 
 export const revalidate = 300;
 
+// This overrides the `title.default` in the root layout, so the local
+// keywords have to be repeated here or the homepage keeps the old
+// brand-only title. "travel agency in chandigarh" (3.6k searches,
+// difficulty 29) and "travel agent mohali" (390, difficulty 12) are the
+// two terms this site can realistically win; the previous title carried
+// neither.
 export const metadata: Metadata = pageMetadata({
-  title: "Flywings Tour & Packages Pvt Ltd | Flights & Tour Packages",
+  title: "Travel Agency in Chandigarh & Mohali | Flywings Tour & Packages",
   description:
-    "Book domestic & international flights at the lowest fares, plus tour packages to Dubai, Thailand & Bali. Mohali agency since 2005.",
+    "Trusted travel agency in Chandigarh and Mohali since 2005. Tour packages, domestic & international flight booking, tourist visa assistance and hotels. Free quote in 24 hours.",
   path: "/",
   keywords: ALL_KEYWORDS,
   titleAbsolute: true,

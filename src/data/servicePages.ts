@@ -43,9 +43,14 @@ const servicePages: ServicePage[] = [
       "Air ticket booking at the day's lowest fares — from Chandigarh (IXC), Delhi, Amritsar and every Indian airport, backed by a human ticketing desk since 2005.",
     heroImage: "/assets/service-flight.jpg",
     heroAlt: "Commercial airplane above golden clouds — air ticket booking Chandigarh, domestic and international flights",
-    metaTitle: "Flight Booking Chandigarh | Domestic & International Air Tickets | Flywings",
+    // "Agent" is deliberate. "Flight booking Chandigarh" and route queries
+    // like "flight tickets from chandigarh to mumbai" are answered by
+    // booking engines, and a visitor with that intent bounces off a
+    // callback form. Someone searching for an *agent* wants a human, which
+    // is what this business actually sells.
+    metaTitle: "Flight Booking Agent in Chandigarh & Mohali | Air Ticket Agent | Flywings",
     metaDescription:
-      "Book domestic & international air tickets at the lowest fares with Flywings Mohali — IXC direct flights, group bookings, 24/7 support & honest wait-or-book advice. Free fare check.",
+      "Air ticket agent in Chandigarh & Mohali for domestic and international flights. Group bookings, complex multi-city routes, date changes and honest wait-or-book advice. Free fare check.",
     keywords: [
       "flight booking Chandigarh",
       "air ticket booking Mohali",
@@ -121,9 +126,15 @@ const servicePages: ServicePage[] = [
       "Tourist and business visa assistance for 50+ countries — documentation, appointments and follow-up handled by our Mohali visa desk since 2005.",
     heroImage: "/assets/service-visa.jpg",
     heroAlt: "Travel consultant helping client with visa documentation — visa assistance services Chandigarh Mohali",
-    metaTitle: "Visa Assistance Chandigarh | Tourist & Business Visa Services | Flywings",
+    // Leads with "tourist visa consultant in chandigarh", the exact query
+    // people type. "Tourist" is load-bearing, not decoration: bare "visa
+    // consultant" searches in Punjab are dominated by study, work and PR
+    // enquiries, which is a licensed immigration service this agency does
+    // not offer. Ranking for the unqualified term brings leads nobody here
+    // can serve.
+    metaTitle: "Tourist Visa Consultant in Chandigarh & Mohali | Visa Assistance | Flywings",
     metaDescription:
-      "Visa assistance in Chandigarh & Mohali for UAE, Schengen, UK, USA, Thailand, Singapore & 50+ countries. Documentation, appointments & follow-up by experts since 2005.",
+      "Tourist and visitor visa assistance in Chandigarh & Mohali for Dubai, Schengen, Thailand, Singapore, Japan & 50+ countries. Documentation, appointments and follow-up by experts since 2005.",
     keywords: [
       "visa assistance Chandigarh",
       "visa agent Mohali",

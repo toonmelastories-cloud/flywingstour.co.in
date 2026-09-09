@@ -129,6 +129,22 @@ export default function Footer() {
                   </Link>
                 </li>
               ))}
+              {/*
+                Sister site cross-link. flywingstour.net is the group's
+                taxi and cab arm, on the same address and phone. Two sites
+                sharing a brand and a city look like duplicates to Google
+                unless the relationship is stated, and a plain link that
+                names the other service is how you state it.
+              */}
+              <li className="pt-2">
+                <a
+                  href="https://flywingstour.net/"
+                  className="text-white/60 font-body text-sm hover:text-gold transition-colors flex items-center gap-2 group"
+                >
+                  <ArrowRight className="w-3 h-3 opacity-0 group-hover:opacity-100 -ml-1 transition-all text-gold" />
+                  Taxi &amp; Cab Service (Flywings Tour &amp; Travels)
+                </a>
+              </li>
             </ul>
           </div>
 

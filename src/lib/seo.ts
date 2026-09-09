@@ -233,6 +233,30 @@ export function organizationJsonLd() {
       { "@type": "City", name: "Mohali" },
       { "@type": "City", name: "Chandigarh" },
     ],
+    /**
+     * The group's taxi arm, on the same address and phone number.
+     *
+     * Declared explicitly because two sites sharing a brand, a city and a
+     * contact number otherwise read as duplicates. Naming the
+     * relationship lets Google treat them as one business with two
+     * service lines, which is what they are.
+     */
+    subOrganization: {
+      "@type": "TravelAgency",
+      name: "Flywings Tour & Travels",
+      url: "https://flywingstour.net/",
+      description:
+        "Taxi, cab and airport transfer arm of Flywings Tour & Packages Pvt Ltd, serving Chandigarh, Mohali and Panchkula.",
+      telephone: CONTACT.phoneE164,
+      address: {
+        "@type": "PostalAddress",
+        streetAddress: CONTACT.streetAddress,
+        addressLocality: CONTACT.locality,
+        addressRegion: CONTACT.region,
+        postalCode: CONTACT.postalCode,
+        addressCountry: CONTACT.country,
+      },
+    },
     contactPoint: [
       {
         "@type": "ContactPoint",
