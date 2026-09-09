@@ -96,7 +96,7 @@ const servicePages: ServicePage[] = [
       {
         question: "How far in advance should I book my flight?",
         answer:
-          "For domestic routes the 4–6 week window is typically the sweet spot; for international, 6–10 weeks. Last-week fares routinely run 25–35% higher. Our desk tracks your route and tells you honestly whether to book now or wait — read our full guide on cheap flights from Chandigarh on the blog.",
+          "For domestic routes the 4–6 week window is typically the sweet spot; for international, 6–10 weeks. Last-week fares routinely run 25–35% higher. Our desk tracks your route and tells you honestly whether to book now or wait — read our full [guide on cheap flights from Chandigarh](/blog/cheap-flights-from-chandigarh) on the blog.",
       },
       {
         question: "Do you handle flight cancellations and refunds?",
@@ -481,7 +481,7 @@ const servicePages: ServicePage[] = [
       {
         question: "Which honeymoon destination is best from Chandigarh?",
         answer:
-          "It depends on your wedding month: November–February weddings suit the Maldives and Dubai perfectly, April–October belongs to Bali, and Thailand flexes across most of the year. Our detailed comparison of Bali vs Maldives vs Dubai on the blog walks through exactly this decision.",
+          "It depends on your wedding month: November–February weddings suit the Maldives and Dubai perfectly, April–October belongs to Bali, and Thailand flexes across most of the year. Our [detailed comparison of Bali vs Maldives vs Dubai](/blog/best-honeymoon-destination-from-chandigarh) on the blog walks through exactly this decision.",
       },
       {
         question: "How far in advance should we book our honeymoon?",

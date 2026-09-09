@@ -11,6 +11,7 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import WhatsAppButton from "@/components/WhatsAppButton";
 import InquiryModal from "@/components/InquiryModal";
+import LinkedText from "@/components/LinkedText";
 import {
   DOMESTIC_REGIONS,
   DOMESTIC_GUIDES,
@@ -399,7 +400,7 @@ export default function PillarDomesticClient({ packages }: { packages: PillarPac
                   </span>
                 </summary>
                 <p className="text-muted-foreground font-body text-sm leading-relaxed mt-3">
-                  {faq.answer}
+                  <LinkedText text={faq.answer} />
                 </p>
               </details>
             ))}

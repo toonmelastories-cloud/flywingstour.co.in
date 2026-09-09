@@ -81,7 +81,7 @@ export const PILLAR_FAQS: { question: string; answer: string }[] = [
     question:
       "Which is the best international honeymoon destination from Chandigarh?",
     answer:
-      "For most couples from Chandigarh and Punjab it comes down to three options: Maldives for overwater-villa luxury, Bali for a longer romantic trip at mid-range budgets, and Dubai for glamour plus the shortest, direct flight. Tell us your budget and travel month and we will recommend the right fit with a customised quote.",
+      "For most couples from Chandigarh and Punjab it comes down to three options: Maldives for overwater-villa luxury, Bali for a longer romantic trip at mid-range budgets, and Dubai for glamour plus the shortest, direct flight. Our [Bali vs Maldives vs Dubai comparison](/blog/best-honeymoon-destination-from-chandigarh) breaks each one down in detail. Tell us your budget and travel month and we will recommend the right fit with a customised quote.",
   },
   {
     question: "Do your packages include flights from Chandigarh?",

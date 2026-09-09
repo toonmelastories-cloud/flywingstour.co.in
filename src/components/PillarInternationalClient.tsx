@@ -11,6 +11,7 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import WhatsAppButton from "@/components/WhatsAppButton";
 import InquiryModal from "@/components/InquiryModal";
+import LinkedText from "@/components/LinkedText";
 import {
   COMPARISON_ROWS,
   PILLAR_FAQS,
@@ -366,7 +367,7 @@ export default function PillarInternationalClient({ packages }: { packages: Pill
                   </span>
                 </summary>
                 <p className="text-muted-foreground font-body text-sm leading-relaxed mt-3">
-                  {faq.answer}
+                  <LinkedText text={faq.answer} />
                 </p>
               </details>
             ))}

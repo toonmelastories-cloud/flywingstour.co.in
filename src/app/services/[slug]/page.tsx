@@ -3,6 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ChevronRight, CheckCircle2, Phone, ArrowRight } from "lucide-react";
 import JsonLd from "@/components/JsonLd";
+import LinkedText, { stripLinks } from "@/components/LinkedText";
 import PageChrome from "@/components/PageChrome";
 import servicePages, { getServicePageBySlug } from "@/data/servicePages";
 import {
@@ -65,7 +66,7 @@ export default async function ServicePage({
               { "@type": "Country", name: "India" },
             ],
           },
-          faqJsonLd(svc.faqs),
+          faqJsonLd(svc.faqs.map((f) => ({ ...f, answer: stripLinks(f.answer) }))),
           breadcrumbJsonLd([
             { name: "Home", path: "/" },
             { name: "Services", path: "/services" },
@@ -122,7 +123,7 @@ export default async function ServicePage({
           <div className="container-custom max-w-4xl">
             {svc.intro.map((para) => (
               <p key={para.slice(0, 32)} className="text-muted-foreground font-body text-lg leading-relaxed mb-6">
-                {para}
+                <LinkedText text={para} />
               </p>
             ))}
           </div>
@@ -197,7 +198,7 @@ export default async function ServicePage({
               {svc.faqs.map((faq) => (
                 <div key={faq.question} className="bg-white rounded-2xl border border-border shadow-card p-6">
                   <h3 className="font-display font-700 text-lg text-navy mb-2">{faq.question}</h3>
-                  <p className="text-muted-foreground font-body text-sm leading-relaxed">{faq.answer}</p>
+                  <p className="text-muted-foreground font-body text-sm leading-relaxed"><LinkedText text={faq.answer} /></p>
                 </div>
               ))}
             </div>

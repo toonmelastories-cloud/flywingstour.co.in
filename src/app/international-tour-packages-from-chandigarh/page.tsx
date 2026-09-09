@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import PillarInternationalClient from "@/components/PillarInternationalClient";
 import JsonLd from "@/components/JsonLd";
+import { stripLinks } from "@/components/LinkedText";
 import { getAllTours } from "@/lib/tours";
 import { PILLAR_FAQS } from "@/data/pillar-international";
 import {
@@ -62,7 +63,7 @@ export default async function InternationalToursFromChandigarhPage() {
               image: pkg.heroImages[0],
             }))
           ),
-          faqJsonLd(PILLAR_FAQS),
+          faqJsonLd(PILLAR_FAQS.map((f) => ({ ...f, answer: stripLinks(f.answer) }))),
           breadcrumbJsonLd([
             { name: "Home", path: "/" },
             { name: "International Tour Packages from Chandigarh", path: PATH },

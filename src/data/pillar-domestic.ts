@@ -115,7 +115,7 @@ export const PILLAR_DOMESTIC_FAQS: { question: string; answer: string }[] = [
   {
     question: "What is the best time to visit Kashmir from Chandigarh?",
     answer:
-      "Kashmir works in every season: March–April for tulip blooms, May–August for the classic green-meadow escape, September–October for autumn colours, and December–February for snow and skiing in Gulmarg. Read our full Kashmir guide for a month-by-month breakdown.",
+      "Kashmir works in every season: March–April for tulip blooms, May–August for the classic green-meadow escape, September–October for autumn colours, and December–February for snow and skiing in Gulmarg. Read our full [Kashmir guide](/blog/kashmir-tour-package-from-chandigarh) for a month-by-month breakdown.",
   },
   {
     question: "Can you arrange helicopter bookings for Vaishno Devi?",
