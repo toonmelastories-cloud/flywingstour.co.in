@@ -50,7 +50,7 @@ const servicePages: ServicePage[] = [
     // is what this business actually sells.
     metaTitle: "Flight Booking Agent in Chandigarh & Mohali | Air Ticket Agent | Flywings",
     metaDescription:
-      "Air ticket agent in Chandigarh & Mohali for domestic and international flights. Group bookings, complex multi-city routes, date changes and honest wait-or-book advice. Free fare check.",
+      "Flight booking agent in Chandigarh and Mohali for domestic and international tickets. Group fares, multi-city routes and date changes handled.",
     keywords: [
       "flight booking Chandigarh",
       "air ticket booking Mohali",
@@ -134,7 +134,7 @@ const servicePages: ServicePage[] = [
     // can serve.
     metaTitle: "Tourist Visa Consultant in Chandigarh & Mohali | Visa Assistance | Flywings",
     metaDescription:
-      "Tourist and visitor visa assistance in Chandigarh & Mohali for Dubai, Schengen, Thailand, Singapore, Japan & 50+ countries. Documentation, appointments and follow-up by experts since 2005.",
+      "Tourist visa consultant in Chandigarh and Mohali for Dubai, Schengen, Thailand and 50+ countries. Documents and appointments handled.",
     keywords: [
       "visa assistance Chandigarh",
       "visa agent Mohali",
@@ -211,7 +211,7 @@ const servicePages: ServicePage[] = [
     heroAlt: "Luxury five-star hotel lobby with chandeliers — hotel booking agency Chandigarh",
     metaTitle: "Hotel Booking Agency Chandigarh | Hotels, Resorts & Villas | Flywings",
     metaDescription:
-      "Book verified hotels, resorts, villas & houseboats worldwide with Flywings Mohali — agent rates, honest location advice & 24/7 support. Free custom quote.",
+      "Hotel booking agent in Chandigarh and Mohali for hotels, resorts, villas and houseboats worldwide. Agent rates and honest location advice.",
     keywords: [
       "hotel booking agency Chandigarh",
       "hotel reservations Mohali",
@@ -288,7 +288,7 @@ const servicePages: ServicePage[] = [
     heroAlt: "Business professionals with luggage at airport — corporate travel management company Chandigarh",
     metaTitle: "Corporate Travel Management Chandigarh | Business Travel Desk | Flywings",
     metaDescription:
-      "Corporate travel management for companies in Chandigarh, Mohali & Punjab — flight desks, hotel programmes, visas, MICE & GST invoicing with 24/7 support.",
+      "Corporate travel management for companies in Chandigarh, Mohali and Punjab. Flight desk, hotels, visas, MICE and GST invoicing.",
     keywords: [
       "corporate travel management Chandigarh",
       "business travel agency Mohali",
@@ -365,7 +365,7 @@ const servicePages: ServicePage[] = [
     heroAlt: "Happy group of Indian travellers on tour together — group tour packages from Chandigarh",
     metaTitle: "Group Tour Packages from Chandigarh | Family & Corporate Groups | Flywings",
     metaDescription:
-      "Group tour packages from Chandigarh — family functions, friends' trips, weddings, corporate offsites & senior citizen groups with group fares & full coordination.",
+      "Group tour packages from Chandigarh for families, friends, weddings, corporate offsites and senior citizens, with group fares and coordination.",
     keywords: [
       "group tour packages from Chandigarh",
       "group travel agency Mohali",
@@ -442,7 +442,7 @@ const servicePages: ServicePage[] = [
     heroAlt: "Couple at a romantic overwater villa at sunset — honeymoon packages from Chandigarh",
     metaTitle: "Honeymoon Packages from Chandigarh | Bali, Maldives, Dubai | Flywings",
     metaDescription:
-      "Honeymoon packages from Chandigarh — Bali, Maldives, Dubai, Thailand & Kashmir with flights, romantic stays, couple experiences & visa help. Free custom quote in 24 hours.",
+      "Honeymoon packages from Chandigarh to Bali, Maldives, Dubai, Thailand and Kashmir, with flights, couple stays and visa help. Free quote.",
     keywords: [
       "honeymoon packages from Chandigarh",
       "honeymoon package Bali Maldives Dubai",

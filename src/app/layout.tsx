@@ -23,8 +23,10 @@ export const metadata: Metadata = {
     default: "Travel Agency in Chandigarh & Mohali | Flywings Tour & Packages",
     template: `%s | ${SITE_NAME}`,
   },
+  // Fallback for any route without its own description. Kept under
+  // ~900px so Google shows it whole instead of cutting it mid-sentence.
   description:
-    "Trusted travel agency in Chandigarh and Mohali since 2005. Tour packages, domestic & international flight booking, tourist visa assistance and hotels. Free consultation, quote in 24 hours.",
+    "Travel agency in Chandigarh and Mohali since 2005. Tour packages, flight booking, tourist visa help and hotels. Free quote in 24 hours.",
   keywords: ALL_KEYWORDS,
   applicationName: SITE_NAME,
   authors: [{ name: SITE_NAME, url: SITE_URL }],

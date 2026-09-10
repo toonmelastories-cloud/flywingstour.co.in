@@ -17,7 +17,7 @@ export const revalidate = 300;
 export const metadata: Metadata = pageMetadata({
   title: "Travel Agency in Chandigarh & Mohali | Flywings Tour & Packages",
   description:
-    "Trusted travel agency in Chandigarh and Mohali since 2005. Tour packages, domestic & international flight booking, tourist visa assistance and hotels. Free quote in 24 hours.",
+    "Travel agency in Chandigarh and Mohali since 2005. Tour packages, flight booking, tourist visa help and hotels. Free quote in 24 hours.",
   path: "/",
   keywords: ALL_KEYWORDS,
   titleAbsolute: true,

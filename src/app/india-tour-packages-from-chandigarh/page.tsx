@@ -20,7 +20,7 @@ export const metadata: Metadata = pageMetadata({
     "India Tour Packages from Chandigarh 2026 | Kashmir, Vaishno Devi, Amritsar | Flywings",
   titleAbsolute: true,
   description:
-    "Book domestic tour packages from Chandigarh — Kashmir, Vaishno Devi yatra, Golden Temple Amritsar & Himachal circuits. Trusted Mohali agency since 2005. Get a free custom quote in 24 hours.",
+    "Domestic tour packages from Chandigarh to Kashmir, Manali, Shimla, Spiti, Goa and Vaishno Devi, by road or flight. Free quote in 24 hours.",
   path: PATH,
   keywords: [
     "india tour packages from chandigarh",

@@ -285,7 +285,7 @@ const packages: PackageData[] = [
     relatedSlugs: ["thailand-explorer-7n8d", "maldives-luxury-4n5d", "bali-romance-6n7d"],
     metaTitle: "Dubai 5 Nights Tour Package Price | Flywings Tour & Packages Pvt Ltd",
     metaDescription:
-      "Book Dubai 5 Nights 6 Days luxury tour package from India ₹79,999. Includes 5★ hotel, flights, desert safari, Burj Khalifa & visa. Get a free quote today!",
+      "Dubai luxury package, 5 nights 6 days starting ₹79,999. 5-star hotel, flights, desert safari, Burj Khalifa and UAE visa included.",
     keywords: [
       "dubai 5 nights package",
       "dubai tour package from india",
@@ -467,7 +467,7 @@ const packages: PackageData[] = [
     relatedSlugs: ["dubai-luxury-5n6d", "dubai-honeymoon-5n6d", "singapore-escape-4n5d"],
     metaTitle: "Dubai 4 Nights Tour Package from India | Flywings",
     metaDescription:
-      "Dubai 4 Nights 5 Days tour package — 4★ hotel with breakfast, private transfers, desert safari, Marina dinner cruise, Burj Khalifa & UAE visa included. Get a free custom quote.",
+      "Dubai 4 nights 5 days package with 4-star hotel, breakfast, desert safari, Marina cruise, Burj Khalifa and UAE visa. Free custom quote.",
     keywords: ["dubai 4 nights package", "dubai tour package", "cheap dubai package from india"],
   },
 
@@ -656,7 +656,7 @@ const packages: PackageData[] = [
     relatedSlugs: ["bali-romance-6n7d", "maldives-luxury-4n5d", "dubai-luxury-5n6d"],
     metaTitle: "Dubai Honeymoon Package from India | Flywings",
     metaDescription:
-      "Best Dubai honeymoon package from India 5N/6D starting ₹89,999/couple. 5★ Palm resort, couples spa, romantic dinner, desert safari & more. Book now!",
+      "Dubai honeymoon package from India, 5 nights 6 days starting ₹89,999 per couple. Palm resort, couples spa, romantic dinner and desert safari.",
     keywords: ["dubai honeymoon package", "dubai romantic package", "dubai couple tour"],
   },
 
@@ -884,7 +884,7 @@ const packages: PackageData[] = [
     relatedSlugs: ["bali-bliss-5n6d", "singapore-escape-4n5d", "dubai-classic-4n5d"],
     metaTitle: "Thailand 7 Nights Tour Package from India | Flywings",
     metaDescription:
-      "Book Thailand 7N/8D tour package from India starting ₹52,999. Bangkok, Phuket, Phi Phi Island & James Bond Island. Flights, hotels & tours included.",
+      "Thailand 7 nights 8 days package from India starting ₹52,999. Bangkok, Phuket, Phi Phi and James Bond Island, with flights and hotels.",
     keywords: ["thailand tour package from india", "bangkok phuket package", "thailand 7 nights package"],
   },
 
@@ -1088,7 +1088,7 @@ const packages: PackageData[] = [
     relatedSlugs: ["dubai-honeymoon-5n6d", "maldives-luxury-4n5d", "thailand-explorer-7n8d"],
     metaTitle: "Bali Honeymoon Package from India 6N/7D | Flywings",
     metaDescription:
-      "Romantic Bali honeymoon package from India 6N/7D starting ₹59,999/couple. Private pool villa, couples spa, temple sunset & beach dinner. Book now!",
+      "Bali honeymoon package from India, 6 nights 7 days starting ₹59,999 per couple. Private pool villa, couples spa and a temple sunset.",
     keywords: ["bali honeymoon package", "bali romance tour", "bali couple package from india"],
   },
 
@@ -1455,7 +1455,7 @@ const packages: PackageData[] = [
     relatedSlugs: ["singapore-escape-4n5d", "dubai-classic-4n5d", "thailand-explorer-7n8d"],
     metaTitle: "Kashmir 4 Nights Family Tour Package | Flywings",
     metaDescription:
-      "Book Kashmir 4N/5D family tour package starting ₹22,999. Dal Lake houseboat, Gulmarg Gondola, Pahalgam & Mughal Gardens. Flights included. Get free quote!",
+      "Kashmir 4 nights 5 days family package starting ₹22,999 with flights. Dal Lake houseboat, Gulmarg gondola, Pahalgam and Mughal gardens.",
     keywords: ["kashmir tour package", "kashmir family tour", "kashmir 4 nights package", "kashmir houseboat"],
   },
 
@@ -1770,7 +1770,7 @@ const packages: PackageData[] = [
     relatedSlugs: ["singapore-escape-4n5d", "thailand-explorer-7n8d", "dubai-classic-4n5d"],
     metaTitle: "Malaysia Kuala Lumpur Tour Package from India 3N/4D | Flywings",
     metaDescription:
-      "Book Malaysia (Kuala Lumpur) 3 Nights 4 Days tour package ₹25,000 per person. 4★ Furama Bukit Bintang hotel, KL city tour, Genting Highlands & Batu Caves. TCS extra.",
+      "Malaysia 3 nights 4 days package at ₹25,000 per person. 4-star Kuala Lumpur hotel, city tour, Genting Highlands and Batu Caves.",
     keywords: [
       "malaysia tour package from india",
       "kuala lumpur tour package",
@@ -1936,7 +1936,7 @@ const packages: PackageData[] = [
     relatedSlugs: ["kashmir-family-4n5d", "dubai-classic-4n5d", "thailand-explorer-7n8d"],
     metaTitle: "Almaty Kazakhstan Tour Package from India 4N/5D | Flywings",
     metaDescription:
-      "Book Almaty (Kazakhstan) 4 Nights 5 Days tour package ₹81,900 per person, ex-Delhi via Air Astana. Hotel, breakfast, sightseeing & transfers included. GST & TCS extra.",
+      "Almaty 4 nights 5 days package at ₹81,900 per person from Delhi on Air Astana. Hotel, breakfast, sightseeing and transfers included.",
     keywords: [
       "almaty tour package from india",
       "kazakhstan tour package",

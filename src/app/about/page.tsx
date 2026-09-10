@@ -7,7 +7,7 @@ export const metadata: Metadata = pageMetadata({
   title: "About Flywings Tour & Packages Pvt Ltd | Travel Experts Since 2005",
   titleAbsolute: true,
   description:
-    "Flywings Tour & Packages Pvt Ltd is a Mohali-based travel agency trusted since 2005 for domestic & international air ticketing, tour packages, visa assistance and corporate travel. Meet the team behind 5,000+ happy travellers.",
+    "Flywings Tour & Packages is a Mohali travel agency trading since 2005, handling tour packages, air tickets, visas and corporate travel.",
   path: "/about",
   keywords: [
     "about Flywings Tour & Packages Pvt Ltd",

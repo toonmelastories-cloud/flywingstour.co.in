@@ -15,7 +15,7 @@ export const metadata: Metadata = pageMetadata({
   title: "Tour Packages from India | Dubai, Bali & More | Flywings",
   titleAbsolute: true,
   description:
-    "Browse best-value domestic & international tour packages from India — Dubai, Thailand, Bali, Kashmir, Maldives, Singapore. Flights, hotels, transfers & visa assistance included. Get a free quote from Flywings.",
+    "Tour packages from Chandigarh and India to Dubai, Thailand, Bali, Maldives, Kashmir and Manali. Flights, hotels and transfers included.",
   path: "/packages",
   keywords: KEYWORDS.tours,
 });

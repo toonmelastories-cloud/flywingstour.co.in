@@ -13,7 +13,7 @@ export const metadata: Metadata = pageMetadata({
   title: "Travel Destinations | Dubai, Thailand, Bali & More | Flywings",
   titleAbsolute: true,
   description:
-    "Explore top international and domestic travel destinations from India — Dubai, Thailand, Bali, Kashmir, Maldives, Singapore. Tour packages with flights, hotels & visa assistance included. Plan your trip with Flywings.",
+    "Holiday destinations from Chandigarh and India: Dubai, Thailand, Bali, Maldives, Kashmir, Manali, Goa and Spiti, with flights and hotels.",
   path: "/destinations",
   keywords: KEYWORDS.tours,
 });

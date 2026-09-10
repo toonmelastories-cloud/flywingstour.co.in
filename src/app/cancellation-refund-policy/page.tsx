@@ -7,7 +7,7 @@ import { breadcrumbJsonLd, pageMetadata, SITE_NAME } from "@/lib/seo";
 export const metadata: Metadata = pageMetadata({
   title: "Cancellation & Refund Policy",
   description:
-    "Cancellation and refund policy for Flywings Tour & Packages Pvt Ltd bookings — flights, hotels, packages, visas, refund timelines and how to cancel.",
+    "Cancellation and refund policy for Flywings bookings: flights, hotels, packages and visas, with refund timelines and how to cancel.",
   path: "/cancellation-refund-policy",
 });
 

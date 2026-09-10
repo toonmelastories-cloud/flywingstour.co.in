@@ -16,7 +16,7 @@ export const metadata: Metadata = pageMetadata({
   title: "Travel Blog | Flight Tips & Destination Guides | Flywings",
   titleAbsolute: true,
   description:
-    "Expert travel tips from the Flywings team — cheap flight booking hacks, destination guides for Dubai, Thailand, Bali & more, visa advice, and trip planning inspiration for Indian travellers.",
+    "Travel guides from Chandigarh: destination planning, flight tips, visa rules and trip ideas from a Mohali travel agency trading since 2005.",
   path: "/blog",
   keywords: [
     "travel blog India",

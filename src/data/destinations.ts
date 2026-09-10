@@ -81,7 +81,7 @@ const destinations: Destination[] = [
       "Dubai is a jewel of the Middle East — a city that rose from desert sands to become one of the most glamorous destinations on Earth. Home to the world's tallest building (Burj Khalifa), ultra-luxury malls, pristine beaches, and thrilling desert safaris, Dubai is the ultimate blend of tradition and ultra-modernity. Indian travelers love Dubai for its seamless visa process, direct flights, and welcoming culture. Whether you seek a honeymoon escape, a family holiday, or a solo adventure, Dubai delivers unforgettable experiences at every turn.",
     metaTitle: "Dubai Tour Package from India | Flywings Tour & Packages Pvt Ltd",
     metaDescription:
-      "Book the best Dubai tour packages from India starting at ₹49,999. Flights, 5★ hotels, desert safari, city tours, and visa assistance included. 24/7 support. Get a free quote today.",
+      "Dubai tour package from India starting ₹49,999, with flights, hotel, desert safari, city tour and UAE visa help. Free quote in 24 hours.",
     packages: [
       {
         id: "dubai-classic",
@@ -340,7 +340,7 @@ const destinations: Destination[] = [
       "Bali is more than a destination — it is a spiritual experience. This enchanting Indonesian island captivates travelers with emerald rice terraces, ancient Hindu temples perched on cliff edges, pristine surf beaches, and a wellness culture unlike anywhere else. From the cultural hub of Ubud to the beach paradise of Seminyak and the surfer's haven of Canggu, Bali suits every type of traveler. Indian visitors especially love Bali for its vegetarian-friendly cuisine, vibrant yoga retreats, and warm Balinese hospitality.",
     metaTitle: "Bali Tour Package from India | Flywings Tour & Packages Pvt Ltd",
     metaDescription:
-      "Book Bali Indonesia tour packages from India starting ₹36,999. Temples, rice terraces, beaches, spa retreats, and more. Flights included. Get free quote.",
+      "Bali tour package from India starting ₹36,999 with flights. Temples, rice terraces, beaches and spa stays. Free quote in 24 hours.",
     packages: [
       {
         id: "bali-bliss",
@@ -475,7 +475,7 @@ const destinations: Destination[] = [
     // international ones, where "from India" dominates.
     metaTitle: "Kashmir Tour Package from Chandigarh with Flight | Flywings",
     metaDescription:
-      "Kashmir tour packages from Chandigarh starting ₹22,999, with flights. Dal Lake houseboats, Gulmarg, Pahalgam and Shikara rides. Free quote in 24 hours.",
+      "Kashmir tour package from Chandigarh starting ₹22,999 with flights. Dal Lake houseboat, Gulmarg, Pahalgam and Shikara ride. Free quote.",
     packages: [
       {
         id: "kashmir-classic",
@@ -600,7 +600,7 @@ const destinations: Destination[] = [
       "The Maldives is the definition of paradise — 1,200 tiny coral islands scattered like jewels across the Indian Ocean, each ringed with powdery white sand and crystal-clear turquoise waters. Here, the most iconic luxury experience is the overwater bungalow: a private villa perched above the lagoon with a glass floor panel revealing the coral reef below. Whether you dream of snorkeling with manta rays, dining under the stars, or simply disconnecting from the world in absolute tranquility, the Maldives delivers perfection.",
     metaTitle: "Maldives Tour Package from India | Flywings Tour & Packages Pvt Ltd",
     metaDescription:
-      "Book Maldives tour packages from India starting ₹89,999. Overwater villas, snorkeling, all-inclusive resorts, and more. Flights included. Get free quote.",
+      "Maldives tour package from India starting ₹89,999 with flights. Overwater villas, snorkelling and all-inclusive resorts. Free quote.",
     packages: [
       {
         id: "maldives-escape",
@@ -724,7 +724,7 @@ const destinations: Destination[] = [
       "Singapore is the ultimate modern city-state: a 719 km² island that punches far above its weight with world-class attractions, remarkable cleanliness, extraordinary food diversity, and seamless infrastructure. From the futuristic Gardens by the Bay to the thrilling Universal Studios, the cultural tapestry of Little India and Chinatown, and the rooftop infinity pool of Marina Bay Sands, Singapore offers something extraordinary at every turn. It's one of Asia's most family-friendly destinations and a favorite among Indian travelers.",
     metaTitle: "Singapore Tour Package from India | Flywings Tour & Packages Pvt Ltd",
     metaDescription:
-      "Book Singapore tour packages from India starting ₹42,999. Universal Studios, Gardens by the Bay, cable car, and more. Flights included. Get free quote.",
+      "Singapore tour package from India starting ₹42,999 with flights. Universal Studios, Gardens by the Bay and Sentosa cable car. Free quote.",
     packages: [
       {
         id: "singapore-explorer",
@@ -848,7 +848,7 @@ const destinations: Destination[] = [
       "Malaysia packs a remarkable range into a short flight from India — the futuristic Kuala Lumpur skyline anchored by the Petronas Twin Towers, the limestone temple caves at Batu Caves, and the cool hill-station air of Genting Highlands reached by Southeast Asia's longest cable car system. Kuala Lumpur's Bukit Bintang district blends shopping, street food, and nightlife, making it an easy, affordable international escape for first-time travelers, families, and quick weekend getaways.",
     metaTitle: "Malaysia Tour Package from India | Flywings Tour & Packages Pvt Ltd",
     metaDescription:
-      "Book Malaysia tour packages from India starting ₹25,000. Kuala Lumpur city tour, Genting Highlands, Batu Caves & 4★ hotel. TCS extra. Get a free quote today.",
+      "Malaysia tour package from India starting ₹25,000. Kuala Lumpur city tour, Genting Highlands, Batu Caves and a 4-star hotel. Free quote.",
     packages: [
       {
         id: "malaysia-kl",
@@ -945,7 +945,7 @@ const destinations: Destination[] = [
       "Almaty is emerging as one of the most exciting new destinations for Indian travelers — a green, mountain-ringed city at the foot of the Tien Shan range, with Soviet-era architecture, leafy boulevards, and easy access to some of Central Asia's most dramatic landscapes. From the Kok-Tobe hilltop viewpoint to the high-altitude Medeu ice rink and the Shymbulak ski resort, Almaty offers a refreshingly offbeat alternative to the usual international circuit, reachable on a direct Air Astana flight from Delhi.",
     metaTitle: "Almaty Kazakhstan Tour Package from India | Flywings Tour & Packages Pvt Ltd",
     metaDescription:
-      "Book Almaty (Kazakhstan) tour packages from India starting ₹81,900. Return Air Astana flights ex-Delhi, hotel, sightseeing & transfers included. GST & TCS extra.",
+      "Almaty Kazakhstan tour package from India starting ₹81,900, with Air Astana flights from Delhi, hotel and sightseeing. Free quote.",
     packages: [
       {
         id: "almaty-kazakhstan",
@@ -1064,7 +1064,7 @@ const destinations: Destination[] = [
       "Manali sits at roughly 2,050 metres in the Beas valley, about 310 kilometres and eight to nine hours by road from Chandigarh, which makes it the most-booked hill holiday in the Tricity. The town splits neatly in two: Old Manali with its cafés, orchards and slow mornings, and the newer town around Mall Road that handles the crowds. Beyond it lie Solang Valley for paragliding and winter snow, the Atal Tunnel that now opens Lahaul as a comfortable day trip, and the Hadimba Devi temple standing in deodar forest since 1553. Most Chandigarh travellers go by overnight Volvo or private cab, arrive at breakfast and lose nothing to travel days, which is exactly why the trip works over a long weekend.",
     metaTitle: "Manali Tour Package from Chandigarh | 4N/5D Volvo & Cab | Flywings",
     metaDescription:
-      "Manali tour packages from Chandigarh with Volvo or private cab, hotel, Solang Valley and Atal Tunnel sightseeing. Departures all year. Free quote in 24 hours.",
+      "Manali tour package from Chandigarh by Volvo or private cab, with hotel, Solang Valley and Atal Tunnel sightseeing. Free quote in 24 hours.",
     packages: [
       {
         id: "manali-weekend",
@@ -1197,7 +1197,7 @@ const destinations: Destination[] = [
       "This is the classic Himachal loop and it belongs to Chandigarh more than to anywhere else, because the drive starts here. Shimla is only 115 kilometres away, close enough to reach by lunch, and the Kalka–Shimla toy train that UNESCO lists as World Heritage boards a half hour from the city. From Shimla the road runs on to Manali, roughly 250 kilometres through the Sutlej and Beas valleys. Doing both in one trip gives you two very different hill stations: Shimla with its colonial ridge, Christ Church and Mall Road promenade, and Manali with snow, adventure sport and the Atal Tunnel. Five to seven nights covers the circuit without spending the whole holiday in the car.",
     metaTitle: "Shimla Manali Tour Package from Chandigarh by Car | 5N/6D | Flywings",
     metaDescription:
-      "Shimla Manali tour packages from Chandigarh by car or Volvo. Kufri, Mall Road, Solang Valley, Atal Tunnel and the Kalka toy train. Free quote in 24 hours.",
+      "Shimla Manali tour package from Chandigarh by car or Volvo. Kufri, Mall Road, Solang Valley, Atal Tunnel and the Kalka toy train.",
     packages: [
       {
         id: "shimla-manali-classic",
@@ -1330,7 +1330,7 @@ const destinations: Destination[] = [
       "Goa is the one beach holiday most Chandigarh families take by air rather than road, and the choice that actually decides the trip is north or south. North Goa, around Baga, Calangute, Anjuna and Vagator, is the busy half: markets, shacks, nightlife and water sports. South Goa, around Palolem, Agonda, Colva and Benaulim, is quieter, greener and built around resorts rather than streets. Old Goa sits between them with the Basilica of Bom Jesus and Se Cathedral, both UNESCO listed. From Chandigarh most itineraries connect through Delhi or Mumbai, with seasonal direct options, and both Goan airports, Dabolim and the newer Manohar International at Mopa, are used depending on fares.",
     metaTitle: "Goa Tour Package from Chandigarh with Flight | North & South Goa | Flywings",
     metaDescription:
-      "Goa tour packages from Chandigarh with flights, hotel and transfers. North Goa nightlife or South Goa resorts, Dudhsagar Falls and Old Goa churches. Free quote in 24 hours.",
+      "Goa tour package from Chandigarh with flights, hotel and transfers. North Goa beaches or South Goa resorts, plus Old Goa. Free quote.",
     packages: [
       {
         id: "goa-north",
@@ -1456,7 +1456,7 @@ const destinations: Destination[] = [
       "Spiti is the hardest trip on this list and the one people talk about for years afterwards. It is a high cold desert on the Tibetan plateau's edge, with Kaza at about 3,800 metres and passes higher still. Two roads reach it from Chandigarh. The Kinnaur route through Shimla, Sarahan and Nako climbs gradually over several days, which is what lets your body adjust. The Manali route over Kunzum Pass at 4,551 metres is far shorter but only open from roughly June to October, and taken in that direction it gains altitude too fast for comfort. We almost always route in via Shimla and out via Manali, which acclimatises properly and means you never drive the same road twice. Key Monastery, Chandratal, Hikkim's post office at 4,400 metres and the fossil village of Langza are all on that loop.",
     metaTitle: "Spiti Valley Tour Package from Chandigarh | Circuit Route | Flywings",
     metaDescription:
-      "Spiti Valley tour packages from Chandigarh on the Shimla-in, Manali-out circuit. Key Monastery, Chandratal, Kaza and Hikkim, with acclimatisation built in.",
+      "Spiti Valley tour package from Chandigarh, in via Shimla and out via Manali. Key Monastery, Chandratal and Kaza, with acclimatisation built in.",
     packages: [
       {
         id: "spiti-circuit",

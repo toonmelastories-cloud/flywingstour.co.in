@@ -7,7 +7,7 @@ import { breadcrumbJsonLd, pageMetadata, CONTACT, SITE_NAME } from "@/lib/seo";
 export const metadata: Metadata = pageMetadata({
   title: "Terms & Conditions",
   description:
-    "Terms and conditions for bookings with Flywings Tour & Packages Pvt Ltd — quotes, payments, documents, visas, itinerary changes and travel responsibilities.",
+    "Booking terms for Flywings Tour & Packages Pvt Ltd: quotes, payments, documents, visas, itinerary changes and traveller responsibilities.",
   path: "/terms-and-conditions",
 });
 

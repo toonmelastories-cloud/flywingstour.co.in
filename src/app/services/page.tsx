@@ -13,7 +13,7 @@ export const metadata: Metadata = pageMetadata({
   title: "Flight Booking, Tour Packages & Visa Services | Flywings",
   titleAbsolute: true,
   description:
-    "Flywings travel services: domestic & international air ticket booking at the cheapest fares, customised tour packages, visa assistance for 50+ countries, hotel reservations & corporate travel management across India.",
+    "Travel services from our Mohali office: flight booking, tour packages, tourist visa help, hotels and corporate travel. Free quote in 24 hours.",
   path: "/services",
   keywords: [...KEYWORDS.flights, ...KEYWORDS.services],
   image: "/assets/services-hero.jpg",

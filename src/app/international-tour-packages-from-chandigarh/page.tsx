@@ -20,7 +20,7 @@ export const metadata: Metadata = pageMetadata({
     "International Tour Packages from Chandigarh 2026 | Dubai, Thailand, Bali | Flywings",
   titleAbsolute: true,
   description:
-    "Book international tour packages from Chandigarh — Dubai, Thailand, Bali, Singapore & Maldives. Flights from IXC, hotels, transfers & visa assistance by a trusted Mohali agency since 2005. Get a free custom quote in 24 hours.",
+    "International tour packages from India, departing Chandigarh or Amritsar. Dubai, Thailand, Bali, Singapore and Maldives with flights and visa help.",
   path: PATH,
   keywords: [
     "international tour packages from Chandigarh",

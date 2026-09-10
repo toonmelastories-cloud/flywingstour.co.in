@@ -7,7 +7,7 @@ import { breadcrumbJsonLd, pageMetadata, CONTACT, SITE_NAME } from "@/lib/seo";
 export const metadata: Metadata = pageMetadata({
   title: "Privacy Policy",
   description:
-    "How Flywings Tour & Packages Pvt Ltd collects, uses and protects your personal information — enquiry data, bookings, newsletter and website analytics.",
+    "How Flywings Tour & Packages Pvt Ltd collects, uses and protects your data: enquiries, bookings, newsletter and website analytics.",
   path: "/privacy-policy",
 });
 
