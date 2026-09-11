@@ -12,6 +12,7 @@ import { Calendar } from "@/components/ui/calendar";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { AIRPORTS, searchAirports, formatAirport, type Airport } from "@/data/airports";
 import { trackLead, logLead, getAttribution } from "@/lib/analytics";
+import { submitLead } from "@/lib/leadSubmit";
 
 const heroBg = "/assets/hero-bg.jpg";
 
@@ -164,24 +165,30 @@ export default function HeroSection({ onInquiryOpen }: HeroSectionProps) {
     try {
       const from = formatAirport(fromAirport!);
       const to = formatAirport(toAirport!);
-      // Sent from the browser — FormSubmit blocks server/datacenter IPs
-      const res = await fetch("https://formsubmit.co/ajax/sales@flywingstour.co.in", {
-        method: "POST",
-        headers: { "Content-Type": "application/json", Accept: "application/json" },
-        body: JSON.stringify({
-          Route: `${from} → ${to}`,
-          Departure: format(departureDate!, "PPP"),
-          Return: returnDate ? format(returnDate, "PPP") : "One-way / not selected",
-          Travelers: travelers,
-          Phone: cleanPhone,
-          Source: "homepage-flight-search",
-          _subject: `Fare Request: ${from} → ${to} — Flywings Website`,
-          _template: "table",
-          _captcha: "false",
-        }),
-      });
-      const json = (await res.json().catch(() => null)) as { success?: string | boolean } | null;
-      if (!res.ok || !(json?.success === true || json?.success === "true")) throw new Error();
+      const departure = format(departureDate!, "PPP");
+      const ret = returnDate ? format(returnDate, "PPP") : "One-way / not selected";
+      await submitLead(
+        {
+          kind: "fare",
+          phone: cleanPhone,
+          route: `${from} → ${to}`,
+          departure,
+          returnDate: ret,
+          travellers: String(travelers),
+          source: "homepage-flight-search",
+        },
+        {
+          subject: `Fare Request: ${from} → ${to} - Flywings Website`,
+          fields: {
+            Route: `${from} → ${to}`,
+            Departure: departure,
+            Return: ret,
+            Travelers: String(travelers),
+            Phone: cleanPhone,
+            Source: "homepage-flight-search",
+          },
+        }
+      );
       const route = `${fromAirport!.code}-${toAirport!.code}`;
       trackLead("fare_request", { route, travellers: travelers });
       logLead({

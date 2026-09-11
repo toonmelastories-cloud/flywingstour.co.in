@@ -4,6 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 import { Phone, Mail, MapPin, Facebook, Instagram, ArrowRight, Send } from "lucide-react";
 import { SOCIAL_PROFILES } from "@/lib/seo";
+import { submitLead } from "@/lib/leadSubmit";
 
 const LOGO_URL = "/assets/flywings-logo-white-1.webp";
 
@@ -43,22 +44,14 @@ export default function Footer() {
     if (!email.trim() || subscribing) return;
     setSubscribing(true);
     try {
-      // Sent from the browser — FormSubmit blocks server/datacenter IPs
-      const res = await fetch("https://formsubmit.co/ajax/sales@flywingstour.co.in", {
-        method: "POST",
-        headers: { "Content-Type": "application/json", Accept: "application/json" },
-        body: JSON.stringify({
-          Email: email.trim(),
-          _subject: "Newsletter Signup — Flywings Website",
-          _template: "table",
-          _captcha: "false",
-        }),
-      });
-      const json = await res.json().catch(() => null);
-      if (res.ok && (json?.success === true || json?.success === "true")) {
-        setSubscribed(true);
-        setEmail("");
-      }
+      await submitLead(
+        { kind: "newsletter", email: email.trim(), source: "newsletter" },
+        { subject: "Newsletter Signup - Flywings Website", fields: { Email: email.trim() } }
+      );
+      setSubscribed(true);
+      setEmail("");
+    } catch {
+      // Leave the address in the box so the visitor can retry.
     } finally {
       setSubscribing(false);
     }

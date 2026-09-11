@@ -47,6 +47,8 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/bui
 | `NEXT_PUBLIC_GA_MEASUREMENT_ID` | No (defaults to `G-TLNBFYH8SZ`) | Google Analytics 4 measurement ID, loaded site-wide via `@next/third-parties` in `src/app/layout.tsx`. |
 | `LEAD_SHEET_URL` | No (logging is skipped when unset) | Google Apps Script web app URL that appends each enquiry to a Google Sheet. See [Lead capture](#lead-capture) below. Server-side only, never exposed to the browser. |
 | `SALES_EMAIL` | No (defaults to `sales@flywingstour.co.in`) | Inbox that enquiry emails are delivered to. |
+| `SMTP_PASS` | No, but needed for branded emails | Password of the `sales@flywingstour.co.in` Hostinger mailbox. When set, `/api/lead` sends the branded sales alert and the customer confirmation (`src/lib/email/templates.ts`). When unset, every form falls back to FormSubmit's plain table email, so nothing breaks. |
+| `SMTP_USER` / `SMTP_HOST` / `SMTP_PORT` | No | Default to `sales@flywingstour.co.in`, `smtp.hostinger.com`, `465`. |
 
 **Local development:** already set in `.env.local` (gitignored).
 

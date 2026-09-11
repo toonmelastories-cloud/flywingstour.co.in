@@ -25,6 +25,7 @@ import {
   type FlightSearchParams, type HotelSearchParams,
 } from "@/lib/api";
 import { trackLead, logLead, getAttribution } from "@/lib/analytics";
+import { submitLead } from "@/lib/leadSubmit";
 
 // Static data imports (fallbacks)
 import staticDestinations, { getDestinationBySlug, type Destination } from "@/data/destinations";
@@ -134,31 +135,11 @@ export function useServices() {
 // ─── Form Submissions (Mutations) ───────────────────────────────
 
 /**
- * Forms deliver leads to the sales inbox via FormSubmit's AJAX API,
- * called DIRECTLY from the visitor's browser — FormSubmit 403-blocks
- * datacenter IPs (e.g. Vercel functions), but browser requests from
- * real users pass. No more simulated success.
+ * Forms deliver leads through submitLead (src/lib/leadSubmit.ts): branded
+ * email from the company mailbox first, FormSubmit from the browser as
+ * the fallback. The FormSubmit field maps below are only used by that
+ * fallback.
  */
-const SALES_EMAIL = "sales@flywingstour.co.in";
-
-async function sendViaFormSubmit(
-  subject: string,
-  fields: Record<string, string>
-): Promise<void> {
-  const res = await fetch(`https://formsubmit.co/ajax/${SALES_EMAIL}`, {
-    method: "POST",
-    headers: { "Content-Type": "application/json", Accept: "application/json" },
-    body: JSON.stringify({
-      ...fields,
-      _subject: subject,
-      _template: "table",
-      _captcha: "false",
-    }),
-  });
-  const json = await res.json().catch(() => null);
-  const ok = res.ok && (json?.success === true || json?.success === "true");
-  if (!ok) throw new Error(json?.message || "Submission failed");
-}
 
 /**
  * Builds the FormSubmit body for an enquiry.
@@ -211,11 +192,19 @@ export function useSubmitInquiry() {
       if (isApiEnabled()) {
         return submitInquiry(data);
       }
-      await sendViaFormSubmit(
-        "New Trip Inquiry — Flywings Website",
-        enquiryFields(data, "website")
+      await submitLead(
+        {
+          kind: "inquiry",
+          name: data.name,
+          phone: data.phone,
+          email: data.email,
+          destination: data.destination,
+          travelMonth: data.travelMonth,
+          source: data.source || "website",
+        },
+        { subject: "New Trip Inquiry - Flywings Website", fields: enquiryFields(data, "website") }
       );
-      return { success: true, data: { id: "fs-" + Date.now() } };
+      return { success: true, data: { id: "lead-" + Date.now() } };
     },
     onSuccess: (_result, data) =>
       recordLead("inquiry_submit", data, data.source || "website"),
@@ -228,11 +217,19 @@ export function useSubmitContact() {
       if (isApiEnabled()) {
         return submitContact(data);
       }
-      await sendViaFormSubmit(
-        "New Contact Enquiry — Flywings Website",
-        enquiryFields(data, "contact-page")
+      await submitLead(
+        {
+          kind: "contact",
+          name: data.name,
+          phone: data.phone,
+          email: data.email,
+          destination: data.destination,
+          travelMonth: data.travelMonth,
+          source: data.source || "contact-page",
+        },
+        { subject: "New Contact Enquiry - Flywings Website", fields: enquiryFields(data, "contact-page") }
       );
-      return { success: true, data: { id: "fs-" + Date.now() } };
+      return { success: true, data: { id: "lead-" + Date.now() } };
     },
     onSuccess: (_result, data) =>
       recordLead("contact_submit", data, data.source || "contact-page"),
@@ -245,9 +242,10 @@ export function useSubscribeNewsletter() {
       if (isApiEnabled()) {
         return subscribeNewsletter(data);
       }
-      await sendViaFormSubmit("Newsletter Signup — Flywings Website", {
-        Email: data.email,
-      });
+      await submitLead(
+        { kind: "newsletter", email: data.email, source: "newsletter" },
+        { subject: "Newsletter Signup - Flywings Website", fields: { Email: data.email } }
+      );
       return { success: true, data: { subscribed: true } };
     },
     onSuccess: (_result, data) =>
