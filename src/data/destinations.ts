@@ -1177,6 +1177,11 @@ const destinations: Destination[] = [
         answer:
           "Volvo is cheaper and comfortable if you are two adults travelling light. A private cab makes more sense for families, anyone with elderly parents or small children, and for trips that include Naggar and Kullu, because you keep the vehicle for sightseeing instead of hiring locally each day.",
       },
+      {
+        question: "Can we continue from Manali to Leh Ladakh?",
+        answer:
+          "Yes. Manali is where the road to Leh begins, roughly 490 km over high passes and usually open from around June to September. Most travellers drive it one way and fly back, which helps acclimatisation without spending the whole trip on the highway. Our [Leh Ladakh package from Chandigarh guide](/blog/leh-ladakh-package-from-chandigarh) covers the 2026 permit rules and the road-versus-flight choice.",
+      },
     ],
     relatedSlugs: ["shimla-manali", "spiti-valley", "kashmir"],
   },
@@ -1591,6 +1596,11 @@ const destinations: Destination[] = [
         question: "Is Spiti suitable for children or elderly travellers?",
         answer:
           "We do not recommend it for children under about ten, or for elderly travellers without a doctor's clearance. Medical help is hours away from most of the route. Families wanting high mountains with far less risk are usually better served by Manali and Lahaul through the Atal Tunnel.",
+      },
+      {
+        question: "Should we choose Spiti or Ladakh?",
+        answer:
+          "For a first high-altitude trip, Ladakh is usually the better pick: it is larger, better supplied and easier to reach by air. Spiti is smaller, rawer and needs no permit for Indian travellers, which makes it the ideal second trip. Our [Leh Ladakh package from Chandigarh guide](/blog/leh-ladakh-package-from-chandigarh) covers the Ladakh side, including the 2026 permit changes.",
       },
     ],
     relatedSlugs: ["manali", "shimla-manali", "kashmir"],

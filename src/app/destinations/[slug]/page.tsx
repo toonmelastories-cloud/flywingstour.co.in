@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import DestinationDetailClient from "@/components/DestinationDetailClient";
 import JsonLd from "@/components/JsonLd";
+import { stripLinks } from "@/components/LinkedText";
 import destinations, { getDestinationBySlug } from "@/data/destinations";
 import {
   ORG_ID,
@@ -81,7 +82,8 @@ export default async function DestinationPage({
                 }
               : {}),
           },
-          faqJsonLd(destination.faqs),
+          // FAQ answers can contain [label](/href) links; schema gets plain text.
+          faqJsonLd(destination.faqs.map((f) => ({ ...f, answer: stripLinks(f.answer) }))),
           breadcrumbJsonLd([
             { name: "Home", path: "/" },
             { name: "Destinations", path: "/destinations" },

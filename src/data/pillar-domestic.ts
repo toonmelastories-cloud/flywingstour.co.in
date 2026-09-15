@@ -94,6 +94,13 @@ export const DOMESTIC_GUIDES: DomesticGuideCard[] = [
     href: "/blog/weekend-getaways-from-chandigarh",
     cta: "See the Getaway List",
   },
+  {
+    title: "Leh Ladakh Package from Chandigarh",
+    description:
+      "The 2026 permit rules, the acclimatisation schedule that decides the trip, and Manali road trip vs flight from Chandigarh.",
+    href: "/blog/leh-ladakh-package-from-chandigarh",
+    cta: "Read the Ladakh Guide",
+  },
 ];
 
 export const PILLAR_DOMESTIC_FAQS: { question: string; answer: string }[] = [

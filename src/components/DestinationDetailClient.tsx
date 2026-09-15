@@ -14,6 +14,7 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import WhatsAppButton from "@/components/WhatsAppButton";
 import InquiryModal from "@/components/InquiryModal";
+import LinkedText from "@/components/LinkedText";
 import { getRelatedDestinations, Destination } from "@/data/destinations";
 
 /* ─── Animated Counter ────────────────────────── */
@@ -121,7 +122,8 @@ function FAQItem({ faq, index }: { faq: { question: string; answer: string }; in
             className="overflow-hidden"
           >
             <p className="px-6 pb-5 text-muted-foreground font-body text-sm leading-relaxed border-t border-border pt-4">
-              {faq.answer}
+              {/* Answers may carry [label](/href) internal links. */}
+              <LinkedText text={faq.answer} />
             </p>
           </motion.div>
         )}

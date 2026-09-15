@@ -33,8 +33,11 @@ export const DEFAULT_OG_IMAGE = "/assets/hero-bg.jpg";
  */
 export const SOCIAL_PROFILES = {
   facebook: "https://www.facebook.com/Flywingstourpackages/",
-  instagram: "https://www.instagram.com/flywings_tour/",
-  pinterest: "https://in.pinterest.com/flywingstourpackagespvtltd/",
+  instagram: "https://www.instagram.com/flywings1409/",
+  // Profile URL, not the pin.it share link the owner supplied: that
+  // resolves to a single pin with a personal invite code attached, which
+  // is wrong for a footer link and wrong for schema sameAs.
+  pinterest: "https://in.pinterest.com/flywingstourandpackages/",
 } as const;
 
 export const CONTACT = {
