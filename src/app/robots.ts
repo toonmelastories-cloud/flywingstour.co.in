@@ -13,12 +13,11 @@ import { SITE_URL } from "@/lib/seo";
 export default function robots(): MetadataRoute.Robots {
   return {
     rules: [
-      {
-        userAgent: "*",
-        allow: "/",
-        // _next assets are fetchable but pointless to crawl as pages
-        disallow: ["/_next/"],
-      },
+      // No `Disallow: /_next/`. That folder serves the CSS and JS chunks
+      // Googlebot needs to render each page; blocking it can leave Google
+      // indexing a broken, unstyled render. Removed Sep 2026 at the SEO
+      // team's request.
+      { userAgent: "*", allow: "/" },
       // Explicit allows for answer-engine crawlers so a future stricter
       // wildcard rule can't silently lock them out.
       { userAgent: "GPTBot", allow: "/" },
@@ -32,7 +31,7 @@ export default function robots(): MetadataRoute.Robots {
       { userAgent: "Bytespider", allow: "/" },
       { userAgent: "cohere-ai", allow: "/" },
     ],
+    // No `Host:` line: it is a Yandex-only directive Google ignores.
     sitemap: `${SITE_URL}/sitemap.xml`,
-    host: SITE_URL,
   };
 }
