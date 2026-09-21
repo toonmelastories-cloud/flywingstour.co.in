@@ -238,13 +238,16 @@ export default function HeroSection({ onInquiryOpen }: HeroSectionProps) {
             {...fadeUp(0.2)}
             className="font-display font-900 text-4xl sm:text-5xl lg:text-6xl xl:text-7xl text-white leading-tight mb-6"
           >
-            Explore The World <br />
-            <span className="text-transparent bg-clip-text bg-gradient-gold">With Flywings</span>
+            Best Travel Agency <br />
+            <span className="text-transparent bg-clip-text bg-gradient-gold">for Your Next Journey</span>
           </motion.h1>
 
-          {/* Subheading */}
-          <motion.p {...fadeUp(0.35)} className="text-white/80 font-body text-lg sm:text-xl mb-8 max-w-xl leading-relaxed">
-            Flights, Holidays, Visa & Complete Travel Solutions — tailored to your dreams.
+          {/* Subheading. Carries the old "explore the world with Flywings"
+              line so the brand message survives the more commercial H1. */}
+          <motion.p {...fadeUp(0.35)} className="text-white/80 font-body text-base sm:text-lg mb-8 max-w-2xl leading-relaxed">
+            Explore the world with Flywings, a trusted tour and travel agency offering flights, holiday packages, visa
+            assistance, hotels, corporate travel and customized tours. Our experienced travel agents help you plan
+            comfortable and memorable journeys.
           </motion.p>
 
           {/* CTAs */}

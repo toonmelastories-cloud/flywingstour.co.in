@@ -13,6 +13,7 @@ const ServicesSection = dynamic(() => import("@/components/ServicesSection"));
 const DestinationsSection = dynamic(() => import("@/components/DestinationsSection"));
 const WhyChooseUs = dynamic(() => import("@/components/WhyChooseUs"));
 const TourPackages = dynamic(() => import("@/components/TourPackages"));
+const LocalTravelAgents = dynamic(() => import("@/components/LocalTravelAgents"));
 const Testimonials = dynamic(() => import("@/components/Testimonials"));
 const BlogSection = dynamic(() => import("@/components/BlogSection"));
 const CTASection = dynamic(() => import("@/components/CTASection"));
@@ -39,6 +40,7 @@ export default function HomeClient({ latestPosts }: { latestPosts: HomeBlogPost[
         <DestinationsSection />
         <WhyChooseUs />
         <TourPackages onBook={openInquiry} />
+        <LocalTravelAgents />
         <Testimonials />
         <BlogSection posts={latestPosts} />
 

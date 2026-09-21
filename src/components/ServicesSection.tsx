@@ -65,7 +65,8 @@ export default function ServicesSection() {
             Complete Travel Solutions
           </h2>
           <p className="text-muted-foreground font-body max-w-xl mx-auto leading-relaxed">
-            From flights to full holidays — we handle every detail so you travel with complete peace of mind.
+            From flight bookings and holiday packages to visa assistance and corporate travel, Flywings provides
+            end-to-end travel services designed around your needs.
           </p>
         </motion.div>
 

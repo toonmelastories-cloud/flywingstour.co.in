@@ -73,7 +73,9 @@ export default function WhyChooseUs() {
             Why Choose <span className="text-gold">Flywings?</span>
           </h2>
           <p className="text-white/60 font-body max-w-xl mx-auto leading-relaxed">
-            18 years of trust, thousands of happy travelers, and an unwavering commitment to excellence.
+            Choosing the best travel agency means having reliable support from planning to departure. At Flywings, we
+            combine personalized planning, destination expertise, visa assistance and responsive customer support to
+            make every journey easier.
           </p>
         </motion.div>
 

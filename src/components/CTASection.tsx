@@ -43,7 +43,8 @@ export default function CTASection({ onInquiryOpen }: CTASectionProps) {
           </h2>
 
           <p className="text-navy/70 font-body text-lg max-w-lg mx-auto mb-10 leading-relaxed">
-            Talk to our expert travel consultants and get a personalized itinerary crafted just for you — completely free.
+            Plan your next journey with Flywings, your trusted best travel agency for flights, holidays, visas, hotels
+            and customized travel experiences.
           </p>
 
           <div className="flex flex-wrap items-center justify-center gap-4">
