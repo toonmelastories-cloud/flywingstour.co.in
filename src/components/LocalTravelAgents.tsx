@@ -19,7 +19,7 @@ export default function LocalTravelAgents() {
   const services = [
     { label: "Flight Booking", href: "/services/flight-booking" },
     { label: "Holiday Packages", href: "/packages" },
-    { label: "Visa Assistance", href: "/services/visa-assistance" },
+    { label: "Visa Assistance", href: "/services/tourist-visa-assistance" },
     { label: "Hotel Booking", href: "/services/hotel-booking" },
     { label: "Corporate Travel", href: "/services/corporate-travel" },
     { label: "Tours from Chandigarh", href: "/india-tour-packages-from-chandigarh" },

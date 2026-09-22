@@ -9,6 +9,12 @@ const nextConfig: NextConfig = {
     // continuing to show a dead link in search results.
     return [
       { source: "/contact-us", destination: "/contact", permanent: true },
+      // Visa page renamed Sep 2026 so the slug carries "tourist visa".
+      {
+        source: "/services/visa-assistance",
+        destination: "/services/tourist-visa-assistance",
+        permanent: true,
+      },
       {
         source: "/google-flights-international-booking-process",
         destination: "/blog",
