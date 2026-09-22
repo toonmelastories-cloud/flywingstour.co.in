@@ -120,10 +120,10 @@ const servicePages: ServicePage[] = [
   {
     slug: "visa-assistance",
     name: "Visa Services",
-    heroTitle: "Visa Assistance &",
-    heroAccent: "Documentation",
+    heroTitle: "Tourist Visa Services &",
+    heroAccent: "Application Assistance",
     heroSubtitle:
-      "Tourist and business visa assistance for 50+ countries — documentation, appointments and follow-up handled by our Mohali visa desk since 2005.",
+      "Get tourist visa assistance for 50+ destinations, with support for documentation, application preparation, appointments and follow-up from our Mohali visa desk, serving travellers since 2005.",
     heroImage: "/assets/service-visa.jpg",
     heroAlt: "Travel consultant helping client with visa documentation — visa assistance services Chandigarh Mohali",
     // Leads with "tourist visa consultant in chandigarh", the exact query
@@ -132,26 +132,25 @@ const servicePages: ServicePage[] = [
     // enquiries, which is a licensed immigration service this agency does
     // not offer. Ranking for the unqualified term brings leads nobody here
     // can serve.
-    metaTitle: "Tourist Visa Consultant in Chandigarh & Mohali | Visa Assistance | Flywings",
+    metaTitle: "Tourist Visa Assistance Services in Mohali | Flywings Tour",
     metaDescription:
-      "Tourist visa consultant in Chandigarh and Mohali for Dubai, Schengen, Thailand and 50+ countries. Documents and appointments handled.",
+      "Get tourist visa assistance for 50+ destinations with documentation, application support, appointments and follow-up from Flywings in Mohali.",
     keywords: [
-      "visa assistance Chandigarh",
+      "tourist visa assistance",
+      "tourist visa consultant Chandigarh",
       "visa agent Mohali",
       "tourist visa services India",
       "UAE visa assistance",
       "Schengen visa help Chandigarh",
-      "business visa documentation",
       "visa consultant near me",
     ],
     intro: [
-      "A visa file prepared right the first time is the difference between a confirmed holiday and a heartbreaking rejection stamp. Our visa desk in Phase 7, Mohali has been preparing tourist and business visa files since 2005 — UAE and the Gulf, Schengen Europe, UK, USA, Thailand, Singapore, Malaysia, Australia and 50+ destinations — for travellers across Chandigarh, Mohali, Panchkula and Punjab.",
+      "A visa file prepared right the first time is the difference between a confirmed holiday and a heartbreaking rejection stamp. Our visa desk in Phase 7, Mohali has been preparing tourist visa files since 2005, for UAE and the Gulf, Schengen Europe, UK, USA, Thailand, Singapore, Malaysia, Australia and 50+ destinations, for travellers across Chandigarh, Mohali, Panchkula and Punjab.",
       "We do the part that actually decides outcomes: checking every document against the embassy's current checklist, flagging rejection risks before submission, booking biometric appointments, drafting cover letters and itineraries, and following the file until the decision arrives. Visa assistance is included with every Flywings tour package — and available standalone when you only need the paperwork done right.",
     ],
     featuresTitle: "What Our Visa Desk Covers",
     features: [
       { title: "Tourist Visas", description: "UAE, Thailand, Singapore, Schengen, UK, USA, Australia and more — current checklists, honest timelines and complete filing." },
-      { title: "Business Visas", description: "Invitation-letter guidance, company documentation and express options for trade fairs, meetings and site visits." },
       { title: "Document Preparation", description: "Bank statement review, ITR guidance, cover letters, sponsorship formats and photo specifications — checked line by line." },
       { title: "Appointments & Biometrics", description: "VFS/embassy appointment booking at the earliest usable slots, with full briefing on what to carry and expect." },
       { title: "Rejection-Risk Review", description: "Weak files are flagged and fixed before submission — travel history, funds trail and purpose clarity strengthened honestly." },
