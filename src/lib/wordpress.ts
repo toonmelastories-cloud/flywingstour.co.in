@@ -50,7 +50,14 @@ export interface WPPost {
   categories?: number[];
   yoast_head_json?: WPYoastHead;
   _embedded?: {
-    "wp:featuredmedia"?: Array<{ source_url: string }>;
+    "wp:featuredmedia"?: Array<{
+      source_url: string;
+      /** WordPress's generated crops. Listing cards should use one of
+       *  these rather than the full-size original. */
+      media_details?: {
+        sizes?: Record<string, { source_url: string; width: number; height: number }>;
+      };
+    }>;
     "wp:term"?: Array<Array<{ id: number; name: string; slug: string }>>;
   };
 }
@@ -184,8 +191,25 @@ export async function getPostBySlug(slug: string): Promise<WPPost | null> {
 }
 
 /** Best-effort featured image URL extraction from an embedded WP post. */
-export function getFeaturedImageUrl(post: WPPost): string | undefined {
-  return post._embedded?.["wp:featuredmedia"]?.[0]?.source_url;
+export function getFeaturedImageUrl(
+  post: WPPost,
+  size: "medium" | "medium_large" | "large" | "full" = "full"
+): string | undefined {
+  const media = post._embedded?.["wp:featuredmedia"]?.[0];
+  if (!media) return undefined;
+  if (size === "full") return media.source_url;
+  // Listing cards were loading the full-size original for a thumbnail:
+  // 39 cards at roughly 150 KB each put the /blog page over 6 MB. The
+  // 768px crop is a little over half the bytes and is still sharp on a
+  // retina card. Falls back to the original if the crop is missing.
+  return media.media_details?.sizes?.[size]?.source_url ?? media.source_url;
+}
+
+/** Trims an excerpt to a word count, for uniform listing cards. */
+export function trimWords(text: string, max = 40): string {
+  const words = text.trim().split(/\s+/);
+  if (words.length <= max) return text.trim();
+  return words.slice(0, max).join(" ").replace(/[,.;:]$/, "") + "...";
 }
 
 /**

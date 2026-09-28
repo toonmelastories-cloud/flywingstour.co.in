@@ -36,7 +36,7 @@ export default async function AuthorPage() {
     slug: post.slug,
     title: stripWpHtml(post.title.rendered),
     excerpt: stripWpHtml(post.excerpt.rendered),
-    image: getFeaturedImageUrl(post) ?? FALLBACK_IMAGE,
+    image: getFeaturedImageUrl(post, "medium_large") ?? FALLBACK_IMAGE,
     category: post._embedded?.["wp:term"]?.[0]?.[0]?.name,
     readTime: estimateReadTime(post.content.rendered),
     date: new Date(post.date).toLocaleDateString("en-IN", {

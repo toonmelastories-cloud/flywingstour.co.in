@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import BlogListClient, { type BlogPostSummary } from "@/components/BlogListClient";
 import JsonLd from "@/components/JsonLd";
-import { getPosts, getFeaturedImageUrl } from "@/lib/wordpress";
+import { getPosts, getFeaturedImageUrl, trimWords } from "@/lib/wordpress";
 import { stripWpHtml, estimateReadTime } from "@/lib/sanitize";
 import {
   ORG_ID,
@@ -35,8 +35,8 @@ export default async function BlogPage() {
   const posts: BlogPostSummary[] = (wpPosts ?? []).map((post) => ({
     slug: post.slug,
     title: stripWpHtml(post.title.rendered),
-    excerpt: stripWpHtml(post.excerpt.rendered),
-    image: getFeaturedImageUrl(post) ?? FALLBACK_IMAGE,
+    excerpt: trimWords(stripWpHtml(post.excerpt.rendered), 40),
+    image: getFeaturedImageUrl(post, "medium_large") ?? FALLBACK_IMAGE,
     category: post._embedded?.["wp:term"]?.[0]?.[0]?.name,
     readTime: estimateReadTime(post.content.rendered),
     date: new Date(post.date).toLocaleDateString("en-IN", { year: "numeric", month: "short", day: "numeric" }),

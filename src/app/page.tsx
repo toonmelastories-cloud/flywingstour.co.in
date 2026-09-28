@@ -55,7 +55,7 @@ export default async function Home() {
     return {
       category,
       categoryColor: getCategoryColor(category),
-      image: getFeaturedImageUrl(post) ?? "/assets/hero-bg.jpg",
+      image: getFeaturedImageUrl(post, "medium_large") ?? "/assets/hero-bg.jpg",
       readTime: estimateReadTime(post.content.rendered),
       date: new Date(post.date).toLocaleDateString("en-IN", {
         year: "numeric",

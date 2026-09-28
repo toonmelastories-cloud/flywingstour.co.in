@@ -32,11 +32,16 @@ function PostCard({ post, index, isInView }: { post: BlogPostSummary; index: num
         className="group block bg-card rounded-2xl overflow-hidden border border-border shadow-card hover:shadow-navy transition-all duration-300 hover:-translate-y-1"
       >
         <div className="relative h-52 overflow-hidden">
+          {/* Dimensions match WordPress's 768px crop, so the browser can
+              reserve the space before the image arrives. */}
           <img
             src={post.image}
             alt={post.title}
+            width={768}
+            height={429}
             className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
             loading="lazy"
+            decoding="async"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-primary/60 via-transparent to-transparent" />
           {post.category && (
@@ -55,7 +60,7 @@ function PostCard({ post, index, isInView }: { post: BlogPostSummary; index: num
           <h3 className="font-display font-700 text-primary text-lg mb-2 leading-snug group-hover:text-secondary transition-colors line-clamp-2">
             {post.title}
           </h3>
-          <p className="text-muted-foreground font-body text-sm leading-relaxed mb-4 line-clamp-2">
+          <p className="text-muted-foreground font-body text-sm leading-relaxed mb-4 line-clamp-3">
             {post.excerpt}
           </p>
           <span className="inline-flex items-center gap-1.5 text-secondary font-body font-semibold text-sm group-hover:gap-2.5 transition-all">

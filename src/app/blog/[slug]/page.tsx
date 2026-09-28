@@ -64,7 +64,7 @@ export default async function BlogPostPage({
       slug: p.slug,
       title: stripWpHtml(p.title.rendered),
       excerpt: stripWpHtml(p.excerpt.rendered),
-      image: getFeaturedImageUrl(p) ?? FALLBACK_IMAGE,
+      image: getFeaturedImageUrl(p, "medium_large") ?? FALLBACK_IMAGE,
       category: p._embedded?.["wp:term"]?.[0]?.[0]?.name,
       readTime: estimateReadTime(p.content.rendered),
       date: new Date(p.date).toLocaleDateString("en-IN", { year: "numeric", month: "short", day: "numeric" }),
