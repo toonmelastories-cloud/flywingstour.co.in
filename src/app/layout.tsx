@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { GoogleAnalytics } from "@next/third-parties/google";
+import { GoogleAnalytics, GoogleTagManager } from "@next/third-parties/google";
 import "./globals.css";
 import Providers from "./providers";
 import JsonLd from "@/components/JsonLd";
@@ -95,7 +95,27 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en-IN">
+      {/*
+        Google Tag Manager, for the marketing team to add ad pixels
+        (Meta, Google Ads) without a code change.
+
+        WARNING: GA4 below is loaded directly, not through GTM. Do not
+        add a GA4 configuration tag inside the container, or every
+        pageview and every lead event is counted twice and the reports
+        become useless. GTM is for new tags only.
+      */}
+      <GoogleTagManager gtmId={process.env.NEXT_PUBLIC_GTM_ID || "GTM-5P4CNLR5"} />
       <body>
+        {/* GTM's no-JavaScript fallback; the component above does not
+            render it, and Google's install snippet asks for it here. */}
+        <noscript>
+          <iframe
+            src="https://www.googletagmanager.com/ns.html?id=GTM-5P4CNLR5"
+            height="0"
+            width="0"
+            style={{ display: "none", visibility: "hidden" }}
+          />
+        </noscript>
         <JsonLd data={[organizationJsonLd(), webSiteJsonLd()]} />
         {/* Tracks every phone / WhatsApp / mailto click site-wide. */}
         <LeadTracking />
