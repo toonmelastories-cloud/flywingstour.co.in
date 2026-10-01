@@ -103,7 +103,11 @@ function AirportField({
 }
 
 const trustBadges = [
-  { icon: Shield, label: "Trusted Travel Partner", sub: "IATA Certified" },
+  // "IATA Certified" removed Oct 2026: the accreditation was never
+  // verified, and seo.ts only ever claimed "IATA-style". An unprovable
+  // certification claim is exactly what gets ad accounts and business
+  // listings flagged, and understating costs nothing.
+  { icon: Shield, label: "Trusted Travel Partner", sub: "Since 2005" },
   { icon: Clock, label: "24/7 Support", sub: "Always Available" },
   { icon: Tag, label: "Best Price Guarantee", sub: "No Hidden Fees" },
 ];

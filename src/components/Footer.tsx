@@ -66,7 +66,7 @@ export default function Footer() {
           <div className="lg:col-span-1">
             <img src={LOGO_URL} alt="Flywings Tour & Packages Pvt Ltd" className="h-[58px] w-auto mb-5" />
             <p className="text-white/60 font-body text-sm leading-relaxed mb-6">
-              India's trusted travel partner since 2005. Creating unforgettable journeys for 50,000+ travelers across 180+ destinations worldwide.
+              India&apos;s trusted travel partner since 2005. Creating unforgettable journeys for travellers across 100+ destinations worldwide.
             </p>
             {/* Social */}
             <div className="flex gap-2">
