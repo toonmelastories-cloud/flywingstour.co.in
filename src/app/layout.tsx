@@ -26,7 +26,7 @@ export const metadata: Metadata = {
   // Fallback for any route without its own description. Kept under
   // ~900px so Google shows it whole instead of cutting it mid-sentence.
   description:
-    "Travel agency in Chandigarh and Mohali since 2005. Tour packages, flight booking, tourist visa help and hotels. Free quote in 24 hours.",
+    "Travel agency in Chandigarh and Mohali since 2013. Tour packages, flight booking, tourist visa help and hotels. Free quote in 24 hours.",
   keywords: ALL_KEYWORDS,
   applicationName: SITE_NAME,
   authors: [{ name: SITE_NAME, url: SITE_URL }],
@@ -57,7 +57,7 @@ export const metadata: Metadata = {
     locale: "en_IN",
     title: "Travel Agency in Chandigarh & Mohali | Flywings Tour & Packages",
     description:
-      "Tour packages, domestic & international flight booking, tourist visa assistance, hotels and corporate travel. Mohali office, trading since 2005.",
+      "Tour packages, domestic & international flight booking, tourist visa assistance, hotels and corporate travel. Mohali office, trading since 2013.",
     images: [
       {
         url: DEFAULT_OG_IMAGE,
@@ -71,7 +71,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Travel Agency in Chandigarh & Mohali | Flywings Tour & Packages",
     description:
-      "Tour packages, flight booking and tourist visa assistance from a Mohali travel agency trading since 2005.",
+      "Tour packages, flight booking and tourist visa assistance from a Mohali travel agency trading since 2013.",
     images: [DEFAULT_OG_IMAGE],
   },
   verification: {

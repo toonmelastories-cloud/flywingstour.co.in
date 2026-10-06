@@ -51,7 +51,7 @@ export const CONTACT = {
   region: "Punjab",
   postalCode: "160062",
   country: "IN",
-  foundingYear: "2005",
+  foundingYear: "2013",
   // Approximate coordinates for Phase 7, S.A.S Nagar (Mohali) — refine
   // from the Google Business Profile pin once it is verified.
   latitude: 30.7086,

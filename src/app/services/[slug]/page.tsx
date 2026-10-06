@@ -213,7 +213,7 @@ export default async function ServicePage({
             </h2>
             <p className="text-muted-foreground font-body text-lg max-w-2xl mx-auto mb-8">
               Free consultation, itemised quotes within 24 hours, and a human desk in Mohali
-              that answers — since 2005.
+              that answers — since 2013.
             </p>
             <div className="flex flex-wrap justify-center gap-3 mb-10">
               <a

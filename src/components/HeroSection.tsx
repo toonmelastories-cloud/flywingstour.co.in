@@ -107,7 +107,7 @@ const trustBadges = [
   // verified, and seo.ts only ever claimed "IATA-style". An unprovable
   // certification claim is exactly what gets ad accounts and business
   // listings flagged, and understating costs nothing.
-  { icon: Shield, label: "Trusted Travel Partner", sub: "Since 2005" },
+  { icon: Shield, label: "Trusted Travel Partner", sub: "Since 2013" },
   { icon: Clock, label: "24/7 Support", sub: "Always Available" },
   { icon: Tag, label: "Best Price Guarantee", sub: "No Hidden Fees" },
 ];
@@ -234,7 +234,7 @@ export default function HeroSection({ onInquiryOpen }: HeroSectionProps) {
           {/* Badge */}
           <motion.div {...fadeUp(0.1)} className="inline-flex items-center gap-2 bg-gold/20 border border-gold/40 rounded-full px-4 py-1.5 mb-6">
             <span className="w-2 h-2 rounded-full bg-gold animate-pulse" />
-            <span className="text-gold text-xs font-body font-medium tracking-widest uppercase">Premium Travel Since 2005</span>
+            <span className="text-gold text-xs font-body font-medium tracking-widest uppercase">Premium Travel Since 2013</span>
           </motion.div>
 
           {/* H1 */}

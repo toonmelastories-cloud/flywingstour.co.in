@@ -40,7 +40,7 @@ const servicePages: ServicePage[] = [
     heroTitle: "Domestic & International",
     heroAccent: "Flight Booking",
     heroSubtitle:
-      "Air ticket booking at the day's lowest fares — from Chandigarh (IXC), Delhi, Amritsar and every Indian airport, backed by a human ticketing desk since 2005.",
+      "Air ticket booking at the day's lowest fares — from Chandigarh (IXC), Delhi, Amritsar and every Indian airport, backed by a human ticketing desk since 2013.",
     heroImage: "/assets/service-flight.jpg",
     heroAlt: "Commercial airplane above golden clouds — air ticket booking Chandigarh, domestic and international flights",
     // "Agent" is deliberate. "Flight booking Chandigarh" and route queries
@@ -62,7 +62,7 @@ const servicePages: ServicePage[] = [
       "Chandigarh airport flights",
     ],
     intro: [
-      "Air ticketing is where Flywings began in 2005, and it is still the heart of everything we do. Our Mohali ticketing desk issues domestic and international air tickets every single day — Chandigarh to Mumbai and Bengaluru, direct IXC–Dubai, Delhi long-hauls to Europe and North America, and every routing in between. We watch fares the way traders watch markets: booking windows, fare buckets, sale calendars and seasonal swings — so you board the same seat for less.",
+      "Air ticketing is where Flywings began in 2013, and it is still the heart of everything we do. Our Mohali ticketing desk issues domestic and international air tickets every single day — Chandigarh to Mumbai and Bengaluru, direct IXC–Dubai, Delhi long-hauls to Europe and North America, and every routing in between. We watch fares the way traders watch markets: booking windows, fare buckets, sale calendars and seasonal swings — so you board the same seat for less.",
       "What makes a human desk better than a booking app? Honest advice before you pay — book now or wait, fly from Chandigarh or Delhi, one-way mix or return — and a real person on the phone when a flight cancels at midnight. Same fares as the portals, plus group blocks, corporate deals and airline-office contacts the apps simply do not have.",
     ],
     featuresTitle: "What Our Flight Desk Handles",
@@ -76,7 +76,7 @@ const servicePages: ServicePage[] = [
     ],
     whyTitle: "Why Book Flights with Flywings",
     whyPoints: [
-      "Two decades of daily ticketing experience on Chandigarh, Delhi and Amritsar departures",
+      "Over a decade of daily ticketing experience on Chandigarh, Delhi and Amritsar departures",
       "Same fares as online portals — plus group and corporate fares they don't show",
       "Honest wait-or-book advice based on real booking-window data",
       "One phone number for booking, changes, refunds and midnight emergencies",
@@ -123,7 +123,7 @@ const servicePages: ServicePage[] = [
     heroTitle: "Tourist Visa Services &",
     heroAccent: "Application Assistance",
     heroSubtitle:
-      "Get tourist visa assistance for 50+ destinations, with support for documentation, application preparation, appointments and follow-up from our Mohali visa desk, serving travellers since 2005.",
+      "Get tourist visa assistance for 50+ destinations, with support for documentation, application preparation, appointments and follow-up from our Mohali visa desk, serving travellers since 2013.",
     heroImage: "/assets/service-visa.jpg",
     heroAlt: "Travel consultant helping client with visa documentation — visa assistance services Chandigarh Mohali",
     // Leads with "tourist visa consultant in chandigarh", the exact query
@@ -145,7 +145,7 @@ const servicePages: ServicePage[] = [
       "visa consultant near me",
     ],
     intro: [
-      "A visa file prepared right the first time is the difference between a confirmed holiday and a heartbreaking rejection stamp. Our visa desk in Phase 7, Mohali has been preparing tourist visa files since 2005, for UAE and the Gulf, Schengen Europe, UK, USA, Thailand, Singapore, Malaysia, Australia and 50+ destinations, for travellers across Chandigarh, Mohali, Panchkula and Punjab.",
+      "A visa file prepared right the first time is the difference between a confirmed holiday and a heartbreaking rejection stamp. Our visa desk in Phase 7, Mohali has been preparing tourist visa files since 2013, for UAE and the Gulf, Schengen Europe, UK, USA, Thailand, Singapore, Malaysia, Australia and 50+ destinations, for travellers across Chandigarh, Mohali, Panchkula and Punjab.",
       "We do the part that actually decides outcomes: checking every document against the embassy's current checklist, flagging rejection risks before submission, booking biometric appointments, drafting cover letters and itineraries, and following the file until the decision arrives. Visa assistance is included with every Flywings tour package — and available standalone when you only need the paperwork done right.",
     ],
     featuresTitle: "What Our Visa Desk Covers",
@@ -158,7 +158,7 @@ const servicePages: ServicePage[] = [
     ],
     whyTitle: "Why Trust Flywings with Your Visa",
     whyPoints: [
-      "Two decades of files across 50+ countries — we know what each embassy actually checks",
+      "Over a decade of files across 50+ countries — we know what each embassy actually checks",
       "Documentation checked in person at our Mohali office, not over a chatbot",
       "Honest assessment before you spend — if a file is weak, we say so and fix it",
       "Visa fees and timelines quoted transparently, no hidden service surprises",
@@ -221,7 +221,7 @@ const servicePages: ServicePage[] = [
       "hotel booking agent near me",
     ],
     intro: [
-      "Anyone can book a hotel online. What you cannot see from a listing is the 40-minute 'beach walk', the wing under renovation, or which 'sea-view' rooms actually face the parking lot. Our hotel desk books properties we know — either stayed at, inspected on our destination visits, or vetted through two decades of guest feedback across Dubai, Thailand, Bali, Maldives, Singapore, Kashmir and every major Indian destination.",
+      "Anyone can book a hotel online. What you cannot see from a listing is the 40-minute 'beach walk', the wing under renovation, or which 'sea-view' rooms actually face the parking lot. Our hotel desk books properties we know — either stayed at, inspected on our destination visits, or vetted through more than a decade of guest feedback across Dubai, Thailand, Bali, Maldives, Singapore, Kashmir and every major Indian destination.",
       "Because we book volume through hotel partners and consolidators, our rates match or beat the portals — and unlike a portal, we tell you honestly when the cheaper hotel is the better choice. Every reservation comes with the details that matter: the right room category, smart location for your plans, meal-plan math done properly, and a human to call if check-in goes sideways at midnight.",
     ],
     featuresTitle: "What We Book",
@@ -235,7 +235,7 @@ const servicePages: ServicePage[] = [
     ],
     whyTitle: "Why Book Hotels Through Flywings",
     whyPoints: [
-      "Properties vetted through real stays and two decades of guest feedback",
+      "Properties vetted through real stays and more than a decade of guest feedback",
       "Agent-contracted rates that match or beat online portals",
       "Honest location and room-category advice before you pay",
       "One call fixes check-in problems — no chatbot queues",
@@ -316,7 +316,7 @@ const servicePages: ServicePage[] = [
       "Negotiated corporate fares and hotel rates with policy compliance built in",
       "24/7 human support for travellers mid-journey — reschedules in minutes",
       "Clean GST invoicing and monthly consolidated reporting",
-      "Serving Tricity businesses since 2005 — references available",
+      "Serving Tricity businesses since 2013 — references available",
     ],
     steps: [
       { title: "Tell Us Your Travel Pattern", description: "Routes, volumes, policy and pain points — a 20-minute call maps it." },
@@ -375,7 +375,7 @@ const servicePages: ServicePage[] = [
       "friends trip packages",
     ],
     intro: [
-      "Travelling as a group is twice the fun and, without help, five times the coordination. Flywings has been moving groups out of Chandigarh since 2005 — joint families to Kashmir and Dubai, friends' gangs to Thailand and Bali, wedding parties flying together, kitty groups, senior citizens' circles and corporate teams — with one WhatsApp group, one itinerary and one desk answerable for everything.",
+      "Travelling as a group is twice the fun and, without help, five times the coordination. Flywings has been moving groups out of Chandigarh since 2013 — joint families to Kashmir and Dubai, friends' gangs to Thailand and Bali, wedding parties flying together, kitty groups, senior citizens' circles and corporate teams — with one WhatsApp group, one itinerary and one desk answerable for everything.",
       "Groups unlock inventory individuals never see: airline group fare blocks with held seats, hotel room blocks with flexible rooming lists, private coaches, group visa filing and dedicated tour escorts on request. You collect the people; we run the machine behind the trip.",
     ],
     featuresTitle: "Group Travel, Handled End to End",
@@ -393,7 +393,7 @@ const servicePages: ServicePage[] = [
       "One desk coordinates flights, rooms, meals, transport and visas",
       "Rooming-list changes and late joiners handled without drama",
       "Senior citizen and family-with-kids pacing built into itineraries",
-      "Trusted by Tricity families, societies and companies since 2005",
+      "Trusted by Tricity families, societies and companies since 2013",
     ],
     steps: [
       { title: "Tell Us Group Size & Dream", description: "Rough headcount, destination ideas and occasion — that's enough to start." },

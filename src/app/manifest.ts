@@ -6,7 +6,7 @@ export default function manifest(): MetadataRoute.Manifest {
     name: SITE_NAME,
     short_name: SITE_SHORT_NAME,
     description:
-      "Domestic & international flight tickets, tour packages, visa assistance and hotel bookings — trusted travel agency in Mohali since 2005.",
+      "Domestic & international flight tickets, tour packages, visa assistance and hotel bookings — trusted travel agency in Mohali since 2013.",
     start_url: "/",
     display: "standalone",
     background_color: "#ffffff",

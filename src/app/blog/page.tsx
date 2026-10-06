@@ -16,7 +16,7 @@ export const metadata: Metadata = pageMetadata({
   title: "Travel Blog | Flight Tips & Destination Guides | Flywings",
   titleAbsolute: true,
   description:
-    "Travel guides from Chandigarh: destination planning, flight tips, visa rules and trip ideas from a Mohali travel agency trading since 2005.",
+    "Travel guides from Chandigarh: destination planning, flight tips, visa rules and trip ideas from a Mohali travel agency trading since 2013.",
   path: "/blog",
   keywords: [
     "travel blog India",

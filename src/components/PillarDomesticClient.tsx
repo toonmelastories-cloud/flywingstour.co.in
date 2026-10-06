@@ -31,7 +31,7 @@ export interface PillarPackage {
 }
 
 const TRUST_STATS = [
-  { value: "Since 2005", label: "Serving the Chandigarh Tricity" },
+  { value: "Since 2013", label: "Serving the Chandigarh Tricity" },
   { value: "4+", label: "Domestic circuits covered" },
   { value: "No Visa Needed", label: "Just a photo ID" },
   { value: "Custom Itineraries", label: "Built around your dates" },
@@ -45,8 +45,8 @@ const WHY_US = [
   },
   {
     icon: BadgeCheck,
-    title: "20+ years of local knowledge",
-    text: "Hill routes, houseboat operators, and yatra logistics we've worked with since 2005 — not a scripted itinerary.",
+    title: "13+ years of local knowledge",
+    text: "Hill routes, houseboat operators, and yatra logistics we've worked with since 2013 — not a scripted itinerary.",
   },
   {
     icon: IdCard,
@@ -181,7 +181,7 @@ export default function PillarDomesticClient({ packages }: { packages: PillarPac
             </h1>
             <p className="text-white/65 font-body text-lg max-w-2xl mx-auto mb-8 leading-relaxed">
               Kashmir houseboats, Vaishno Devi yatras, the Golden Temple, and Himachal's hill circuit —
-              planned by a Mohali-based travel agency trusted since 2005. No visa, no passport, just pure India.
+              planned by a Mohali-based travel agency trusted since 2013. No visa, no passport, just pure India.
             </p>
             <div className="flex flex-wrap items-center justify-center gap-4">
               <button
@@ -228,7 +228,7 @@ export default function PillarDomesticClient({ packages }: { packages: PillarPac
             </p>
             <p>
               Flywings Tour & Packages Pvt Ltd is a full-service travel agency in Phase 7, Mohali,
-              planning domestic holidays and yatras since 2005. Every trip below is customised for
+              planning domestic holidays and yatras since 2013. Every trip below is customised for
               families, honeymooners, and pilgrimage groups, and quoted with transport, hotels,
               transfers and sightseeing — one price, no surprises.
             </p>

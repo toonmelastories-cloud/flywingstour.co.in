@@ -142,7 +142,7 @@ function SidebarCtaCard({ onInquiryOpen }: { onInquiryOpen: () => void }) {
         </a>
         <ul className="space-y-2">
           {[
-            { icon: BadgeCheck, text: "Trusted travel agency since 2005" },
+            { icon: BadgeCheck, text: "Trusted travel agency since 2013" },
             { icon: Stamp, text: "Complete visa assistance included" },
             { icon: Headphones, text: "24/7 human support while you travel" },
             { icon: ShieldCheck, text: "Office in Phase 7, Mohali — walk in anytime" },

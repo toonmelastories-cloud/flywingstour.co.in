@@ -48,7 +48,7 @@ const features = [
     // with the rating and review count, which a visitor can verify on
     // Google in one click. If a real award exists, name it here instead.
     title: "Rated 4.7 on Google",
-    description: "89 genuine reviews from travellers across Chandigarh, Mohali and Punjab, earned since 2005.",
+    description: "89 genuine reviews from travellers across Chandigarh, Mohali and Punjab, earned since 2013.",
   },
 ];
 
@@ -120,12 +120,12 @@ export default function WhyChooseUs() {
         >
           {[
             // "50K+ Happy Travelers" and "99% Satisfaction Rate" were
-            // invented, and "18+ Years" was stale: trading since 2005 makes
-            // it 21. These four are all either checkable on the Google
+            // invented, and "18+ Years" was stale: trading since 2013 makes
+            // it 13. These four are all either checkable on the Google
             // profile or stated consistently across the site.
             { value: "4.7★", label: "Google Rating" },
             { value: "100+", label: "Destinations" },
-            { value: "20+", label: "Years Experience" },
+            { value: "13+", label: "Years Experience" },
             { value: "24/7", label: "Support" },
           ].map(({ value, label }) => (
             <div key={label} className="text-center">

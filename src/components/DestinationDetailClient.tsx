@@ -457,7 +457,7 @@ export default function DestinationDetailClient({ destination }: { destination: 
               Why Book Your {destination.name} Trip With Us
             </h2>
             <p className="text-white/60 font-body max-w-xl mx-auto">
-              We've been crafting perfect journeys since 2005. Here's why thousands of travelers trust Flywings.
+              We've been crafting perfect journeys since 2013. Here's why thousands of travelers trust Flywings.
             </p>
           </div>
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-5">

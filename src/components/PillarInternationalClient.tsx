@@ -34,7 +34,7 @@ export interface PillarPackage {
 }
 
 const TRUST_STATS = [
-  { value: "Since 2005", label: "Serving the Chandigarh Tricity" },
+  { value: "Since 2013", label: "Serving the Chandigarh Tricity" },
   { value: "5+", label: "International destinations" },
   { value: "Direct IXC → DXB", label: "Daily Dubai flight, ~3h 40m" },
   { value: "Visa Included", label: "Documentation handled by us" },
@@ -48,8 +48,8 @@ const WHY_US = [
   },
   {
     icon: BadgeCheck,
-    title: "20+ years of ticketing expertise",
-    text: "Booking international airfare since 2005 — we watch fares daily and lock the lowest routing from IXC or Delhi.",
+    title: "13+ years of ticketing expertise",
+    text: "Booking international airfare since 2013 — we watch fares daily and lock the lowest routing from IXC or Delhi.",
   },
   {
     icon: Stamp,
@@ -184,7 +184,7 @@ export default function PillarInternationalClient({ packages }: { packages: Pill
             </h1>
             <p className="text-white/65 font-body text-lg max-w-2xl mx-auto mb-8 leading-relaxed">
               Flights from Chandigarh or Delhi, handpicked hotels, transfers, sightseeing, and complete
-              visa assistance — planned by a Mohali-based travel agency trusted since 2005.
+              visa assistance — planned by a Mohali-based travel agency trusted since 2013.
             </p>
             <div className="flex flex-wrap items-center justify-center gap-4">
               <button
@@ -231,7 +231,7 @@ export default function PillarInternationalClient({ packages }: { packages: Pill
             </p>
             <p>
               Flywings Tour & Packages Pvt Ltd is a full-service travel agency in Phase 7, Mohali, booking
-              international air tickets and holiday packages since 2005. Every package below can be
+              international air tickets and holiday packages since 2013. Every package below can be
               customised for honeymoons, families, and groups, and is quoted with return airfare,
               hotels, transfers, daily sightseeing, and visa assistance — one price, no surprises.
             </p>

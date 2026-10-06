@@ -183,7 +183,7 @@ export default function Testimonials() {
               // true as reviews come in.
               { value: "4.7★", label: "Google Rating" },
               { value: "89+", label: "Google Reviews" },
-              { value: "Since 2005", label: "Trusted Locally" },
+              { value: "Since 2013", label: "Trusted Locally" },
             ].map(({ value, label }) => (
               <div key={label} className="text-center p-4 rounded-2xl bg-muted/50 border border-border">
                 <div className="font-display font-800 text-xl sm:text-2xl text-navy">{value}</div>
