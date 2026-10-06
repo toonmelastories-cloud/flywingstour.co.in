@@ -2,8 +2,24 @@
 
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Menu, X, Phone } from "lucide-react";
+import { Menu, X, MessageCircle } from "lucide-react";
 import Link from "next/link";
+import { CONTACT } from "@/lib/seo";
+
+/**
+ * Header contact link.
+ *
+ * It used to be `tel:`, which does nothing on a desktop browser, so the
+ * number looked broken to anyone clicking it on a laptop. It now opens
+ * WhatsApp, which works on both desktop (WhatsApp Web) and mobile (the
+ * app), and is where this business actually talks to customers.
+ *
+ * <LeadTracking> in the root layout records the click as whatsapp_click,
+ * so these still show up as leads in GA4.
+ */
+const WHATSAPP_HREF = `https://wa.me/${CONTACT.phoneE164.replace("+", "")}?text=${encodeURIComponent(
+  "Hi Flywings! I would like to enquire about your travel services."
+)}`;
 
 interface NavbarProps {
   onInquiryOpen: () => void;
@@ -79,11 +95,14 @@ export default function Navbar({ onInquiryOpen }: NavbarProps) {
           {/* CTA */}
           <div className="hidden lg:flex items-center gap-3">
             <a
-            href="tel:+919914310333"
+              href={WHATSAPP_HREF}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label={`Chat with Flywings on WhatsApp at ${CONTACT.phoneDisplay}`}
               className="flex items-center gap-2 text-gold text-sm font-body font-medium hover:text-gold-light transition-colors"
             >
-              <Phone className="w-4 h-4" />
-              +91 99143 10333
+              <MessageCircle className="w-4 h-4" />
+              {CONTACT.phoneDisplay}
             </a>
             <button
               onClick={onInquiryOpen}
@@ -138,9 +157,21 @@ export default function Navbar({ onInquiryOpen }: NavbarProps) {
                   </Link>
                 )
               )}
+              {/* The mobile menu had no contact link at all, only the
+                  quote button. Most visitors are on a phone. */}
+              <a
+                href={WHATSAPP_HREF}
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={() => setMenuOpen(false)}
+                className="flex items-center justify-center gap-2 mt-4 w-full py-3 border border-gold/40 text-gold font-body text-sm rounded-full"
+              >
+                <MessageCircle className="w-4 h-4" />
+                {CONTACT.phoneDisplay}
+              </a>
               <button
                 onClick={() => { onInquiryOpen(); setMenuOpen(false); }}
-                className="mt-4 w-full py-3 bg-gradient-gold text-navy font-display font-700 text-sm rounded-full shadow-gold"
+                className="mt-3 w-full py-3 bg-gradient-gold text-navy font-display font-700 text-sm rounded-full shadow-gold"
               >
                 Get Free Quote
               </button>
