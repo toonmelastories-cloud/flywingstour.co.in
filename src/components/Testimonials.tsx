@@ -176,9 +176,14 @@ export default function Testimonials() {
           {/* Trust numbers */}
           <div className="grid grid-cols-3 gap-4 mt-10">
             {[
-              { value: "50,000+", label: "Travelers Served" },
-              { value: "4.9★", label: "Average Rating" },
-              { value: "98%", label: "Would Recommend" },
+              // Replaced invented figures with numbers anyone can check on
+              // the Google Business Profile. "4.9" was the worst of them:
+              // the real Google rating is 4.7, so a visitor could catch it
+              // in one click. Review count is written as "89+" so it stays
+              // true as reviews come in.
+              { value: "4.7★", label: "Google Rating" },
+              { value: "89+", label: "Google Reviews" },
+              { value: "Since 2005", label: "Trusted Locally" },
             ].map(({ value, label }) => (
               <div key={label} className="text-center p-4 rounded-2xl bg-muted/50 border border-border">
                 <div className="font-display font-800 text-xl sm:text-2xl text-navy">{value}</div>

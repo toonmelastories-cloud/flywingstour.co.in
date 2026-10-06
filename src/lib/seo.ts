@@ -209,7 +209,10 @@ export function organizationJsonLd() {
     },
     image: absoluteUrl(DEFAULT_OG_IMAGE),
     description:
-      "Flywings Tour & Packages Pvt Ltd is an IATA-style full-service travel agency in Mohali, Punjab, specialising in domestic and international air ticket booking, customised tour packages, visa assistance, hotel reservations, and corporate travel management.",
+      // "IATA-style" removed Oct 2026: the agency is not IATA accredited,
+      // and the hedge still implied the accreditation. This description
+      // goes into the Organization schema on every page.
+      "Flywings Tour & Packages Pvt Ltd is a full-service travel agency in Mohali, Punjab, specialising in domestic and international air ticket booking, customised tour packages, tourist visa assistance, hotel reservations, and corporate travel management.",
     telephone: CONTACT.phoneE164,
     email: CONTACT.email,
     priceRange: "₹₹",

@@ -31,7 +31,9 @@ const features = [
   {
     icon: FileText,
     title: "Visa Assistance",
-    description: "Expert visa guidance with high approval rates across 50+ countries globally.",
+    // "High approval rates" implied a success rate we cannot evidence,
+    // and approval is the embassy's decision, not ours.
+    description: "Tourist visa guidance for 50+ countries, with every file checked before it is submitted.",
   },
   {
     icon: Building,
@@ -40,8 +42,13 @@ const features = [
   },
   {
     icon: Award,
-    title: "Award-Winning Agency",
-    description: "Recognized as India's top travel agency with 18+ years of outstanding service.",
+    // Was "Award-Winning Agency / Recognized as India's top travel
+    // agency with 18+ years". No award is named anywhere, "top travel
+    // agency in India" cannot be evidenced, and 18+ was stale. Replaced
+    // with the rating and review count, which a visitor can verify on
+    // Google in one click. If a real award exists, name it here instead.
+    title: "Rated 4.7 on Google",
+    description: "89 genuine reviews from travellers across Chandigarh, Mohali and Punjab, earned since 2005.",
   },
 ];
 
@@ -112,10 +119,14 @@ export default function WhyChooseUs() {
           className="grid grid-cols-2 md:grid-cols-4 gap-6 mt-16 pt-12 border-t border-white/10"
         >
           {[
-            { value: "50K+", label: "Happy Travelers" },
-            { value: "180+", label: "Destinations" },
-            { value: "18+", label: "Years Experience" },
-            { value: "99%", label: "Satisfaction Rate" },
+            // "50K+ Happy Travelers" and "99% Satisfaction Rate" were
+            // invented, and "18+ Years" was stale: trading since 2005 makes
+            // it 21. These four are all either checkable on the Google
+            // profile or stated consistently across the site.
+            { value: "4.7★", label: "Google Rating" },
+            { value: "100+", label: "Destinations" },
+            { value: "20+", label: "Years Experience" },
+            { value: "24/7", label: "Support" },
           ].map(({ value, label }) => (
             <div key={label} className="text-center">
               <div className="font-display font-900 text-3xl sm:text-4xl text-gold mb-1">{value}</div>
