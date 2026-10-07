@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { GoogleAnalytics, GoogleTagManager } from "@next/third-parties/google";
+import Script from "next/script";
 import "./globals.css";
 import Providers from "./providers";
 import JsonLd from "@/components/JsonLd";
@@ -124,6 +125,25 @@ export default function RootLayout({
       <GoogleAnalytics
         gaId={process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID || "G-TLNBFYH8SZ"}
       />
+      {/*
+        Google Ads tag, for conversion tracking and remarketing.
+
+        Google's own snippet also loads gtag.js, but the GoogleAnalytics
+        component above already loads it, and Google's instructions say
+        not to put two Google tags on one page. One gtag.js serves any
+        number of destinations, so this only adds the Ads config. gtag()
+        queues onto dataLayer, so order against the async library does
+        not matter.
+
+        Must NOT also be added inside GTM-5P4CNLR5: two copies would
+        double every conversion.
+      */}
+      <Script id="google-ads-tag" strategy="afterInteractive">
+        {`window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', '${process.env.NEXT_PUBLIC_GOOGLE_ADS_ID || "AW-18437464646"}');`}
+      </Script>
     </html>
   );
 }
