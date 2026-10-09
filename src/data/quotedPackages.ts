@@ -72,6 +72,9 @@ const quotedPackages: QuotedPackage[] = [
       "Drinking water on tour days",
       "Local English speaking guides in Vietnam",
     ],
+    image: "/assets/dest-vietnam-halong-bay.jpg",
+    imageAlt:
+      "Traditional junk boat sailing past limestone karsts in Ha Long Bay, Vietnam",
   },
   {
     slug: "vietnam-saigon-mekong-cu-chi-4d",
@@ -97,6 +100,9 @@ const quotedPackages: QuotedPackage[] = [
       "Drinking water on tour days",
       "All entrance fees and sightseeing listed in the programme",
     ],
+    image: "/assets/dest-vietnam-mekong-delta.jpg",
+    imageAlt:
+      "Wooden sampan boats on a palm lined canal in the Mekong Delta, Vietnam",
   },
   {
     slug: "kuala-lumpur-3n4d",
