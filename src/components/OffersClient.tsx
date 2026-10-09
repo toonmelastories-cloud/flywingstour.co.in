@@ -19,7 +19,11 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import WhatsAppButton from "@/components/WhatsAppButton";
 import InquiryModal from "@/components/InquiryModal";
-import quotedPackages, { type QuotedPackage } from "@/data/quotedPackages";
+import {
+  activeOffers,
+  savingOn,
+  type QuotedPackage,
+} from "@/data/quotedPackages";
 import { CONTACT } from "@/lib/seo";
 
 const WA_NUMBER = CONTACT.phoneE164.replace("+", "");
@@ -48,6 +52,7 @@ function OfferCard({ offer, index, onQuote }: {
 }) {
   const [showAllIncludes, setShowAllIncludes] = useState(false);
   const [showItinerary, setShowItinerary] = useState(false);
+  const saving = savingOn(offer);
 
   const visibleIncludes = showAllIncludes
     ? offer.inclusions
@@ -104,20 +109,80 @@ function OfferCard({ offer, index, onQuote }: {
         </p>
 
         {/* Price */}
-        <div className="flex items-end justify-between gap-3 mb-4 pb-4 border-b border-border">
-          <div>
-            <span className="block text-muted-foreground font-body text-xs mb-0.5">
-              Starting from
-            </span>
-            <span className="font-display font-900 text-secondary text-2xl">
-              {offer.startingPrice}
-            </span>
-            <span className="text-muted-foreground font-body text-xs"> /person</span>
+        <div className="mb-4 pb-4 border-b border-border">
+          <div className="flex items-end justify-between gap-3">
+            <div>
+              <span className="block text-muted-foreground font-body text-xs mb-0.5">
+                Starting from
+              </span>
+              <span className="font-display font-900 text-secondary text-2xl">
+                {offer.startingPrice}
+              </span>
+              <span className="text-muted-foreground font-body text-xs"> /person</span>
+              {saving !== null && offer.compareWith && (
+                <span className="ml-2 text-muted-foreground font-body text-sm line-through">
+                  {offer.compareWith.price}
+                </span>
+              )}
+            </div>
+            <div className="flex items-center gap-1.5 text-muted-foreground font-body text-xs">
+              <Users className="w-3.5 h-3.5" />
+              Min {offer.minPax} travellers
+            </div>
           </div>
-          <div className="flex items-center gap-1.5 text-muted-foreground font-body text-xs">
-            <Users className="w-3.5 h-3.5" />
-            Min {offer.minPax} travellers
-          </div>
+
+          {/*
+            The saving is only printed where the offer really is the
+            same trip as a package we publish, and it links to that
+            package so the visitor can check the figure rather than
+            take our word for it.
+          */}
+          {saving !== null && offer.compareWith && (
+            <div className="mt-3">
+              <span className="inline-flex items-center gap-1.5 bg-secondary/15 border border-secondary/30 rounded-full px-3 py-1">
+                <Tag className="w-3 h-3 text-secondary" />
+                <span className="text-secondary font-body text-xs font-bold">
+                  Save ₹{saving.toLocaleString("en-IN")} on{" "}
+                </span>
+                <Link
+                  href={offer.compareWith.href}
+                  className="text-secondary font-body text-xs font-bold underline underline-offset-2"
+                >
+                  {offer.compareWith.label}
+                </Link>
+              </span>
+              {offer.compareWith.note && (
+                <p className="mt-2 text-muted-foreground font-body text-xs leading-relaxed">
+                  {offer.compareWith.note}
+                </p>
+              )}
+            </div>
+          )}
+
+          {/* Different trip, so pointed at rather than priced against. */}
+          {saving === null && offer.compareWith && (
+            <p className="mt-3 text-muted-foreground font-body text-xs leading-relaxed">
+              A shorter break than{" "}
+              <Link
+                href={offer.compareWith.href}
+                className="text-secondary font-semibold underline underline-offset-2"
+              >
+                {offer.compareWith.label}
+              </Link>{" "}
+              at {offer.compareWith.price}, so the two are not the same trip.
+            </p>
+          )}
+
+          {offer.validTill && (
+            <p className="mt-2 text-muted-foreground font-body text-xs">
+              Rate held till{" "}
+              {new Date(`${offer.validTill}T00:00:00`).toLocaleDateString("en-IN", {
+                day: "numeric",
+                month: "short",
+                year: "numeric",
+              })}
+            </p>
+          )}
         </div>
 
         {/* Inclusions */}
@@ -211,7 +276,11 @@ export default function OffersClient() {
     setInquiryOpen(true);
   };
 
-  const cheapest = quotedPackages.reduce((lowest, o) => {
+  // Rates that have passed their hold date drop off by themselves; see
+  // activeOffers() in the data file.
+  const offers = activeOffers();
+
+  const cheapest = offers.reduce((lowest, o) => {
     const n = Number(o.startingPrice.replace(/[^\d]/g, ""));
     return n && n < lowest ? n : lowest;
   }, Number.POSITIVE_INFINITY);
@@ -249,13 +318,22 @@ export default function OffersClient() {
               Tour Package Offers from Chandigarh
             </h1>
             <p className="text-white/65 font-body text-lg max-w-2xl mx-auto leading-relaxed">
-              Live rates our Mohali office is quoting right now for Vietnam,
-              Bali, Singapore and Kuala Lumpur
-              {Number.isFinite(cheapest)
-                ? `, starting at ₹${cheapest.toLocaleString("en-IN")} per person`
-                : ""}
-              . Land packages for two or more travellers, with the full day by
-              day and inclusions on every card.
+              {offers.length > 0 ? (
+                <>
+                  Live rates our Mohali office is quoting right now
+                  {Number.isFinite(cheapest)
+                    ? `, starting at ₹${cheapest.toLocaleString("en-IN")} per person`
+                    : ""}
+                  . These come and go as suppliers release and withdraw them,
+                  so what is on this page is what we can book today.
+                </>
+              ) : (
+                <>
+                  No offer rates are being held at the moment. Our standard tour
+                  packages are still bookable, and a custom quote is always
+                  free.
+                </>
+              )}
             </p>
           </motion.div>
         </div>
@@ -264,43 +342,68 @@ export default function OffersClient() {
       {/* ── OFFER GRID ─────────────────────────────────────────── */}
       <section className="section-padding bg-background">
         <div className="container-custom">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {quotedPackages.map((offer, i) => (
-              <OfferCard
-                key={offer.slug}
-                offer={offer}
-                index={i}
-                onQuote={openQuote}
-              />
-            ))}
-          </div>
+          {offers.length > 0 ? (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {offers.map((offer, i) => (
+                <OfferCard
+                  key={offer.slug}
+                  offer={offer}
+                  index={i}
+                  onQuote={openQuote}
+                />
+              ))}
+            </div>
+          ) : (
+            <div className="bg-card border border-border rounded-2xl p-8 sm:p-12 text-center">
+              <Tag className="w-10 h-10 text-secondary mx-auto mb-4" />
+              <h2 className="font-display font-800 text-primary text-2xl mb-3">
+                No offer rates being held right now
+              </h2>
+              <p className="text-muted-foreground font-body text-sm max-w-lg mx-auto mb-6 leading-relaxed">
+                Supplier rates come and go through the season. Tell us where and
+                when you want to travel and we will quote the best rate
+                available on the day, which is often better than anything
+                published here.
+              </p>
+              <button
+                type="button"
+                onClick={() => openQuote("")}
+                className="inline-flex items-center justify-center gap-2 bg-primary hover:bg-navy-dark text-secondary font-body font-bold text-sm rounded-full px-6 py-3 transition-colors"
+              >
+                <Send className="w-4 h-4" />
+                Ask for a quote
+              </button>
+            </div>
+          )}
 
           {/* What these rates leave out */}
-          <div className="mt-12 bg-card border border-border rounded-2xl p-6 sm:p-8">
-            <div className="flex items-center gap-2.5 mb-4">
-              <Info className="w-5 h-5 text-secondary" />
-              <h2 className="font-display font-800 text-primary text-xl">
-                What these rates do not include
-              </h2>
+          {offers.length > 0 && (
+            <div className="mt-12 bg-card border border-border rounded-2xl p-6 sm:p-8">
+              <div className="flex items-center gap-2.5 mb-4">
+                <Info className="w-5 h-5 text-secondary" />
+                <h2 className="font-display font-800 text-primary text-xl">
+                  What these rates do not include
+                </h2>
+              </div>
+              <p className="text-muted-foreground font-body text-sm mb-5 leading-relaxed">
+                Every price on this page is a starting land rate, per person, on
+                a minimum of {offers[0]?.minPax ?? 2} travellers sharing. Rates
+                move with season, hotel availability and group size, so the
+                written quote you receive is the one that counts.
+              </p>
+              <ul className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-2">
+                {EXCLUSIONS.map((item) => (
+                  <li
+                    key={item}
+                    className="flex gap-2 text-foreground/75 font-body text-sm leading-relaxed"
+                  >
+                    <span className="text-secondary mt-0.5">·</span>
+                    <span>{item}</span>
+                  </li>
+                ))}
+              </ul>
             </div>
-            <p className="text-muted-foreground font-body text-sm mb-5 leading-relaxed">
-              Every price on this page is a starting land rate, per person, on a
-              minimum of {quotedPackages[0]?.minPax ?? 2} travellers sharing.
-              Rates move with season, hotel availability and group size, so the
-              written quote you receive is the one that counts.
-            </p>
-            <ul className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-2">
-              {EXCLUSIONS.map((item) => (
-                <li
-                  key={item}
-                  className="flex gap-2 text-foreground/75 font-body text-sm leading-relaxed"
-                >
-                  <span className="text-secondary mt-0.5">·</span>
-                  <span>{item}</span>
-                </li>
-              ))}
-            </ul>
-          </div>
+          )}
 
           {/* Where to go next */}
           <div className="mt-8 flex flex-wrap items-center justify-center gap-3">

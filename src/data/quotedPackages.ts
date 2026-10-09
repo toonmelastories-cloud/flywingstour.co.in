@@ -40,6 +40,31 @@ export interface QuotedPackage {
    */
   image?: string;
   imageAlt?: string;
+  /**
+   * The package page this rate undercuts, so a visitor can see what the
+   * offer is worth and click through to check it.
+   *
+   * `sameTrip` must only be true where the two really are the same trip
+   * at the same length. Where it is true the card prints a struck-out
+   * regular price and a saving; where it is false it just points at the
+   * other package, because calling a shorter holiday a saving would be
+   * a discount we have not actually given.
+   */
+  compareWith?: {
+    label: string;
+    price: string;
+    href: string;
+    sameTrip: boolean;
+    /** What differs between the two, printed under the saving. */
+    note?: string;
+  };
+  /**
+   * ISO date (YYYY-MM-DD) this rate is held until. Past that the offer
+   * drops off /offers and /llms.txt on its own: an expired price left
+   * on a live page is worse than a thin offers page. Leave unset for a
+   * rate with no end date.
+   */
+  validTill?: string;
 }
 
 const quotedPackages: QuotedPackage[] = [
@@ -125,6 +150,13 @@ const quotedPackages: QuotedPackage[] = [
     image:
       "https://wp.flywingstour.co.in/wp-content/uploads/2026/07/dest-malaysia.jpg",
     imageAlt: "Petronas Towers lit up over Kuala Lumpur at dusk",
+    compareWith: {
+      label: "our Kuala Lumpur 3N/4D package",
+      price: "₹25,000",
+      href: "/packages/malaysia-kl-3n4d",
+      sameTrip: true,
+      note: "Same 3 nights and the same sightseeing. The package page rate is on a confirmed 4 star hotel; this one is on a hotel confirmed at booking.",
+    },
   },
   {
     slug: "singapore-4n5d",
@@ -148,6 +180,13 @@ const quotedPackages: QuotedPackage[] = [
     ],
     image: "/assets/dest-singapore.jpg",
     imageAlt: "Marina Bay skyline and Gardens by the Bay, Singapore",
+    compareWith: {
+      label: "our Singapore 4N/5D package",
+      price: "₹55,000",
+      href: "/packages/singapore-escape-4n5d",
+      sameTrip: true,
+      note: "Same 4 nights. The package page rate is on a confirmed 4 star hotel; this one is on a hotel confirmed at booking.",
+    },
   },
   {
     slug: "bali-4n5d",
@@ -176,7 +215,36 @@ const quotedPackages: QuotedPackage[] = [
     ],
     image: "/assets/dest-bali.jpg",
     imageAlt: "Rice terraces and temple gate in Bali, Indonesia",
+    compareWith: {
+      // Not a saving: this is a shorter holiday in cheaper rooms, not
+      // the 6 night 5 star villa trip at a discount.
+      label: "our 6 night Bali Romance package",
+      price: "₹59,999",
+      href: "/packages/bali-romance-6n7d",
+      sameTrip: false,
+    },
   },
 ];
+
+/**
+ * The offers to publish today.
+ *
+ * Rates are released and withdrawn constantly, so anything past its
+ * `validTill` drops off the site by itself rather than sitting there as
+ * a price we can no longer honour.
+ */
+export function activeOffers(now: Date = new Date()): QuotedPackage[] {
+  const today = now.toISOString().slice(0, 10);
+  return quotedPackages.filter((o) => !o.validTill || o.validTill >= today);
+}
+
+/** "₹25,000" and "₹19,999" -> 5001, or null where there is no honest saving. */
+export function savingOn(offer: QuotedPackage): number | null {
+  if (!offer.compareWith?.sameTrip) return null;
+  const was = Number(offer.compareWith.price.replace(/[^\d]/g, ""));
+  const now = Number(offer.startingPrice.replace(/[^\d]/g, ""));
+  if (!was || !now || was <= now) return null;
+  return was - now;
+}
 
 export default quotedPackages;

@@ -1,5 +1,5 @@
 import destinations from "@/data/destinations";
-import quotedPackages from "@/data/quotedPackages";
+import { activeOffers, savingOn } from "@/data/quotedPackages";
 import servicePages from "@/data/servicePages";
 import { getAllTours } from "@/lib/tours";
 import { CONTACT, SITE_NAME, SITE_URL, absoluteUrl } from "@/lib/seo";
@@ -68,13 +68,23 @@ export async function GET() {
   // left as a link. These five share one page (/offers) instead of
   // having one each, so an assistant that follows the link still has to
   // find the right card; spelling them out here saves it the trip.
-  const quoteBlocks = quotedPackages
+  const offers = activeOffers();
+  const quoteBlocks = offers
     .map((q) => {
+      const saving = savingOn(q);
       const head = `### [${q.name}](${absoluteUrl(`/offers#${q.slug}`)})\n\n${
         q.region
       }. ${q.duration}. ${q.cities.join(", ")}. ${q.hotelCategory}. From ${
         q.startingPrice
-      } per person, minimum ${q.minPax} travellers.`;
+      } per person, minimum ${q.minPax} travellers.${
+        saving !== null && q.compareWith
+          ? ` That is ₹${saving.toLocaleString("en-IN")} below ${
+              q.compareWith.label
+            } at ${q.compareWith.price} (${absoluteUrl(q.compareWith.href)})${
+              q.compareWith.note ? `. ${q.compareWith.note}` : "."
+            }`
+          : ""
+      }${q.validTill ? ` Rate held till ${q.validTill}.` : ""}`;
       const days = q.itinerary.length
         ? `\n\nItinerary:\n${q.itinerary.map((d) => `- ${d}`).join("\n")}`
         : "";
@@ -154,10 +164,13 @@ ${serviceLines}
 - Prices above are starting prices per person in Indian Rupees (INR) for the
   lowest season and smallest room category. They move with season, airfare and
   group size, so quote them as "from" figures and point the user at a quote.
-- Where a destination appears in both "Tour packages" and "Current offers" -
-  Kuala Lumpur, Singapore and Bali - the two entries are different trips at
-  different lengths and inclusion levels, and the "Current offers" figure is
-  the more recently issued rate. Confirm the exact trip before quoting either.
+- A destination can appear in both "Tour packages" and "Current offers" at two
+  prices. That is deliberate: the offers are supplier rates that undercut the
+  standard package, and each one says what it undercuts and by how much. Quote
+  the offer rate when the traveller wants the cheapest option and the standard
+  package when they want the confirmed hotel category.
+- Offers are withdrawn and replaced through the season. Anything listed here is
+  bookable today; a rate quoted from an older copy of this file may not be.
 - Vietnam is sold from the offers page only; there is no Vietnam destination
   guide on the site yet.
 - Bookings are handled by human travel consultants over phone, WhatsApp or the

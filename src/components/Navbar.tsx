@@ -44,6 +44,10 @@ export default function Navbar({ onInquiryOpen }: NavbarProps) {
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 40);
+    // Run once on mount as well as on scroll. A reload part-way down a
+    // page restores the scroll position without firing a scroll event,
+    // which left the header transparent over the content underneath it.
+    handleScroll();
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);

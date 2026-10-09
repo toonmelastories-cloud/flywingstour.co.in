@@ -554,6 +554,7 @@ export function quotedOffersJsonLd(offers: QuotedPackage[]) {
                   availability: "https://schema.org/InStock",
                   url,
                   seller: { "@id": ORG_ID },
+                  ...(offer.validTill ? { priceValidUntil: offer.validTill } : {}),
                   priceSpecification: {
                     "@type": "UnitPriceSpecification",
                     price,

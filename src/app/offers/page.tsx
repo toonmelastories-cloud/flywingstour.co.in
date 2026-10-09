@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import JsonLd from "@/components/JsonLd";
 import OffersClient from "@/components/OffersClient";
-import quotedPackages from "@/data/quotedPackages";
+import { activeOffers } from "@/data/quotedPackages";
 import {
   KEYWORDS,
   breadcrumbJsonLd,
@@ -15,7 +15,12 @@ import {
  * Built from `src/data/quotedPackages.ts`, the same file /llms.txt
  * reads, so a corrected rate reaches the page, the structured data and
  * the AI assistants in one edit.
+ *
+ * Regenerated hourly because `activeOffers()` compares each rate's hold
+ * date against today. Prerendered once at build time, an expired rate
+ * would sit on the page until the next deploy.
  */
+export const revalidate = 3600;
 export const metadata: Metadata = pageMetadata({
   title: "Tour Package Offers from Chandigarh | Vietnam, Bali, Singapore",
   titleAbsolute: true,
@@ -38,7 +43,7 @@ export default function OffersPage() {
     <>
       <JsonLd
         data={[
-          quotedOffersJsonLd(quotedPackages),
+          quotedOffersJsonLd(activeOffers()),
           breadcrumbJsonLd([
             { name: "Home", path: "/" },
             { name: "Offers", path: "/offers" },
