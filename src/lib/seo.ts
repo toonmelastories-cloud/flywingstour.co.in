@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import type { Destination } from "@/data/destinations";
+import type { QuotedPackage } from "@/data/quotedPackages";
 import type { TourData } from "@/lib/tours";
 
 /**
@@ -494,5 +495,82 @@ export function itemListJsonLd(
       url: absoluteUrl(item.path),
       ...(item.image ? { image: absoluteUrl(item.image) } : {}),
     })),
+  };
+}
+
+/**
+ * The /offers page: an ItemList of TouristTrips, each carrying the
+ * quoted rate as an Offer.
+ *
+ * These quotes have no page of their own, so every item points at its
+ * anchor on /offers. `priceSpecification` carries the minimum party
+ * size, because the rate only holds for two or more travellers and a
+ * price shown without that condition would be the sort of claim this
+ * site has been clearing out.
+ */
+export function quotedOffersJsonLd(offers: QuotedPackage[]) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    name: "Current tour package offers",
+    numberOfItems: offers.length,
+    itemListElement: offers.map((offer, i) => {
+      const price = parsePrice(offer.startingPrice);
+      const url = absoluteUrl(`/offers#${offer.slug}`);
+      return {
+        "@type": "ListItem",
+        position: i + 1,
+        item: {
+          "@type": "TouristTrip",
+          "@id": url,
+          name: offer.name,
+          url,
+          description: `${offer.duration} ${offer.region} package covering ${offer.cities.join(
+            ", "
+          )}, quoted from ${offer.startingPrice} per person for a minimum of ${
+            offer.minPax
+          } travellers.`,
+          ...(offer.image ? { image: absoluteUrl(offer.image) } : {}),
+          touristType: ["Couples", "Families", "Honeymooners"],
+          provider: { "@id": ORG_ID },
+          ...(offer.itinerary.length > 0
+            ? {
+                itinerary: {
+                  "@type": "ItemList",
+                  numberOfItems: offer.itinerary.length,
+                  itemListElement: offer.itinerary.map((day, d) => ({
+                    "@type": "ListItem",
+                    position: d + 1,
+                    name: day,
+                  })),
+                },
+              }
+            : {}),
+          ...(price
+            ? {
+                offers: {
+                  "@type": "Offer",
+                  priceCurrency: "INR",
+                  availability: "https://schema.org/InStock",
+                  url,
+                  seller: { "@id": ORG_ID },
+                  priceSpecification: {
+                    "@type": "UnitPriceSpecification",
+                    price,
+                    priceCurrency: "INR",
+                    referenceQuantity: {
+                      "@type": "QuantitativeValue",
+                      value: 1,
+                      unitText: "person",
+                      minValue: offer.minPax,
+                    },
+                    valueAddedTaxIncluded: false,
+                  },
+                },
+              }
+            : {}),
+        },
+      };
+    }),
   };
 }

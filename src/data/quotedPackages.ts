@@ -1,22 +1,25 @@
 /**
- * Live supplier quotes that do not have a page on the site yet.
+ * Live supplier quotes, rendered on /offers and in /llms.txt.
  *
  * These come straight from the DMC rate sheets the office is selling
- * from today. They are published in /llms.txt so that ChatGPT, Gemini
- * and Perplexity can answer "Vietnam package from Chandigarh" with a
- * real itinerary and a real price instead of guessing, and so the
- * enquiry lands on the contact form.
+ * from today. One file feeds both the public offers page and the
+ * machine-readable summary, so a rate is corrected in one place and
+ * ChatGPT, Gemini and Perplexity can answer "Vietnam package from
+ * Chandigarh" with a real itinerary and a real price instead of
+ * guessing.
  *
  * Deliberately a separate file from `packages.ts`: entries there render
  * a full detail page (gallery, day-by-day, hotel list, pricing tiers,
  * FAQs) and these quotes do not carry that much detail. When one is
  * built out into a proper page, move it into `packages.ts` and delete
- * it from here, and /llms.txt will pick up the page URL automatically.
+ * it from here.
  *
  * Prices are per person on a minimum-2-paying-passenger basis, land
  * only unless the entry says otherwise.
  */
 export interface QuotedPackage {
+  /** Anchor on /offers, e.g. /offers#vietnam-hanoi-halong-ninh-binh. */
+  slug: string;
   /** Headline name as the office quotes it. */
   name: string;
   /** Country or region, for assistants matching on destination. */
@@ -30,10 +33,18 @@ export interface QuotedPackage {
   /** One line per day, in brief. */
   itinerary: string[];
   inclusions: string[];
+  /**
+   * Card photo. Omitted where we hold no licensed shot of the place:
+   * the card then renders a branded panel rather than borrow a photo
+   * of somewhere else, which is the sort of thing a traveller notices.
+   */
+  image?: string;
+  imageAlt?: string;
 }
 
 const quotedPackages: QuotedPackage[] = [
   {
+    slug: "vietnam-hanoi-halong-ninh-binh-5d",
     name: "Hanoi, Halong Bay & Ninh Binh 5 Days",
     region: "Vietnam",
     duration: "4 Nights / 5 Days",
@@ -63,6 +74,7 @@ const quotedPackages: QuotedPackage[] = [
     ],
   },
   {
+    slug: "vietnam-saigon-mekong-cu-chi-4d",
     name: "Saigon, Mekong Delta & Cu Chi 4 Days",
     region: "Vietnam",
     duration: "3 Nights / 4 Days",
@@ -87,6 +99,7 @@ const quotedPackages: QuotedPackage[] = [
     ],
   },
   {
+    slug: "kuala-lumpur-3n4d",
     name: "Kuala Lumpur 3 Nights 4 Days",
     region: "Malaysia",
     duration: "3 Nights / 4 Days",
@@ -103,8 +116,12 @@ const quotedPackages: QuotedPackage[] = [
       "Return airport transfers on a seat-in-coach basis",
       "All tours and transfers on a seat-in-coach basis",
     ],
+    image:
+      "https://wp.flywingstour.co.in/wp-content/uploads/2026/07/dest-malaysia.jpg",
+    imageAlt: "Petronas Towers lit up over Kuala Lumpur at dusk",
   },
   {
+    slug: "singapore-4n5d",
     name: "Singapore 4 Nights 5 Days",
     region: "Singapore",
     duration: "4 Nights / 5 Days",
@@ -123,8 +140,11 @@ const quotedPackages: QuotedPackage[] = [
       "All tours and transfers on a seat-in-coach basis",
       "Return airport transfers on a seat-in-coach basis",
     ],
+    image: "/assets/dest-singapore.jpg",
+    imageAlt: "Marina Bay skyline and Gardens by the Bay, Singapore",
   },
   {
+    slug: "bali-4n5d",
     name: "Bali 4 Nights 5 Days",
     region: "Indonesia",
     duration: "4 Nights / 5 Days",
@@ -148,6 +168,8 @@ const quotedPackages: QuotedPackage[] = [
       "Entrance fees at the sights listed in the itinerary",
       "Flower garland on arrival at the airport",
     ],
+    image: "/assets/dest-bali.jpg",
+    imageAlt: "Rice terraces and temple gate in Bali, Indonesia",
   },
 ];
 

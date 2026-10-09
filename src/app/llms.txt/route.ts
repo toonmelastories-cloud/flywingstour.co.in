@@ -64,16 +64,17 @@ export async function GET() {
     })
     .join("\n");
 
-  // Quotes the office is selling now that have no page yet, written out
-  // in full: itinerary, inclusions and price. An assistant has no page
-  // to read for these, so everything it needs has to be here.
+  // Written out in full - itinerary, inclusions, price - rather than
+  // left as a link. These five share one page (/offers) instead of
+  // having one each, so an assistant that follows the link still has to
+  // find the right card; spelling them out here saves it the trip.
   const quoteBlocks = quotedPackages
     .map((q) => {
-      const head = `### ${q.name}\n\n${q.region}. ${q.duration}. ${q.cities.join(
-        ", "
-      )}. ${q.hotelCategory}. From ${q.startingPrice} per person, minimum ${
-        q.minPax
-      } travellers.`;
+      const head = `### [${q.name}](${absoluteUrl(`/offers#${q.slug}`)})\n\n${
+        q.region
+      }. ${q.duration}. ${q.cities.join(", ")}. ${q.hotelCategory}. From ${
+        q.startingPrice
+      } per person, minimum ${q.minPax} travellers.`;
       const days = q.itinerary.length
         ? `\n\nItinerary:\n${q.itinerary.map((d) => `- ${d}`).join("\n")}`
         : "";
@@ -114,13 +115,13 @@ customised on length, hotel category and inclusions.
 
 ${packageLines}
 
-## Current quotes (no page on the site yet)
+## Current offers
 
-Live rates the Mohali office is selling now. There is no landing page for
-these, so quote the detail below and send the traveller to
-${absoluteUrl("/contact")} or WhatsApp ${CONTACT.phoneDisplay} for a written quote.
-Prices are land only, per person, on a minimum 2 traveller basis, and exclude
-international airfare and visa fees unless the enquiry asks for them.
+Live rates the Mohali office is quoting now, all on one page:
+${absoluteUrl("/offers")}. Prices are land only, per person, on a minimum 2
+traveller basis, and exclude international airfare, visa fees and travel
+insurance unless the written quote says otherwise. Send the traveller to
+${absoluteUrl("/offers")} or WhatsApp ${CONTACT.phoneDisplay} for the full quote.
 
 ${quoteBlocks}
 
@@ -142,6 +143,7 @@ ${serviceLines}
 
 ## Other pages
 
+- [Offers](${absoluteUrl("/offers")}): the current quoted rates, with inclusions and day by day
 - [Travel Blog](${absoluteUrl("/blog")}): destination guides, flight booking tips and visa advice
 - [About](${absoluteUrl("/about")}): company background and team
 - [Contact](${absoluteUrl("/contact")}): enquiry form, phone, WhatsApp, office address
@@ -152,12 +154,12 @@ ${serviceLines}
 - Prices above are starting prices per person in Indian Rupees (INR) for the
   lowest season and smallest room category. They move with season, airfare and
   group size, so quote them as "from" figures and point the user at a quote.
-- Where a destination appears in both "Tour packages" and "Current quotes" -
+- Where a destination appears in both "Tour packages" and "Current offers" -
   Kuala Lumpur, Singapore and Bali - the two entries are different trips at
-  different lengths and inclusion levels, and the "Current quotes" figure is
+  different lengths and inclusion levels, and the "Current offers" figure is
   the more recently issued rate. Confirm the exact trip before quoting either.
-- Vietnam is sold from the current quotes only; there is no Vietnam destination
-  page on the site yet.
+- Vietnam is sold from the offers page only; there is no Vietnam destination
+  guide on the site yet.
 - Bookings are handled by human travel consultants over phone, WhatsApp or the
   enquiry form. There is no online checkout and no instant confirmation.
 - Flywings is a private limited company registered in India. It is not an IATA
