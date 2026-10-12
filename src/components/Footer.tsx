@@ -20,7 +20,7 @@ const quickLinks = [
 const services = [
   { label: "Flight Booking", href: "/services/flight-booking" },
   { label: "Holiday Packages", href: "/packages" },
-  { label: "Visa Services", href: "/services/tourist-visa-assistance" },
+  { label: "Tourist Visa Assistance", href: "/services/tourist-visa-assistance" },
   { label: "Hotel Booking", href: "/services/hotel-booking" },
   { label: "Corporate Travel", href: "/services/corporate-travel" },
   { label: "Group Tours", href: "/services/group-tours" },

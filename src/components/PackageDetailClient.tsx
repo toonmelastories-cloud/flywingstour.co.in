@@ -762,7 +762,7 @@ export default function PackageDetailClient({ pkg, related }: { pkg: TourData; r
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-5">
             {[
               { icon: Headphones, title: "24/7 Support", desc: "Round-the-clock assistance before, during & after your trip" },
-              { icon: Globe, title: "Visa Assistance", desc: "Complete visa guidance, documentation & submission support" },
+              { icon: Globe, title: "Tourist Visa Assistance", desc: "Complete visa guidance, documentation & submission support" },
               { icon: BadgeCheck, title: "Transparent Pricing", desc: "No hidden fees — zero surprises at checkout" },
               { icon: Shield, title: "Secure Booking", desc: "100% safe & encrypted payment processing" },
             ].map(({ icon: Icon, title, desc }, i) => (

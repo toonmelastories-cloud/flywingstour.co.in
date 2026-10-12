@@ -313,8 +313,8 @@ export function organizationJsonLd() {
           "@type": "Offer",
           itemOffered: {
             "@type": "Service",
-            name: "Visa Assistance",
-            serviceType: "Visa services",
+            name: "Tourist Visa Assistance",
+            serviceType: "Tourist visa services",
           },
         },
         {

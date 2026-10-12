@@ -10,7 +10,7 @@ import {
 } from "@/lib/seo";
 
 export const metadata: Metadata = pageMetadata({
-  title: "Flight Booking, Tour Packages & Visa Services | Flywings",
+  title: "Flight Booking, Tour Packages & Tourist Visa | Flywings",
   titleAbsolute: true,
   description:
     "Travel services from our Mohali office: flight booking, tour packages, tourist visa help, hotels and corporate travel. Free quote in 24 hours.",
@@ -26,9 +26,9 @@ const servicesFaqs = [
       "You can book domestic or international flights by contacting our travel experts via phone (+91 99143 10333), WhatsApp, or the inquiry form. We find the best fares for your route and confirm instantly.",
   },
   {
-    question: "Do you provide visa assistance?",
+    question: "Do you provide tourist visa assistance?",
     answer:
-      "Yes, Flywings provides professional visa assistance for tourist and business visas to 50+ countries. Our experts guide you through documentation, appointment booking, and submission.",
+      "Yes, Flywings provides tourist visa assistance for tourist and business visas to 50+ countries. Our experts guide you through documentation, appointment booking and submission. The decision itself always rests with the embassy.",
   },
   {
     question: "Can I customize my holiday package?",

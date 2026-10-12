@@ -194,16 +194,20 @@ export default function ServicesClient() {
     {
       id: "visa-services",
       badge: "50+ Countries",
-      heading: "Visa Assistance & Documentation Support",
-      description: "Navigating visa requirements can be overwhelming — but not with Flywings. Our certified visa consultants simplify the entire process, from documentation to appointment booking, ensuring maximum success rate for your visa application.",
+      heading: "Tourist Visa Assistance & Documentation Support",
+      // "Certified visa consultants" names a certification that does not
+      // exist, and "maximum success rate" / "high success rate" claim an
+      // approval rate we cannot evidence: approval is the embassy's
+      // decision. Same reason the claim came out of WhyChooseUs.
+      description: "Navigating visa requirements can be overwhelming - but not with Flywings. Our visa desk handles the whole process with you, from documentation to appointment booking, and checks every file before it is submitted.",
       bullets: [
         "Expert guidance on tourist & business visas",
         "Complete document checklist and review support",
         "Appointment scheduling and slot booking assistance",
         "Fast-track processing for urgent travel",
-        "High visa success rate across 50+ countries",
+        "Tourist visa assistance for 50+ countries",
       ],
-      ctaLabel: "Get Visa Assistance",
+      ctaLabel: "Get Tourist Visa Assistance",
       image: serviceVisa,
       imageAlt: "Travel consultant helping client with visa documentation — Flywings visa services",
       reverse: false,
@@ -259,8 +263,8 @@ export default function ServicesClient() {
       answer: "You can book flights by contacting our travel experts directly via phone, WhatsApp, or by filling out our inquiry form. We'll find the best fares for your route and confirm instantly. We also offer group booking discounts for 10+ passengers.",
     },
     {
-      question: "Do you provide visa assistance?",
-      answer: "Yes, Flywings provides professional visa assistance for tourist and business visas to 50+ countries. Our experts guide you through every step — documentation, appointment booking, and submission — ensuring a high success rate.",
+      question: "Do you provide tourist visa assistance?",
+      answer: "Yes, Flywings provides tourist visa assistance for tourist and business visas to 50+ countries. Our experts guide you through every step - documentation, appointment booking and submission - and check the file before it goes in. The decision itself always rests with the embassy.",
     },
     {
       question: "Can I customize my holiday package?",
@@ -335,7 +339,7 @@ export default function ServicesClient() {
               transition={{ duration: 0.7, delay: 0.2 }}
               className="font-body text-white/80 text-lg sm:text-xl max-w-xl leading-relaxed mb-8"
             >
-              Complete Travel Solutions — Flights, Holidays, Visa & More
+              Complete Travel Solutions - Flights, Holidays, Tourist Visa & More
             </motion.p>
 
             {/* Quick nav pills */}
@@ -348,7 +352,7 @@ export default function ServicesClient() {
               {[
                 { label: "Flights", href: "#flight-booking" },
                 { label: "Holidays", href: "#holiday-packages" },
-                { label: "Visa", href: "#visa-services" },
+                { label: "Tourist Visa", href: "#visa-services" },
                 { label: "Hotels", href: "#hotel-booking" },
                 { label: "Corporate", href: "#corporate-travel" },
               ].map(({ label, href }) => (

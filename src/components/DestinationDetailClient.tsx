@@ -5,8 +5,8 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { motion, useInView, AnimatePresence } from "framer-motion";
 import {
-  ChevronRight, Star, Clock, MapPin, Sun, DollarSign, Globe,
-  Cloud, CheckCircle2, XCircle, Phone, MessageCircle, ArrowRight,
+  ChevronRight, Clock, MapPin, Sun, DollarSign, Globe,
+  Cloud, Phone, MessageCircle, ArrowRight,
   Plane, Hotel, Utensils, Shield, Headphones, Users, BadgeCheck,
   ChevronDown, ChevronUp,
 } from "lucide-react";
@@ -136,7 +136,6 @@ function FAQItem({ faq, index }: { faq: { question: string; answer: string }; in
 export default function DestinationDetailClient({ destination }: { destination: Destination }) {
   const router = useRouter();
   const [inquiryOpen, setInquiryOpen] = useState(false);
-  const [activeDay, setActiveDay] = useState<number | null>(0);
 
   const packagesRef = useRef(null);
   const packagesInView = useInView(packagesRef, { once: true, margin: "-80px" });
@@ -187,12 +186,6 @@ export default function DestinationDetailClient({ destination }: { destination: 
             <p className="font-body text-white/80 text-lg max-w-2xl mb-6 leading-relaxed">
               {destination.tagline}
             </p>
-            <div className="flex flex-wrap items-center gap-4">
-              <div className="flex items-center gap-1.5">
-                {[...Array(5)].map((_, i) => <Star key={i} className="w-4 h-4 text-secondary fill-secondary" />)}
-                <span className="text-white/80 font-body text-sm ml-1">5.0 Rating</span>
-              </div>
-            </div>
             <div className="flex flex-wrap gap-3 mt-8">
               <button
                 onClick={() => setInquiryOpen(true)}
@@ -201,10 +194,10 @@ export default function DestinationDetailClient({ destination }: { destination: 
                 Get a Free Quote
               </button>
               <a
-                href="#itinerary"
+                href="#packages"
                 className="px-7 py-3.5 bg-white/15 backdrop-blur-sm border border-white/30 text-white font-display font-600 rounded-full hover:bg-white/25 transition-all duration-200"
               >
-                View Itinerary
+                View Packages
               </a>
             </div>
           </motion.div>
@@ -267,7 +260,11 @@ export default function DestinationDetailClient({ destination }: { destination: 
                 { icon: Sun, label: "Best Time to Visit", value: destination.bestTime },
                 { icon: Clock, label: "Ideal Duration", value: destination.tripDuration },
                 { icon: DollarSign, label: "Currency", value: destination.currency },
-                { icon: Globe, label: "Visa for Indians", value: destination.visaInfo },
+                {
+                  icon: Globe,
+                  label: destination.country === "India" ? "Permits & ID" : "Visa for Indians",
+                  value: destination.visaInfo,
+                },
                 { icon: Cloud, label: "Climate", value: destination.weather },
                 { icon: MapPin, label: "Country", value: destination.country },
               ].map(({ icon: Icon, label, value }) => (
@@ -329,123 +326,6 @@ export default function DestinationDetailClient({ destination }: { destination: 
         </div>
       </section>
 
-      {/* ── ITINERARY ─────────────────────────────────── */}
-      <section id="itinerary" className="section-padding bg-muted/30">
-        <div className="container-custom">
-          <SectionHeader
-            badge="Day by Day"
-            title={`${destination.name} Tour Itinerary`}
-            subtitle={`A carefully planned day-by-day itinerary to maximise your ${destination.name} experience.`}
-          />
-          <div className="max-w-3xl mx-auto space-y-3">
-            {destination.itinerary.map((day, i) => (
-              <motion.div
-                key={day.day}
-                initial={{ opacity: 0, x: -20 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.06 }}
-                className="border border-border rounded-2xl overflow-hidden bg-card shadow-card"
-              >
-                <button
-                  onClick={() => setActiveDay(activeDay === i ? null : i)}
-                  className="w-full flex items-center gap-4 px-6 py-5 hover:bg-muted/40 transition-colors text-left"
-                >
-                  <div className="w-12 h-12 rounded-xl bg-gradient-navy text-secondary font-display font-800 text-sm flex items-center justify-center flex-shrink-0">
-                    Day<br />{day.day}
-                  </div>
-                  <div className="flex-1 min-w-0">
-                    <h3 className="font-display font-700 text-primary text-sm sm:text-base">{day.title}</h3>
-                    <p className="text-muted-foreground font-body text-xs sm:text-sm line-clamp-1 mt-0.5">{day.description}</p>
-                  </div>
-                  {activeDay === i
-                    ? <ChevronUp className="w-5 h-5 text-secondary flex-shrink-0" />
-                    : <ChevronDown className="w-5 h-5 text-muted-foreground flex-shrink-0" />
-                  }
-                </button>
-                <AnimatePresence>
-                  {activeDay === i && (
-                    <motion.div
-                      initial={{ height: 0, opacity: 0 }}
-                      animate={{ height: "auto", opacity: 1 }}
-                      exit={{ height: 0, opacity: 0 }}
-                      transition={{ duration: 0.3 }}
-                      className="overflow-hidden"
-                    >
-                      <div className="px-6 pb-6 border-t border-border pt-4">
-                        <p className="text-muted-foreground font-body text-sm leading-relaxed mb-4">{day.description}</p>
-                        <ul className="space-y-2">
-                          {day.activities.map((act) => (
-                            <li key={act} className="flex items-start gap-2.5 font-body text-sm text-primary/80">
-                              <CheckCircle2 className="w-4 h-4 text-secondary flex-shrink-0 mt-0.5" />
-                              {act}
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
-                    </motion.div>
-                  )}
-                </AnimatePresence>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ── INCLUSIONS & EXCLUSIONS ────────────────────── */}
-      <section className="section-padding bg-background">
-        <div className="container-custom">
-          <SectionHeader badge="What's Included" title="Package Inclusions & Exclusions" />
-          <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-            {/* Inclusions */}
-            <motion.div
-              initial={{ opacity: 0, x: -20 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              className="bg-muted border border-border rounded-2xl p-7"
-            >
-              <div className="flex items-center gap-3 mb-5">
-                <div className="w-9 h-9 rounded-xl bg-background flex items-center justify-center border border-border">
-                  <CheckCircle2 className="w-5 h-5 text-secondary" />
-                </div>
-                <h3 className="font-display font-700 text-primary text-lg">What's Included</h3>
-              </div>
-              <ul className="space-y-3">
-                {destination.inclusions.map((item) => (
-                  <li key={item} className="flex items-start gap-2.5 font-body text-sm text-foreground">
-                    <CheckCircle2 className="w-4 h-4 text-secondary flex-shrink-0 mt-0.5" />
-                    {item}
-                  </li>
-                ))}
-              </ul>
-            </motion.div>
-
-            {/* Exclusions */}
-            <motion.div
-              initial={{ opacity: 0, x: 20 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              className="bg-muted/70 border border-border rounded-2xl p-7"
-            >
-              <div className="flex items-center gap-3 mb-5">
-                <div className="w-9 h-9 rounded-xl bg-background flex items-center justify-center border border-border">
-                  <XCircle className="w-5 h-5 text-destructive" />
-                </div>
-                <h3 className="font-display font-700 text-primary text-lg">Not Included</h3>
-              </div>
-              <ul className="space-y-3">
-                {destination.exclusions.map((item) => (
-                  <li key={item} className="flex items-start gap-2.5 font-body text-sm text-foreground">
-                    <XCircle className="w-4 h-4 text-destructive flex-shrink-0 mt-0.5" />
-                    {item}
-                  </li>
-                ))}
-              </ul>
-            </motion.div>
-          </div>
-        </div>
-      </section>
-
       {/* ── WHY BOOK WITH FLYWINGS ─────────────────────── */}
       <section className="section-padding bg-primary">
         <div className="container-custom">
@@ -463,7 +343,7 @@ export default function DestinationDetailClient({ destination }: { destination: 
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-5">
             {[
               { icon: Headphones, title: "24/7 Support", desc: "Round-the-clock assistance during your trip" },
-              { icon: Globe, title: "Visa Assistance", desc: "Complete visa guidance and documentation" },
+              { icon: Globe, title: "Tourist Visa Assistance", desc: "Complete visa guidance and documentation" },
               { icon: BadgeCheck, title: "Transparent Pricing", desc: "No hidden fees. What you see is what you pay" },
               { icon: Users, title: "Local Experts", desc: "Destination specialists with in-depth knowledge" },
             ].map(({ icon: Icon, title, desc }, i) => (

@@ -43,6 +43,17 @@ export interface TourPackage {
 export interface Destination {
   slug: string;
   name: string;
+  /**
+   * Whether this destination gets its own card in the /destinations
+   * grid. Defaults to true.
+   *
+   * Set false where two entries are the same place to a visitor
+   * scanning the grid, as Manali and the Shimla & Manali circuit are.
+   * The page itself stays: it targets its own search term, keeps its
+   * URL, and is still reached from the related-destinations links on
+   * the Manali and Spiti pages, so it is not orphaned.
+   */
+  listed?: boolean;
   country: string;
   tagline: string;
   heroImage: string;
@@ -75,7 +86,8 @@ const destinations: Destination[] = [
     bestTime: "November to March",
     tripDuration: "5–7 Days",
     currency: "AED (UAE Dirham)",
-    visaInfo: "Visa on arrival for Indian passport holders (30 days)",
+    visaInfo:
+      "Most Indian passport holders need a UAE tourist visa arranged before travel, which we handle. Visa on arrival (14 days) applies only if you also hold a valid US visa or US Green Card",
     weather: "Desert climate; mild winters (17–28°C), hot summers (38°C+)",
     about:
       "Dubai is a jewel of the Middle East — a city that rose from desert sands to become one of the most glamorous destinations on Earth. Home to the world's tallest building (Burj Khalifa), ultra-luxury malls, pristine beaches, and thrilling desert safaris, Dubai is the ultimate blend of tradition and ultra-modernity. Indian travelers love Dubai for its seamless visa process, direct flights, and welcoming culture. Whether you seek a honeymoon escape, a family holiday, or a solo adventure, Dubai delivers unforgettable experiences at every turn.",
@@ -464,7 +476,8 @@ const destinations: Destination[] = [
     bestTime: "March to October",
     tripDuration: "4–6 Days",
     currency: "INR (Indian Rupee)",
-    visaInfo: "No visa required for Indian citizens",
+    visaInfo:
+      "No visa or permit for Indian citizens. Carry a government photo ID: hotels, the Gulmarg gondola and the Srinagar houseboats all ask for it",
     weather: "Alpine climate; pleasant summers (15–25°C), snowy winters (−5 to 5°C)",
     about:
       "Kashmir — aptly called 'Paradise on Earth' — is India's crown jewel of natural beauty. The Kashmir Valley stuns with mirror-like Dal Lake, flower-filled gardens, majestic Mughal architecture, and snow-draped Himalayan peaks. A shikara ride at sunrise, a stay on a traditional wooden houseboat, the meadows of Gulmarg, and the hill station charm of Pahalgam create memories that last a lifetime. Kashmir is the perfect domestic holiday for Indian families, couples, and solo travelers seeking dramatic landscapes.",
@@ -1058,7 +1071,8 @@ const destinations: Destination[] = [
     bestTime: "March to June, and December to February for snow",
     tripDuration: "4–6 Days",
     currency: "INR (Indian Rupee)",
-    visaInfo: "No visa or permit required for Indian citizens",
+    visaInfo:
+      "No visa for Indian citizens. A separate Rohtang Pass permit is needed only if you drive up to Rohtang itself, and we arrange it; the Atal Tunnel route on to Lahaul does not need one",
     weather: "Pleasant summers (10–25°C), cold snowy winters (−2 to 10°C), heavy monsoon July–August",
     about:
       "Manali sits at roughly 2,050 metres in the Beas valley, about 310 kilometres and eight to nine hours by road from Chandigarh, which makes it the most-booked hill holiday in the Tricity. The town splits neatly in two: Old Manali with its cafés, orchards and slow mornings, and the newer town around Mall Road that handles the crowds. Beyond it lie Solang Valley for paragliding and winter snow, the Atal Tunnel that now opens Lahaul as a comfortable day trip, and the Hadimba Devi temple standing in deodar forest since 1553. Most Chandigarh travellers go by overnight Volvo or private cab, arrive at breakfast and lose nothing to travel days, which is exactly why the trip works over a long weekend.",
@@ -1189,6 +1203,7 @@ const destinations: Destination[] = [
   {
     slug: "shimla-manali",
     name: "Shimla & Manali",
+    listed: false,
     country: "India",
     tagline: "The Himachal circuit the Tricity has been doing for fifty years",
     heroImage: destShimlaManali,
@@ -1196,7 +1211,8 @@ const destinations: Destination[] = [
     bestTime: "March to June, and December to February for snow",
     tripDuration: "5–7 Days",
     currency: "INR (Indian Rupee)",
-    visaInfo: "No visa or permit required for Indian citizens",
+    visaInfo:
+      "No visa for Indian citizens. A separate Rohtang Pass permit is needed only if you drive up to Rohtang itself, and we arrange it; the Atal Tunnel route on to Lahaul does not need one",
     weather: "Shimla 5–22°C, Manali −2 to 25°C by season. Both cold and snowy December to February",
     about:
       "This is the classic Himachal loop and it belongs to Chandigarh more than to anywhere else, because the drive starts here. Shimla is only 115 kilometres away, close enough to reach by lunch, and the Kalka–Shimla toy train that UNESCO lists as World Heritage boards a half hour from the city. From Shimla the road runs on to Manali, roughly 250 kilometres through the Sutlej and Beas valleys. Doing both in one trip gives you two very different hill stations: Shimla with its colonial ridge, Christ Church and Mall Road promenade, and Manali with snow, adventure sport and the Atal Tunnel. Five to seven nights covers the circuit without spending the whole holiday in the car.",
@@ -1329,7 +1345,8 @@ const destinations: Destination[] = [
     bestTime: "November to February",
     tripDuration: "4–6 Days",
     currency: "INR (Indian Rupee)",
-    visaInfo: "No visa required for Indian citizens",
+    visaInfo:
+      "No visa or permit for Indian citizens. Carry a government photo ID for hotel check-in, and a licence plus the original RC if you hire a scooter",
     weather: "Warm through the year (22–33°C). Heavy monsoon June to September",
     about:
       "Goa is the one beach holiday most Chandigarh families take by air rather than road, and the choice that actually decides the trip is north or south. North Goa, around Baga, Calangute, Anjuna and Vagator, is the busy half: markets, shacks, nightlife and water sports. South Goa, around Palolem, Agonda, Colva and Benaulim, is quieter, greener and built around resorts rather than streets. Old Goa sits between them with the Basilica of Bom Jesus and Se Cathedral, both UNESCO listed. From Chandigarh most itineraries connect through Delhi or Mumbai, with seasonal direct options, and both Goan airports, Dabolim and the newer Manohar International at Mopa, are used depending on fares.",

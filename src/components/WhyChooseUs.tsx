@@ -30,7 +30,7 @@ const features = [
   },
   {
     icon: FileText,
-    title: "Visa Assistance",
+    title: "Tourist Visa Assistance",
     // "High approval rates" implied a success rate we cannot evidence,
     // and approval is the embassy's decision, not ours.
     description: "Tourist visa guidance for 50+ countries, with every file checked before it is submitted.",

@@ -119,7 +119,7 @@ const servicePages: ServicePage[] = [
   // ─── VISA ASSISTANCE ───────────────────────────────────────
   {
     slug: "tourist-visa-assistance",
-    name: "Visa Services",
+    name: "Tourist Visa Assistance",
     heroTitle: "Tourist Visa Services &",
     heroAccent: "Application Assistance",
     heroSubtitle:

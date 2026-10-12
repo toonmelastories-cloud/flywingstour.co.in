@@ -25,11 +25,17 @@ export default function Destinations() {
         data={[
           itemListJsonLd(
             "Flywings Travel Destinations",
-            destinations.map((d) => ({
-              name: `${d.name} Tour Packages`,
-              path: `/destinations/${d.slug}`,
-              image: d.heroImage,
-            }))
+            // Matches what the grid actually shows: an ItemList that
+            // names a card the visitor cannot see describes a different
+            // page from the one being served. The hidden destination
+            // keeps its own page, sitemap entry and related links.
+            destinations
+              .filter((d) => d.listed !== false)
+              .map((d) => ({
+                name: `${d.name} Tour Packages`,
+                path: `/destinations/${d.slug}`,
+                image: d.heroImage,
+              }))
           ),
           breadcrumbJsonLd([
             { name: "Home", path: "/" },

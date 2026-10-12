@@ -10,12 +10,15 @@ import WhatsAppButton from "@/components/WhatsAppButton";
 import InquiryModal from "@/components/InquiryModal";
 import destinations from "@/data/destinations";
 
-const REGIONS = ["All", "Middle East", "Southeast Asia", "South Asia", "Indian Ocean", "Central Asia"];
+const REGIONS = ["All", "India", "Middle East", "Southeast Asia", "Indian Ocean", "Central Asia"];
 
+// Manali, Goa and Spiti were added without a region, so every filter
+// except "All" hid them. "South Asia" is also the wrong label for a
+// list that is entirely Indian.
 const regionMap: Record<string, string[]> = {
+  India: ["kashmir", "manali", "shimla-manali", "goa", "spiti-valley"],
   "Middle East": ["dubai"],
   "Southeast Asia": ["thailand", "bali", "singapore", "malaysia"],
-  "South Asia": ["kashmir"],
   "Indian Ocean": ["maldives"],
   "Central Asia": ["almaty"],
 };
@@ -28,6 +31,9 @@ export default function DestinationsListClient() {
   const isInView = useInView(ref, { once: true, margin: "-60px" });
 
   const filtered = destinations.filter((d) => {
+    // Hidden entries stay reachable by search, just not by default: a
+    // visitor typing "shimla" should still find the circuit.
+    if (d.listed === false && !search.trim()) return false;
     const matchSearch = d.name.toLowerCase().includes(search.toLowerCase()) ||
       d.country.toLowerCase().includes(search.toLowerCase());
     const matchRegion = activeRegion === "All" || regionMap[activeRegion]?.includes(d.slug);
@@ -120,8 +126,21 @@ export default function DestinationsListClient() {
                     initial={{ opacity: 0, y: 40 }}
                     animate={isInView ? { opacity: 1, y: 0 } : {}}
                     transition={{ duration: 0.5, delay: i * 0.08 }}
-                    className="group relative rounded-2xl overflow-hidden shadow-card hover:shadow-navy transition-all duration-300 hover:-translate-y-1 cursor-pointer"
+                    className="group relative rounded-2xl overflow-hidden shadow-card hover:shadow-navy transition-all duration-300 hover:-translate-y-1"
                   >
+                    {/*
+                      The card used to show a pointer cursor and lift on
+                      hover while only the button inside it was a link,
+                      and that button was invisible until hover. The whole
+                      card is the link now; the button below is styled
+                      text inside it, not a second anchor, because an
+                      anchor inside an anchor is invalid HTML.
+                    */}
+                    <Link
+                      href={`/destinations/${dest.slug}`}
+                      aria-label={`${dest.name} tour packages`}
+                      className="block"
+                    >
                     {/* Image */}
                     <div className="relative h-72 overflow-hidden">
                       <img
@@ -146,13 +165,11 @@ export default function DestinationsListClient() {
                       <p className="text-white/70 font-body text-xs leading-relaxed mb-4 max-h-0 overflow-hidden group-hover:max-h-20 transition-all duration-300">
                         {dest.tagline}
                       </p>
-                      <Link
-                        href={`/destinations/${dest.slug}`}
-                        className="inline-flex items-center gap-2 px-5 py-2.5 bg-secondary text-primary font-display font-700 text-sm rounded-full shadow-gold hover:opacity-90 transition-all opacity-0 group-hover:opacity-100 translate-y-2 group-hover:translate-y-0 duration-300"
-                      >
+                      <span className="inline-flex items-center gap-2 px-5 py-2.5 bg-secondary text-primary font-display font-700 text-sm rounded-full shadow-gold group-hover:opacity-90 transition-all opacity-0 group-hover:opacity-100 translate-y-2 group-hover:translate-y-0 duration-300">
                         Explore Packages <ArrowRight className="w-3.5 h-3.5" />
-                      </Link>
+                      </span>
                     </div>
+                    </Link>
                   </motion.div>
                 ))}
               </div>

@@ -57,8 +57,15 @@ export default function DestinationsSection() {
               initial={{ opacity: 0, y: 50 }}
               animate={isInView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.5, delay: i * 0.1 }}
-              className="group relative rounded-2xl overflow-hidden shadow-card hover:shadow-navy transition-all duration-400 cursor-pointer"
+              className="group relative rounded-2xl overflow-hidden shadow-card hover:shadow-navy transition-all duration-400"
             >
+              {/* Same fix as the destinations listing: the whole card is
+                  the link, and the button inside it is styled text. */}
+              <Link
+                href={`/destinations/${slug}`}
+                aria-label={`${name} tour packages`}
+                className="block"
+              >
               {/* Image */}
               <div className="relative h-72 overflow-hidden">
                 <img
@@ -85,13 +92,11 @@ export default function DestinationsSection() {
                 <p className="text-white/70 font-body text-xs leading-relaxed mb-4 opacity-0 group-hover:opacity-100 translate-y-2 group-hover:translate-y-0 transition-all duration-300">
                   {description}
                 </p>
-                <Link
-                  href={`/destinations/${slug}`}
-                  className="inline-flex items-center gap-2 px-5 py-2.5 bg-gold text-navy font-display font-700 text-sm rounded-full shadow-gold hover:bg-gold-light transition-colors opacity-0 group-hover:opacity-100 translate-y-2 group-hover:translate-y-0 duration-300"
-                >
+                <span className="inline-flex items-center gap-2 px-5 py-2.5 bg-gold text-navy font-display font-700 text-sm rounded-full shadow-gold group-hover:bg-gold-light transition-colors opacity-0 group-hover:opacity-100 translate-y-2 group-hover:translate-y-0 duration-300">
                   View Package <ArrowRight className="w-3.5 h-3.5" />
-                </Link>
+                </span>
               </div>
+              </Link>
             </motion.div>
           ))}
         </div>

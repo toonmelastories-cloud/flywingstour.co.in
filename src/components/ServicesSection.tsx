@@ -3,43 +3,57 @@
 import { motion } from "framer-motion";
 import { useInView } from "framer-motion";
 import { useRef } from "react";
-import { Plane, Package, FileCheck, Hotel, Briefcase, Globe } from "lucide-react";
+import Link from "next/link";
+import { Plane, Package, FileCheck, Hotel, Briefcase, Globe, ArrowRight } from "lucide-react";
 
+/**
+ * These cards looked clickable (pointer cursor, a "Learn more" arrow on
+ * hover) but were plain divs with nowhere to go, so the whole grid was
+ * a dead end. Each one now carries the href of the page it describes.
+ */
 const services = [
   {
     icon: Plane,
     title: "Flight Booking",
     description: "Best fares on domestic & international flights with flexible booking options and instant confirmation.",
+    href: "/services/flight-booking",
     color: "from-blue-500/10 to-blue-600/5",
   },
   {
     icon: Package,
     title: "Holiday Packages",
     description: "All-inclusive curated holiday packages for families, couples, and solo travelers worldwide.",
+    href: "/packages",
     color: "from-emerald-500/10 to-emerald-600/5",
   },
   {
     icon: FileCheck,
-    title: "Visa Services",
-    description: "Hassle-free visa processing with expert guidance, documentation support, and high success rates.",
+    title: "Tourist Visa Assistance",
+    // "High success rates" went the way of the other unevidenced
+    // claims: approval is the embassy's decision, not ours.
+    description: "Tourist visa guidance for 50+ countries, with documentation support and every file checked before it is submitted.",
+    href: "/services/tourist-visa-assistance",
     color: "from-gold/10 to-gold/5",
   },
   {
     icon: Hotel,
     title: "Hotel Booking",
     description: "Handpicked luxury hotels and resorts at the best rates, from boutique stays to 5-star properties.",
+    href: "/services/hotel-booking",
     color: "from-purple-500/10 to-purple-600/5",
   },
   {
     icon: Briefcase,
     title: "Corporate Travel",
     description: "End-to-end corporate travel management with dedicated account managers and priority support.",
+    href: "/services/corporate-travel",
     color: "from-red-500/10 to-red-600/5",
   },
   {
     icon: Globe,
     title: "Group Tours",
     description: "Specially crafted group tour experiences with expert local guides and seamless logistics.",
+    href: "/services/group-tours",
     color: "from-teal-500/10 to-teal-600/5",
   },
 ];
@@ -72,14 +86,18 @@ export default function ServicesSection() {
 
         {/* Cards */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {services.map(({ icon: Icon, title, description, color }, i) => (
+          {services.map(({ icon: Icon, title, description, href, color }, i) => (
             <motion.div
               key={title}
               initial={{ opacity: 0, y: 40 }}
               animate={isInView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.5, delay: i * 0.08 }}
             >
-              <div className="group h-full bg-white rounded-2xl p-6 border border-border hover:border-gold/40 shadow-card hover:shadow-gold transition-all duration-300 cursor-pointer hover:-translate-y-1">
+              {/* The whole card is the link, so a click lands anywhere. */}
+              <Link
+                href={href}
+                className="group flex flex-col h-full bg-white rounded-2xl p-6 border border-border hover:border-gold/40 shadow-card hover:shadow-gold transition-all duration-300 hover:-translate-y-1"
+              >
                 <div className={`w-14 h-14 rounded-2xl bg-gradient-to-br ${color} flex items-center justify-center mb-5 group-hover:scale-110 transition-transform duration-300`}>
                   <Icon className="w-7 h-7 text-navy group-hover:text-gold transition-colors duration-300" />
                 </div>
@@ -87,10 +105,14 @@ export default function ServicesSection() {
                   {title}
                 </h3>
                 <p className="text-muted-foreground font-body text-sm leading-relaxed">{description}</p>
-                <div className="mt-4 flex items-center gap-1 text-gold text-sm font-body font-medium opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                  Learn more <span className="ml-1">→</span>
-                </div>
-              </div>
+                {/*
+                  Was hidden until hover, which left no hint of where the
+                  card went on a touch screen, where there is no hover.
+                */}
+                <span className="mt-4 pt-1 inline-flex items-center gap-1.5 text-gold text-sm font-body font-semibold group-hover:gap-2.5 transition-all duration-300">
+                  Learn more <ArrowRight className="w-3.5 h-3.5" />
+                </span>
+              </Link>
             </motion.div>
           ))}
         </div>
