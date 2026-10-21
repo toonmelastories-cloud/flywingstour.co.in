@@ -956,9 +956,15 @@ const destinations: Destination[] = [
     weather: "Continental climate; warm summers (20–30°C), cold snowy winters (−10 to 0°C)",
     about:
       "Almaty is emerging as one of the most exciting new destinations for Indian travelers — a green, mountain-ringed city at the foot of the Tien Shan range, with Soviet-era architecture, leafy boulevards, and easy access to some of Central Asia's most dramatic landscapes. From the Kok-Tobe hilltop viewpoint to the high-altitude Medeu ice rink and the Shymbulak ski resort, Almaty offers a refreshingly offbeat alternative to the usual international circuit, reachable on a direct Air Astana flight from Delhi.",
-    metaTitle: "Almaty Kazakhstan Tour Package from India | Flywings Tour & Packages Pvt Ltd",
+    // The old title ran 717px against Google's ~580px cut-off, so the
+    // brand half of it never showed. Dropping it leaves room for what
+    // the page is actually about.
+    metaTitle: "Almaty Tour Package from India | Flights & Sightseeing",
+    // As supplied by the SEO team, less the opening "Explore": with it
+    // the line measured 931px and clipped the closing call to action.
+    // Leading on the keyword instead is no loss.
     metaDescription:
-      "Almaty Kazakhstan tour package from India starting ₹81,900, with Air Astana flights from Delhi, hotel and sightseeing. Free quote.",
+      "Almaty tour packages from India starting at ₹81,900, with Air Astana flights from Delhi, hotel stay and sightseeing. Contact Flywings for a quote.",
     packages: [
       {
         id: "almaty-kazakhstan",
