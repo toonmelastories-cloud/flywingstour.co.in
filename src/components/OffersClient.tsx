@@ -19,11 +19,7 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import WhatsAppButton from "@/components/WhatsAppButton";
 import InquiryModal from "@/components/InquiryModal";
-import {
-  activeOffers,
-  savingOn,
-  type QuotedPackage,
-} from "@/data/quotedPackages";
+import { savingOn, type QuotedPackage } from "@/data/quotedPackages";
 import { CONTACT } from "@/lib/seo";
 
 const WA_NUMBER = CONTACT.phoneE164.replace("+", "");
@@ -265,7 +261,12 @@ function OfferCard({ offer, index, onQuote }: {
   );
 }
 
-export default function OffersClient() {
+/**
+ * `offers` comes from the server: the live rates in quotedPackages.ts
+ * plus any WordPress package switched onto the Offers page. Rates past
+ * their hold date are already filtered out there.
+ */
+export default function OffersClient({ offers }: { offers: QuotedPackage[] }) {
   const [inquiryOpen, setInquiryOpen] = useState(false);
   const [inquiryDestination, setInquiryDestination] = useState("");
   const heroRef = useRef(null);
@@ -275,10 +276,6 @@ export default function OffersClient() {
     setInquiryDestination(destination);
     setInquiryOpen(true);
   };
-
-  // Rates that have passed their hold date drop off by themselves; see
-  // activeOffers() in the data file.
-  const offers = activeOffers();
 
   const cheapest = offers.reduce((lowest, o) => {
     const n = Number(o.startingPrice.replace(/[^\d]/g, ""));

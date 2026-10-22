@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import PillarInternationalClient from "@/components/PillarInternationalClient";
 import JsonLd from "@/components/JsonLd";
 import { stripLinks } from "@/components/LinkedText";
-import { getAllTours } from "@/lib/tours";
+import { getAllTours, regionOf } from "@/lib/tours";
 import { PILLAR_FAQS } from "@/data/pillar-international";
 import {
   breadcrumbJsonLd,
@@ -36,9 +36,7 @@ export const metadata: Metadata = pageMetadata({
 });
 
 export default async function InternationalToursFromChandigarhPage() {
-  const tours = (await getAllTours()).filter(
-    (pkg) => pkg.destinationSlug !== "kashmir"
-  );
+  const tours = (await getAllTours()).filter((pkg) => regionOf(pkg) === "international");
   // Slim projection: only what the cards render (business rule — no
   // prices anywhere on this page, not even in the serialized payload).
   const packages = tours.map((pkg) => ({

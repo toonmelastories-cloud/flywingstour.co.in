@@ -8,10 +8,11 @@
  * throwing — so pages can fall back to static content and builds
  * never crash because WordPress isn't ready yet.
  *
- * Content model: tours and blog articles are both plain WordPress
- * Posts (no ACF, no custom post type). Tours are simply posts assigned
- * to a category whose slug is TOURS_CATEGORY_SLUG (create it in
- * WP admin and tag tour posts with it). SEO title/description are
+ * Content model: blog articles are plain WordPress Posts. Tour packages
+ * come from the Flywings Packages plugin (wp-plugin/flywings-packages,
+ * read through wpJsonFetch and src/lib/tours.ts). An older setup where
+ * a tour was a post in the TOURS_CATEGORY_SLUG category is still read,
+ * so nothing breaks if such posts exist. SEO title/description are
  * managed entirely by the Yoast SEO plugin, which — once installed and
  * active — automatically adds a `yoast_head_json` field to every post
  * in the REST API response. No extra plugin/config needed for that.
@@ -75,11 +76,25 @@ interface WpFetchOptions {
   fresh?: boolean;
 }
 
-async function wpFetch<T>(
+// The REST root (…/wp-json), for namespaces outside wp/v2 such as the
+// Flywings Packages plugin's flywings/v1.
+const WP_JSON_ROOT = WP_API_URL.replace(/\/wp\/v2\/?$/, "");
+
+async function wpFetch<T>(path: string, options?: WpFetchOptions): Promise<T | null> {
+  return fetchJson<T>(WP_API_URL, path, options);
+}
+
+/** Same fail-soft fetch as the wp/v2 helpers, against any /wp-json/ namespace. */
+export async function wpJsonFetch<T>(path: string, options?: WpFetchOptions): Promise<T | null> {
+  return fetchJson<T>(WP_JSON_ROOT, path, options);
+}
+
+async function fetchJson<T>(
+  base: string,
   path: string,
   { fresh = false }: WpFetchOptions = {}
 ): Promise<T | null> {
-  const url = `${WP_API_URL}${path}${path.includes("?") ? "&" : "?"}_v=${CACHE_VERSION}`;
+  const url = `${base}${path}${path.includes("?") ? "&" : "?"}_v=${CACHE_VERSION}`;
   try {
     const res = await fetch(url, {
       // Tagged so /api/revalidate can invalidate every WP-derived page

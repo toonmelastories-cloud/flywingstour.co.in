@@ -5,6 +5,7 @@ import dynamic from "next/dynamic";
 import Navbar from "@/components/Navbar";
 import HeroSection from "@/components/HeroSection";
 import type { HomeBlogPost } from "@/components/BlogSection";
+import type { FeaturedPackageCard } from "@/lib/tours";
 
 // Below-the-fold sections are code-split into their own chunks so the
 // initial bundle parses/hydrates faster (INP/TBT). They still render on
@@ -22,7 +23,13 @@ const WhatsAppButton = dynamic(() => import("@/components/WhatsAppButton"), { ss
 // Only fetched the first time a visitor opens it — pure interaction UI.
 const InquiryModal = dynamic(() => import("@/components/InquiryModal"), { ssr: false });
 
-export default function HomeClient({ latestPosts }: { latestPosts: HomeBlogPost[] }) {
+export default function HomeClient({
+  latestPosts,
+  featuredPackages,
+}: {
+  latestPosts: HomeBlogPost[];
+  featuredPackages: FeaturedPackageCard[];
+}) {
   const [inquiryOpen, setInquiryOpen] = useState(false);
   const [inquiryRequested, setInquiryRequested] = useState(false);
 
@@ -39,7 +46,7 @@ export default function HomeClient({ latestPosts }: { latestPosts: HomeBlogPost[
         <ServicesSection />
         <DestinationsSection />
         <WhyChooseUs />
-        <TourPackages onBook={openInquiry} />
+        <TourPackages packages={featuredPackages} onBook={openInquiry} />
         <LocalTravelAgents />
         <Testimonials />
         <BlogSection posts={latestPosts} />

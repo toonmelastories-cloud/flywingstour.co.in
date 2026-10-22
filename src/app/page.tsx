@@ -3,6 +3,7 @@ import HomeClient from "@/components/HomeClient";
 import JsonLd from "@/components/JsonLd";
 import type { HomeBlogPost } from "@/components/BlogSection";
 import { getPosts, getFeaturedImageUrl } from "@/lib/wordpress";
+import { getFeaturedPackageCards } from "@/lib/tours";
 import { stripWpHtml, estimateReadTime, getCategoryColor } from "@/lib/sanitize";
 import { ALL_KEYWORDS, pageMetadata } from "@/lib/seo";
 
@@ -49,7 +50,7 @@ const homeFaqs = [
 export default async function Home() {
   // Latest 3 posts for the "Latest Travel Insights" section; the
   // section hides itself if WordPress is unreachable.
-  const posts = await getPosts();
+  const [posts, featuredPackages] = await Promise.all([getPosts(), getFeaturedPackageCards()]);
   const latestPosts: HomeBlogPost[] = (posts ?? []).slice(0, 3).map((post) => {
     const category = post._embedded?.["wp:term"]?.[0]?.[0]?.name ?? "Travel Guide";
     return {
@@ -81,7 +82,7 @@ export default async function Home() {
           })),
         }}
       />
-      <HomeClient latestPosts={latestPosts} />
+      <HomeClient latestPosts={latestPosts} featuredPackages={featuredPackages} />
     </>
   );
 }

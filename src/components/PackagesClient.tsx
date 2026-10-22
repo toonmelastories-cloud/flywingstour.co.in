@@ -14,12 +14,21 @@ import WhatsAppButton from "@/components/WhatsAppButton";
 import InquiryModal from "@/components/InquiryModal";
 import type { TourData } from "@/lib/tours";
 
-const FILTERS = ["All", "Dubai", "Thailand", "Bali", "Kashmir", "Maldives", "Singapore", "Malaysia", "Almaty"];
+/** A destination chip in the filter bar, built on the server from the packages themselves. */
+export interface DestinationFilter {
+  slug: string;
+  label: string;
+}
 
 function PackageCard({ pkg, index, isInView, onBook }: {
   pkg: TourData; index: number; isInView: boolean; onBook: () => void;
 }) {
   const router = useRouter();
+  const price = pkg.showPrice && !pkg.priceOnRequest ? pkg.startingPrice : "";
+  const wasPrice =
+    price && Number(pkg.originalPrice.replace(/[^\d]/g, "")) > Number(price.replace(/[^\d]/g, ""))
+      ? pkg.originalPrice
+      : "";
   const inclusionPills = [
     { label: "Flights", icon: Plane },
     { label: pkg.hotelCategory, icon: Hotel },
@@ -41,12 +50,17 @@ function PackageCard({ pkg, index, isInView, onBook }: {
       {/* Hero Image */}
       <div className="relative h-52 overflow-hidden">
         <img
-          src={pkg.heroImages[0]}
-          alt={pkg.shortTitle}
+          src={pkg.cardImage || pkg.heroImages[0]}
+          alt={pkg.heroImageAlts?.[0] || pkg.shortTitle}
           className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
           loading="lazy"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-primary/70 via-transparent to-transparent" />
+        {pkg.soldOut && (
+          <div className="absolute top-3 right-3 bg-red-500 text-white text-xs font-display font-700 px-2.5 py-1 rounded-full">
+            Sold Out
+          </div>
+        )}
         {pkg.badge && (
           <div className="absolute top-3 left-3 flex items-center gap-1 bg-secondary text-primary text-xs font-display font-700 px-2.5 py-1 rounded-full shadow-gold">
             <Tag className="w-3 h-3" /> {pkg.badge}
@@ -98,6 +112,16 @@ function PackageCard({ pkg, index, isInView, onBook }: {
           </div>
         )}
 
+        {/* Price, only where the package is set to show it */}
+        {price && (
+          <div className="flex items-baseline flex-wrap gap-x-1.5 mb-4">
+            <span className="text-muted-foreground font-body text-xs">From</span>
+            <span className="font-display font-800 text-secondary text-lg">{price}</span>
+            <span className="text-muted-foreground font-body text-xs">per person</span>
+            {wasPrice && <span className="text-muted-foreground font-body text-xs line-through">{wasPrice}</span>}
+          </div>
+        )}
+
         {/* CTA */}
         <div className="flex items-center gap-2">
           <Link
@@ -119,10 +143,16 @@ function PackageCard({ pkg, index, isInView, onBook }: {
   );
 }
 
-export default function PackagesClient({ packages }: { packages: TourData[] }) {
+export default function PackagesClient({
+  packages,
+  filters,
+}: {
+  packages: TourData[];
+  filters: DestinationFilter[];
+}) {
   const [inquiryOpen, setInquiryOpen] = useState(false);
   const [search, setSearch] = useState("");
-  const [activeDestination, setActiveDestination] = useState("All");
+  const [activeDestination, setActiveDestination] = useState("all");
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-60px" });
 
@@ -130,9 +160,10 @@ export default function PackagesClient({ packages }: { packages: TourData[] }) {
     const matchSearch =
       pkg.shortTitle.toLowerCase().includes(search.toLowerCase()) ||
       pkg.destinations.some((d) => d.toLowerCase().includes(search.toLowerCase()));
-    const matchDest = activeDestination === "All" ||
-      pkg.destinations.some((d) => d.toLowerCase().includes(activeDestination.toLowerCase())) ||
-      pkg.destinationSlug.toLowerCase().includes(activeDestination.toLowerCase());
+    const label = filters.find((f) => f.slug === activeDestination)?.label.toLowerCase() ?? "";
+    const matchDest = activeDestination === "all" ||
+      pkg.destinationSlug === activeDestination ||
+      (label !== "" && pkg.destinations.some((d) => d.toLowerCase().includes(label)));
     return matchSearch && matchDest;
   });
 
@@ -184,17 +215,17 @@ export default function PackagesClient({ packages }: { packages: TourData[] }) {
         <div className="container-custom py-3 space-y-2">
           <div className="flex items-center gap-2 overflow-x-auto scrollbar-hide">
             <Filter className="w-3.5 h-3.5 text-muted-foreground flex-shrink-0" />
-            {FILTERS.map((f) => (
+            {[{ slug: "all", label: "All" }, ...filters].map((f) => (
               <button
-                key={f}
-                onClick={() => setActiveDestination(f)}
+                key={f.slug}
+                onClick={() => setActiveDestination(f.slug)}
                 className={`flex-shrink-0 px-3.5 py-1.5 rounded-full text-xs font-body font-semibold transition-all ${
-                  activeDestination === f
+                  activeDestination === f.slug
                     ? "bg-primary text-secondary shadow-navy"
                     : "bg-muted text-muted-foreground hover:bg-muted/70"
                 }`}
               >
-                {f}
+                {f.label}
               </button>
             ))}
           </div>
@@ -210,7 +241,7 @@ export default function PackagesClient({ packages }: { packages: TourData[] }) {
               <h3 className="font-display font-700 text-primary text-xl mb-2">No packages found</h3>
               <p className="text-muted-foreground font-body text-sm mb-6">Try adjusting your filters or search term.</p>
               <button
-                onClick={() => { setSearch(""); setActiveDestination("All"); }}
+                onClick={() => { setSearch(""); setActiveDestination("all"); }}
                 className="px-6 py-3 bg-gradient-gold text-primary font-display font-700 rounded-full shadow-gold hover:opacity-90 transition-all"
               >
                 Clear Filters

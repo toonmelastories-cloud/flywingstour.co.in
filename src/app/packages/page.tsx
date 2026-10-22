@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
-import PackagesClient from "@/components/PackagesClient";
+import PackagesClient, { type DestinationFilter } from "@/components/PackagesClient";
 import JsonLd from "@/components/JsonLd";
-import { getAllTours } from "@/lib/tours";
+import { getDestinationBySlug } from "@/data/destinations";
+import { getAllTours, type TourData } from "@/lib/tours";
 import {
   KEYWORDS,
   breadcrumbJsonLd,
@@ -19,6 +20,32 @@ export const metadata: Metadata = pageMetadata({
   path: "/packages",
   keywords: KEYWORDS.tours,
 });
+
+/**
+ * One filter chip per destination that has packages, most packages
+ * first, so a destination added in WordPress gets its chip with no code
+ * change.
+ */
+function destinationFilters(packages: TourData[]): DestinationFilter[] {
+  const counts = new Map<string, { label: string; count: number }>();
+  for (const pkg of packages) {
+    if (!pkg.destinationSlug) continue;
+    const entry = counts.get(pkg.destinationSlug);
+    if (entry) {
+      entry.count += 1;
+    } else {
+      const label =
+        getDestinationBySlug(pkg.destinationSlug)?.name ??
+        (pkg.destinationName ||
+          pkg.destinationSlug.replace(/-/g, " ").replace(/\b\w/g, (c) => c.toUpperCase()));
+      counts.set(pkg.destinationSlug, { label, count: 1 });
+    }
+  }
+  // Stable sort: equal counts keep the order the packages came in.
+  return Array.from(counts, ([slug, { label, count }]) => ({ slug, label, count }))
+    .sort((a, b) => b.count - a.count)
+    .map(({ slug, label }) => ({ slug, label }));
+}
 
 export default async function PackagesPage() {
   const packages = await getAllTours();
@@ -40,7 +67,7 @@ export default async function PackagesPage() {
           ]),
         ]}
       />
-      <PackagesClient packages={packages} />
+      <PackagesClient packages={packages} filters={destinationFilters(packages)} />
     </>
   );
 }

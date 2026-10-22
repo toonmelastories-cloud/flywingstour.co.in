@@ -5,62 +5,16 @@ import { useInView } from "framer-motion";
 import { useRef } from "react";
 import Link from "next/link";
 import { Clock, Utensils, Hotel, Plane, ArrowRight } from "lucide-react";
-import { getPackageBySlug, type PackageData } from "@/data/packages";
-import { getDestinationBySlug } from "@/data/destinations";
+import type { FeaturedPackageCard } from "@/lib/tours";
 
-/**
- * The six packages featured on the homepage.
- *
- * This list used to be hand-written here, and it had drifted from the
- * pages it links to: "Thailand Explorer 6 Nights / 7 Days" opened a
- * 7N/8D page, "Bali Bliss 5N/6D" opened a 6N/7D page, and the Singapore
- * card advertised flights that package does not include. Each card also
- * carried an invented star rating. It is now read from the same
- * packages data the detail pages render, so the two cannot disagree.
+/*
+ * The cards are built on the server by getFeaturedPackageCards() in
+ * lib/tours.ts, from the same package data the detail pages render, so
+ * a card cannot advertise a different trip from the page it opens.
+ * Which packages appear is set with "Feature on the homepage" in the
+ * WordPress package editor.
  */
-const FEATURED_SLUGS = [
-  "dubai-luxury-5n6d",
-  "thailand-explorer-7n8d",
-  "bali-romance-6n7d",
-  "kashmir-family-4n5d",
-  "maldives-luxury-4n5d",
-  "singapore-escape-4n5d",
-];
-
-interface FeaturedPackage {
-  slug: string;
-  name: string;
-  destination: string;
-  duration: string;
-  chips: string[];
-  badge?: string;
-  featured?: boolean;
-}
-
-/** Short chips for the card, every one of them taken from the package. */
-function chipsFor(pkg: PackageData): string[] {
-  const includesFlights = pkg.inclusions.some((i) => /flight|airfare/i.test(i));
-  return [
-    ...(includesFlights ? ["Flights"] : []),
-    pkg.hotelCategory,
-    ...(pkg.transferIncluded ? ["Transfers"] : []),
-    pkg.mealsIncluded,
-  ].filter(Boolean);
-}
-
-const packages: FeaturedPackage[] = FEATURED_SLUGS.map((slug, i): FeaturedPackage | null => {
-  const pkg = getPackageBySlug(slug);
-  if (!pkg) return null;
-  return {
-    slug: pkg.slug,
-    name: pkg.shortTitle,
-    destination: getDestinationBySlug(pkg.destinationSlug)?.name ?? pkg.destinations[0] ?? "",
-    duration: pkg.duration,
-    chips: chipsFor(pkg),
-    badge: pkg.badge,
-    featured: i === 0,
-  };
-}).filter((p): p is FeaturedPackage => p !== null);
+type FeaturedPackage = FeaturedPackageCard;
 
 interface PackageCardProps {
   pkg: FeaturedPackage;
@@ -141,10 +95,11 @@ function PackageCard({ pkg, index, isInView }: PackageCardProps) {
 }
 
 interface TourPackagesProps {
+  packages: FeaturedPackage[];
   onBook: () => void;
 }
 
-export default function TourPackages({ onBook }: TourPackagesProps) {
+export default function TourPackages({ packages, onBook }: TourPackagesProps) {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-80px" });
 

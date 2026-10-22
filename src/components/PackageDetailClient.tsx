@@ -144,8 +144,23 @@ function FAQItem({ faq, index }: { faq: { question: string; answer: string }; in
   );
 }
 
+/* ─── Price helpers ──────────────────────────────────────────────────────── */
+
+/** The starting price to print, or "" when the package keeps prices off the page. */
+function shownPrice(pkg: TourData): string {
+  return pkg.showPrice && !pkg.priceOnRequest ? pkg.startingPrice : "";
+}
+
+function hasSaving(pkg: TourData): boolean {
+  const now = Number(pkg.startingPrice.replace(/[^\d]/g, ""));
+  const was = Number(pkg.originalPrice.replace(/[^\d]/g, ""));
+  return now > 0 && was > now;
+}
+
 /* ─── Sticky Enquiry Sidebar ─────────────────────────────────────────────── */
 function BookingSidebar({ pkg, onBook }: { pkg: TourData; onBook: () => void }) {
+  const price = shownPrice(pkg);
+  const tiers = price ? pkg.pricingTiers.filter((t) => t.price) : [];
   return (
     <div className="sticky top-28 bg-card border border-border rounded-2xl shadow-card overflow-hidden">
       {/* Header */}
@@ -157,9 +172,54 @@ function BookingSidebar({ pkg, onBook }: { pkg: TourData; onBook: () => void }) 
             <span className="text-secondary text-xs font-body font-semibold">{pkg.badge}</span>
           </div>
         )}
-        <div className="text-white font-display font-700 text-lg mb-1">Interested in this package?</div>
-        <div className="text-white/60 font-body text-xs">Enquire and our travel expert will get back to you.</div>
+        {price ? (
+          <div className="mb-1">
+            <div className="text-white/60 font-body text-xs">Starting from</div>
+            <div className="flex items-baseline gap-2 flex-wrap">
+              <span className="text-secondary font-display font-900 text-3xl">{price}</span>
+              <span className="text-white/60 font-body text-xs">per person</span>
+              {hasSaving(pkg) && (
+                <span className="text-white/50 font-body text-sm line-through">{pkg.originalPrice}</span>
+              )}
+            </div>
+          </div>
+        ) : pkg.showPrice && pkg.priceOnRequest ? (
+          <div className="text-secondary font-display font-700 text-lg mb-1">Price on request</div>
+        ) : (
+          <div className="text-white font-display font-700 text-lg mb-1">Interested in this package?</div>
+        )}
+        <div className="text-white/60 font-body text-xs">
+          {pkg.soldOut
+            ? "Sold out for current dates. Enquire and we will share the next departure."
+            : "Enquire and our travel expert will get back to you."}
+        </div>
       </div>
+
+      {/* Price options */}
+      {(tiers.length > 0 || (price && pkg.childPrice) || (price && pkg.emiAvailable)) && (
+        <div className="px-6 pt-5 space-y-3">
+          {tiers.map((tier) => (
+            <div key={tier.label} className="flex items-start justify-between gap-3">
+              <div className="min-w-0">
+                <div className="text-primary font-body text-sm font-semibold leading-snug">{tier.label}</div>
+                {tier.description && <div className="text-muted-foreground font-body text-xs">{tier.description}</div>}
+              </div>
+              <div className="text-right flex-shrink-0">
+                <div className="text-primary font-display font-700 text-sm">{tier.price}</div>
+                {tier.originalPrice && tier.originalPrice !== tier.price && (
+                  <div className="text-muted-foreground font-body text-xs line-through">{tier.originalPrice}</div>
+                )}
+              </div>
+            </div>
+          ))}
+          {price && pkg.childPrice && (
+            <div className="text-muted-foreground font-body text-xs">Child: {pkg.childPrice}</div>
+          )}
+          {price && pkg.emiAvailable && (
+            <div className="text-muted-foreground font-body text-xs">EMI options available.</div>
+          )}
+        </div>
+      )}
 
       {/* CTAs */}
       <div className="p-6 space-y-3">
@@ -167,7 +227,7 @@ function BookingSidebar({ pkg, onBook }: { pkg: TourData; onBook: () => void }) 
           onClick={onBook}
           className="w-full py-3.5 bg-gradient-gold text-primary font-display font-700 rounded-xl shadow-gold hover:opacity-90 hover:scale-[1.02] transition-all duration-200"
         >
-          Enquire Now
+          {pkg.soldOut ? "Ask for Next Dates" : "Enquire Now"}
         </button>
 
         <a
@@ -212,8 +272,8 @@ function RelatedCard({ pkg, index }: { pkg: TourData; index: number }) {
     >
       <div className="relative h-44 overflow-hidden">
         <img
-          src={pkg.heroImages[0]}
-          alt={pkg.shortTitle}
+          src={pkg.cardImage || pkg.heroImages[0]}
+          alt={pkg.heroImageAlts?.[0] || pkg.shortTitle}
           className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
           loading="lazy"
         />
@@ -253,7 +313,16 @@ function RelatedCard({ pkg, index }: { pkg: TourData; index: number }) {
 /* ─── Main Client Component ─────────────────────────────────────────────────
    Receives the already-resolved tour (WordPress or local fallback) and its
    related tours from the server component — no client-side data fetching. */
-export default function PackageDetailClient({ pkg, related }: { pkg: TourData; related: TourData[] }) {
+export default function PackageDetailClient({
+  pkg,
+  related,
+  destinationHref,
+}: {
+  pkg: TourData;
+  related: TourData[];
+  /** The destination page, when the site has one for this package's destination. */
+  destinationHref?: string;
+}) {
   const [inquiryOpen, setInquiryOpen] = useState(false);
   const [activeDay, setActiveDay] = useState<number | null>(0);
   const [galleryOpen, setGalleryOpen] = useState(false);
@@ -283,7 +352,9 @@ export default function PackageDetailClient({ pkg, related }: { pkg: TourData; r
     pkg.hotelCategory && { icon: Hotel, label: "Hotel Category", value: pkg.hotelCategory },
     { icon: Plane, label: "Transfers", value: pkg.transferIncluded ? "Included" : "Not Included" },
     pkg.mealsIncluded && { icon: Utensils, label: "Meals", value: pkg.mealsIncluded },
-    { icon: Users, label: "Group Size", value: "Private & Group" },
+    shownPrice(pkg)
+      ? { icon: Tag, label: "Starting From", value: `${shownPrice(pkg)} per person` }
+      : { icon: Users, label: "Group Size", value: "Private & Group" },
   ].filter(Boolean) as { icon: React.ElementType; label: string; value: string }[];
 
   return (
@@ -297,7 +368,7 @@ export default function PackageDetailClient({ pkg, related }: { pkg: TourData; r
           <motion.img
             key={i}
             src={img}
-            alt={`${pkg.shortTitle} — image ${i + 1}`}
+            alt={pkg.heroImageAlts?.[i] || `${pkg.shortTitle} — image ${i + 1}`}
             className="absolute inset-0 w-full h-full object-cover"
             animate={{ opacity: i === activeHeroImage ? 1 : 0 }}
             transition={{ duration: 1.2 }}
@@ -313,12 +384,12 @@ export default function PackageDetailClient({ pkg, related }: { pkg: TourData; r
             <nav className="flex items-center gap-2 text-white/70 font-body text-sm" aria-label="Breadcrumb">
               <Link href="/" className="hover:text-secondary transition-colors">Home</Link>
               <ChevronRight className="w-3.5 h-3.5" />
-              {pkg.destinationSlug ? (
-                <Link href={`/destinations/${pkg.destinationSlug}`} className="hover:text-secondary transition-colors capitalize">
-                  {pkg.destinationSlug}
+              {destinationHref ? (
+                <Link href={destinationHref} className="hover:text-secondary transition-colors capitalize">
+                  {pkg.destinationName || pkg.destinationSlug}
                 </Link>
               ) : (
-                <span className="text-white/70">Packages</span>
+                <Link href="/packages" className="hover:text-secondary transition-colors">Packages</Link>
               )}
               <ChevronRight className="w-3.5 h-3.5" />
               <span className="text-secondary font-semibold">{pkg.shortTitle}</span>
@@ -334,10 +405,19 @@ export default function PackageDetailClient({ pkg, related }: { pkg: TourData; r
             transition={{ duration: 0.8 }}
             className="max-w-3xl"
           >
-            {pkg.badge && (
-              <div className="inline-flex items-center gap-1.5 bg-secondary/20 border border-secondary/40 rounded-full px-3 py-1.5 mb-4 backdrop-blur-sm">
-                <Zap className="w-3 h-3 text-secondary" />
-                <span className="text-secondary text-xs font-body font-semibold tracking-widest uppercase">{pkg.badge}</span>
+            {(pkg.badge || pkg.soldOut) && (
+              <div className="flex flex-wrap gap-2 mb-4">
+                {pkg.badge && (
+                  <div className="inline-flex items-center gap-1.5 bg-secondary/20 border border-secondary/40 rounded-full px-3 py-1.5 backdrop-blur-sm">
+                    <Zap className="w-3 h-3 text-secondary" />
+                    <span className="text-secondary text-xs font-body font-semibold tracking-widest uppercase">{pkg.badge}</span>
+                  </div>
+                )}
+                {pkg.soldOut && (
+                  <div className="inline-flex items-center bg-red-500/90 rounded-full px-3 py-1.5">
+                    <span className="text-white text-xs font-body font-semibold tracking-widest uppercase">Sold Out</span>
+                  </div>
+                )}
               </div>
             )}
 
@@ -403,6 +483,12 @@ export default function PackageDetailClient({ pkg, related }: { pkg: TourData; r
 
       {/* ── STICKY MOBILE CTA ───────────────────────────────────────────────── */}
       <div className="fixed bottom-0 left-0 right-0 z-40 sm:hidden bg-primary border-t border-secondary/20 px-4 py-3 flex gap-2">
+        {shownPrice(pkg) && (
+          <div className="flex flex-col justify-center pr-1">
+            <span className="text-white/60 font-body text-[10px] leading-none">From</span>
+            <span className="text-secondary font-display font-700 text-sm">{shownPrice(pkg)}</span>
+          </div>
+        )}
         <button
           onClick={() => setInquiryOpen(true)}
           className="flex-1 py-3 bg-gradient-gold text-primary font-display font-700 text-sm rounded-xl shadow-gold"
@@ -855,7 +941,19 @@ export default function PackageDetailClient({ pkg, related }: { pkg: TourData; r
 
       {/* Floating elements */}
       <WhatsAppButton />
-      <InquiryModal isOpen={inquiryOpen} onClose={() => setInquiryOpen(false)} />
+      <InquiryModal
+        isOpen={inquiryOpen}
+        onClose={() => setInquiryOpen(false)}
+        defaultDestination={pkg.shortTitle}
+        source={`package:${pkg.slug}`.slice(0, 50)}
+      />
+
+      {/* Draft opened from the WordPress editor */}
+      {pkg.preview && (
+        <div className="fixed bottom-24 sm:bottom-6 left-1/2 -translate-x-1/2 z-[60] bg-amber-400 text-primary font-body text-xs font-semibold px-4 py-2 rounded-full shadow-lg">
+          Preview: not live on the website yet
+        </div>
+      )}
 
       {/* Gallery Modal */}
       {galleryOpen && (

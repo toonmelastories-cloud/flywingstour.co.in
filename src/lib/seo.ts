@@ -413,7 +413,10 @@ export function touristTripJsonLd(pkg: TourData) {
     description: pkg.metaDescription || pkg.overview,
     url: absoluteUrl(`/packages/${pkg.slug}`),
     image: pkg.heroImages.map((img) => absoluteUrl(img)),
-    touristType: ["Couples", "Families", "Honeymooners"],
+    touristType:
+      pkg.tripTypes && pkg.tripTypes.length > 0
+        ? pkg.tripTypes
+        : ["Couples", "Families", "Honeymooners"],
     provider: { "@id": ORG_ID },
     ...(pkg.itinerary.length > 0
       ? {
@@ -435,7 +438,9 @@ export function touristTripJsonLd(pkg: TourData) {
             "@type": "Offer",
             price,
             priceCurrency: "INR",
-            availability: "https://schema.org/InStock",
+            availability: pkg.soldOut
+              ? "https://schema.org/SoldOut"
+              : "https://schema.org/InStock",
             url: absoluteUrl(`/packages/${pkg.slug}`),
             seller: { "@id": ORG_ID },
           },

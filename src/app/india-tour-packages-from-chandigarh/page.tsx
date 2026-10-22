@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import PillarDomesticClient from "@/components/PillarDomesticClient";
 import JsonLd from "@/components/JsonLd";
 import { stripLinks } from "@/components/LinkedText";
-import { getAllTours } from "@/lib/tours";
+import { getAllTours, regionOf } from "@/lib/tours";
 import { PILLAR_DOMESTIC_FAQS } from "@/data/pillar-domestic";
 import {
   breadcrumbJsonLd,
@@ -34,9 +34,7 @@ export const metadata: Metadata = pageMetadata({
 });
 
 export default async function IndiaToursFromChandigarhPage() {
-  const tours = (await getAllTours()).filter(
-    (pkg) => pkg.destinationSlug === "kashmir"
-  );
+  const tours = (await getAllTours()).filter((pkg) => regionOf(pkg) === "india");
   const packages = tours.map((pkg) => ({
     slug: pkg.slug,
     shortTitle: pkg.shortTitle,

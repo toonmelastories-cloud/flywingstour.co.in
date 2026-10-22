@@ -1,8 +1,10 @@
 import type { Metadata } from "next";
+import { permanentRedirect } from "next/navigation";
 import PackageDetailClient from "@/components/PackageDetailClient";
 import PackageNotFound from "@/components/PackageNotFound";
 import JsonLd from "@/components/JsonLd";
-import { getAllTourSlugs, getRelatedTours, getTourData } from "@/lib/tours";
+import { getDestinationBySlug } from "@/data/destinations";
+import { findTour, getAllTourSlugs, getRelatedTours } from "@/lib/tours";
 import {
   breadcrumbJsonLd,
   faqJsonLd,
@@ -24,8 +26,9 @@ export async function generateMetadata({
   params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
   const { slug } = await params;
-  const pkg = await getTourData(slug);
-  if (!pkg) return { title: "Package Not Found" };
+  const found = await findTour(slug);
+  if (!found || !("tour" in found)) return { title: "Package Not Found" };
+  const pkg = found.tour;
 
   return pageMetadata({
     title: pkg.metaTitle,
@@ -37,6 +40,8 @@ export async function generateMetadata({
         ? pkg.keywords
         : [`${pkg.shortTitle} package`, `${pkg.shortTitle} from India`],
     image: pkg.heroImages[0],
+    // Private-link packages (a custom quote for one client) stay out of Google.
+    noIndex: pkg.listed === false,
   });
 }
 
@@ -46,13 +51,22 @@ export default async function PackageDetailPage({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const pkg = await getTourData(slug);
+  const found = await findTour(slug);
 
-  if (!pkg) {
+  if (!found) {
     return <PackageNotFound />;
   }
+  // Renamed in WordPress: the old link moves to the new one. Taken down:
+  // the visitor lands on the destination instead of a dead page.
+  if ("redirect" in found) {
+    permanentRedirect(found.redirect);
+  }
 
-  const related = getRelatedTours(pkg);
+  const pkg = found.tour;
+  const related = await getRelatedTours(pkg);
+  const destinationHref = getDestinationBySlug(pkg.destinationSlug)
+    ? `/destinations/${pkg.destinationSlug}`
+    : undefined;
 
   return (
     <>
@@ -67,7 +81,7 @@ export default async function PackageDetailPage({
           ]),
         ]}
       />
-      <PackageDetailClient pkg={pkg} related={related} />
+      <PackageDetailClient pkg={pkg} related={related} destinationHref={destinationHref} />
     </>
   );
 }

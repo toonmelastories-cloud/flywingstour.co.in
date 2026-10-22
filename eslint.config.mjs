@@ -12,6 +12,8 @@ const eslintConfig = defineConfig([
     "out/**",
     "build/**",
     "next-env.d.ts",
+    // WordPress plugin: PHP plus a script built for wp-admin, not this app.
+    "wp-plugin/**",
   ]),
 ]);
 

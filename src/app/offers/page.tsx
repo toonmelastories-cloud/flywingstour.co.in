@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import JsonLd from "@/components/JsonLd";
 import OffersClient from "@/components/OffersClient";
 import { activeOffers } from "@/data/quotedPackages";
+import { getPackageOffers } from "@/lib/tours";
 import {
   KEYWORDS,
   breadcrumbJsonLd,
@@ -14,11 +15,14 @@ import {
  *
  * Built from `src/data/quotedPackages.ts`, the same file /llms.txt
  * reads, so a corrected rate reaches the page, the structured data and
- * the AI assistants in one edit.
+ * the AI assistants in one edit. WordPress packages switched onto the
+ * Offers page in the package editor are listed first.
  *
- * Regenerated hourly because `activeOffers()` compares each rate's hold
- * date against today. Prerendered once at build time, an expired rate
- * would sit on the page until the next deploy.
+ * Regenerated at least hourly because `activeOffers()` compares each
+ * rate's hold date against today. Prerendered once at build time, an
+ * expired rate would sit on the page until the next deploy. (The
+ * WordPress package read refreshes every 5 minutes, so in practice the
+ * page does too.)
  */
 export const revalidate = 3600;
 export const metadata: Metadata = pageMetadata({
@@ -38,19 +42,20 @@ export const metadata: Metadata = pageMetadata({
   ],
 });
 
-export default function OffersPage() {
+export default async function OffersPage() {
+  const offers = [...(await getPackageOffers()), ...activeOffers()];
   return (
     <>
       <JsonLd
         data={[
-          quotedOffersJsonLd(activeOffers()),
+          quotedOffersJsonLd(offers),
           breadcrumbJsonLd([
             { name: "Home", path: "/" },
             { name: "Offers", path: "/offers" },
           ]),
         ]}
       />
-      <OffersClient />
+      <OffersClient offers={offers} />
     </>
   );
 }

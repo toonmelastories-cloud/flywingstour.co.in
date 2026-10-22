@@ -39,7 +39,7 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/bui
 
 | Variable | Required | Description |
 |---|---|---|
-| `WP_API_URL` | No (defaults to production URL) | Base URL of the headless WordPress REST API, e.g. `https://wp.flywingstour.co.in/wp-json/wp/v2`. Used server-side only by `src/lib/wordpress.ts` to fetch tours (`/tours`) and blog posts (`/posts`). If the "tours" custom post type doesn't exist yet or WordPress is unreachable, `/packages` pages automatically fall back to the local static data in `src/data/packages.ts` — no build/runtime crash. |
+| `WP_API_URL` | No (defaults to production URL) | Base URL of the headless WordPress REST API, e.g. `https://wp.flywingstour.co.in/wp-json/wp/v2`. Used server-side only by `src/lib/wordpress.ts` to fetch blog posts (`/posts`) and, through the same host, tour packages from the Flywings Packages plugin (`/wp-json/flywings/v1/packages`). If the plugin is not installed or WordPress is unreachable, `/packages` pages automatically fall back to the local static data in `src/data/packages.ts` — no build/runtime crash. |
 | `NEXT_PUBLIC_SITE_URL` | No (defaults to `https://flywingstour.co.in`) | Canonical origin used for `<link rel="canonical">`, Open Graph URLs, JSON-LD, `sitemap.xml`, and `robots.txt` (see `src/lib/seo.ts`). Set it on preview deployments so canonicals point at the preview instead of production. |
 | `NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION` | No | Google Search Console verification token (renders as `<meta name="google-site-verification">`). |
 | `NEXT_PUBLIC_BING_SITE_VERIFICATION` | No | Bing Webmaster Tools verification token (`msvalidate.01`). |
@@ -105,8 +105,7 @@ enquiry usually happens several pages later.
 
 ### WordPress content model this integration expects
 
-No ACF, no custom post type — everything is a regular WordPress **Post**:
-
-- **Tours**: create a category in WP admin with slug `tours` (Posts → Categories) and assign tour posts to it. `/packages` and `/packages/[slug]` pull posts from that category; the post's featured image, title, excerpt and content are used. Until the `tours` category exists (or has no posts), those pages show the local curated packages in `src/data/packages.ts` and switch over automatically via ISR (`revalidate: 300`) once you start publishing.
+- **Tour packages**: added in WP admin under **Packages**, provided by the Flywings Packages plugin in [`wp-plugin/flywings-packages`](wp-plugin/flywings-packages/README.md). Each package feeds `/packages`, its own `/packages/[slug]` page, the homepage (when featured), `/offers` (when on offer), the India and International pages and the sitemap, in the existing page design. Data is read in `src/lib/tours.ts`. A slug WordPress does not have falls back to `src/data/packages.ts`, so the site keeps working before the plugin is installed and if WordPress is down. `scripts/import-packages-to-wp.mjs` copies the local packages into WordPress once.
+- **Tours (older setup, still read)**: posts in a category with slug `tours`. Only title, excerpt, content and featured image are used. Prefer the plugin.
 - **Blog**: any other post (i.e. not in the `tours` category) powers `/blog` and `/blog/[slug]`.
 - **SEO**: managed entirely by the **Yoast SEO** plugin — install & activate it on WordPress. Once active, Yoast automatically adds a `yoast_head_json` field (title, meta description) to every post in the REST API response, and this site prefers it over the raw post title/excerpt for page `<title>`/meta description. No extra configuration needed on the frontend side.

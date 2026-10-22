@@ -1,7 +1,7 @@
 import destinations from "@/data/destinations";
 import { activeOffers, savingOn } from "@/data/quotedPackages";
 import servicePages from "@/data/servicePages";
-import { getAllTours } from "@/lib/tours";
+import { getAllTours, getPackageOffers } from "@/lib/tours";
 import { CONTACT, SITE_NAME, SITE_URL, absoluteUrl } from "@/lib/seo";
 
 /**
@@ -68,7 +68,7 @@ export async function GET() {
   // left as a link. These five share one page (/offers) instead of
   // having one each, so an assistant that follows the link still has to
   // find the right card; spelling them out here saves it the trip.
-  const offers = activeOffers();
+  const offers = [...(await getPackageOffers()), ...activeOffers()];
   const quoteBlocks = offers
     .map((q) => {
       const saving = savingOn(q);

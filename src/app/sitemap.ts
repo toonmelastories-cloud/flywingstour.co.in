@@ -62,7 +62,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   const packageRoutes: MetadataRoute.Sitemap = tours.map((pkg) => ({
     url: absoluteUrl(`/packages/${pkg.slug}`),
-    lastModified: now,
+    lastModified: pkg.modified ? new Date(pkg.modified) : now,
     changeFrequency: "weekly",
     priority: 0.9,
     images: pkg.heroImages.slice(0, 1).map((img) => absoluteUrl(img)),

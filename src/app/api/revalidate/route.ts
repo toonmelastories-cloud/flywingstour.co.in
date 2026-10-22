@@ -5,7 +5,8 @@ import { revalidatePath, revalidateTag } from "next/cache";
  * On-demand cache invalidation for WordPress-driven pages.
  *
  * WordPress pings this endpoint from a save_post hook (see the theme's
- * functions.php), so publishing or editing a post in wp-admin refreshes
+ * functions.php) and from the Flywings Packages plugin whenever a live
+ * package changes, so publishing or editing in wp-admin refreshes
  * the frontend within seconds instead of waiting on time-based ISR —
  * which proved unreliable on Vercel for build-time-seeded fetch entries.
  *
@@ -38,6 +39,10 @@ function handle(request: Request) {
   revalidatePath("/blog/[slug]", "page");
   revalidatePath("/packages");
   revalidatePath("/packages/[slug]", "page");
+  // Package data also feeds these.
+  revalidatePath("/offers");
+  revalidatePath("/india-tour-packages-from-chandigarh");
+  revalidatePath("/international-tour-packages-from-chandigarh");
   // /sitemap.xml and /rss.xml are no longer listed here: both are now
   // `dynamic = "force-dynamic"` and rebuild on every request. They used
   // to be ISR routes, and because almost nobody visits them, the one
