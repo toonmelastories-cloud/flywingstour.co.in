@@ -37,14 +37,16 @@ function StarRating({ rating, count }: { rating: number; count: number }) {
   );
 }
 
+/* Sits on the navy band under the hero, so it uses the same light-on-dark
+   card style as the "Why Book" section rather than a grey card. */
 function QuickFact({ icon: Icon, label, value }: { icon: React.ElementType; label: string; value: string }) {
   return (
-    <div className="flex flex-col items-center text-center p-4 bg-muted/60 rounded-xl border border-border">
-      <div className="w-9 h-9 rounded-lg bg-secondary/10 border border-secondary/20 flex items-center justify-center mb-2">
-        <Icon className="w-4 h-4 text-secondary" />
+    <div className="flex flex-col items-center text-center p-4 bg-white/5 rounded-xl border border-white/10 hover:bg-white/10 hover:border-secondary/40 transition-colors">
+      <div className="w-10 h-10 rounded-lg bg-secondary/20 border border-secondary/30 flex items-center justify-center mb-2.5">
+        <Icon className="w-5 h-5 text-gold-light" />
       </div>
-      <div className="text-muted-foreground font-body text-xs mb-0.5">{label}</div>
-      <div className="text-primary font-display font-700 text-sm leading-snug">{value}</div>
+      <div className="text-white/60 font-body text-xs mb-0.5">{label}</div>
+      <div className="text-white font-display font-700 text-sm leading-snug">{value}</div>
     </div>
   );
 }

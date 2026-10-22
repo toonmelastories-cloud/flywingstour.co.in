@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Link from "next/link";
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
 import {
@@ -193,12 +194,12 @@ function CompanyIntro() {
               ))}
             </div>
 
-            <a
-              href="#services"
+            <Link
+              href="/services"
               className="inline-flex items-center gap-2 px-6 py-3 bg-primary text-secondary font-display font-700 rounded-full hover:bg-primary/90 transition-all text-sm"
             >
               Explore Our Services <ChevronRight className="w-4 h-4" />
-            </a>
+            </Link>
           </motion.div>
         </div>
       </div>
