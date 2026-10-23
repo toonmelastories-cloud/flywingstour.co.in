@@ -3,7 +3,7 @@ import { notFound } from "next/navigation";
 import DestinationDetailClient from "@/components/DestinationDetailClient";
 import JsonLd from "@/components/JsonLd";
 import { stripLinks } from "@/components/LinkedText";
-import destinations, { getDestinationBySlug } from "@/data/destinations";
+import destinations, { getDestinationBySlug, originFor } from "@/data/destinations";
 import {
   ORG_ID,
   absoluteUrl,
@@ -63,7 +63,7 @@ export default async function DestinationPage({
           {
             "@context": "https://schema.org",
             "@type": "TouristTrip",
-            name: `${destination.name} Tour Packages from India`,
+            name: `${destination.name} Tour Packages from ${originFor(destination)}`,
             description: destination.metaDescription,
             url: absoluteUrl(`/destinations/${destination.slug}`),
             provider: { "@id": ORG_ID },

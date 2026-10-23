@@ -430,7 +430,7 @@ export default function PillarDomesticClient({ packages }: { packages: PillarPac
               Kashmir Tour Package: Complete Guide
             </Link>
             <Link
-              href="/international-tour-packages-from-chandigarh"
+              href="/international-tour-packages-from-india"
               className="px-6 py-3 border border-border text-primary font-display font-600 text-sm rounded-full hover:bg-muted/50 transition-all"
             >
               International Packages from Chandigarh

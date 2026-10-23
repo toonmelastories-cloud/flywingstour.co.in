@@ -16,11 +16,13 @@ export const revalidate = 300;
 const PATH = "/india-tour-packages-from-chandigarh";
 
 export const metadata: Metadata = pageMetadata({
-  title:
-    "India Tour Packages from Chandigarh 2026 | Kashmir, Vaishno Devi, Amritsar | Flywings",
+  title: "India Tour Packages from Chandigarh | Best Holiday Deals",
   titleAbsolute: true,
+  // As supplied by the SEO team, less the opening "Explore" and the
+  // serial comma: with them the line measured 986px against the ~920px
+  // a snippet gets, and the closing call to action would have clipped.
   description:
-    "Domestic tour packages from Chandigarh to Kashmir, Manali, Shimla, Spiti, Goa and Vaishno Devi, by road or flight. Free quote in 24 hours.",
+    "India tour packages from Chandigarh with affordable prices, popular destinations, comfortable stays and customized holiday plans. Book today!",
   path: PATH,
   keywords: [
     "india tour packages from chandigarh",

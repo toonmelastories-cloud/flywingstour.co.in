@@ -15,7 +15,7 @@ import Footer from "@/components/Footer";
 import WhatsAppButton from "@/components/WhatsAppButton";
 import InquiryModal from "@/components/InquiryModal";
 import LinkedText from "@/components/LinkedText";
-import { getRelatedDestinations, Destination } from "@/data/destinations";
+import { getRelatedDestinations, originFor, Destination } from "@/data/destinations";
 
 /* ─── Animated Counter ────────────────────────── */
 function AnimatedCounter({ target, suffix = "" }: { target: number; suffix?: string }) {
@@ -132,6 +132,7 @@ function FAQItem({ faq, index }: { faq: { question: string; answer: string }; in
   );
 }
 
+
 /* ─── Main Page ───────────────────────────────── */
 export default function DestinationDetailClient({ destination }: { destination: Destination }) {
   const router = useRouter();
@@ -150,7 +151,7 @@ export default function DestinationDetailClient({ destination }: { destination: 
       <section className="relative h-[92vh] min-h-[600px] flex items-end overflow-hidden">
         <img
           src={destination.heroImage}
-          alt={`${destination.name} tour packages from India`}
+          alt={`${destination.name} tour packages from ${originFor(destination)}`}
           className="absolute inset-0 w-full h-full object-cover"
           loading="eager"
         />
@@ -181,7 +182,7 @@ export default function DestinationDetailClient({ destination }: { destination: 
               <span className="text-secondary text-xs font-body font-semibold tracking-widest uppercase">{destination.country}</span>
             </div>
             <h1 className="font-display font-900 text-4xl sm:text-5xl lg:text-6xl text-white mb-4 max-w-3xl leading-tight">
-              {destination.name} Tour Packages from India
+              {destination.name} Tour Packages from {originFor(destination)}
             </h1>
             <p className="font-body text-white/80 text-lg max-w-2xl mb-6 leading-relaxed">
               {destination.tagline}
@@ -231,7 +232,12 @@ export default function DestinationDetailClient({ destination }: { destination: 
               <h2 className="font-display font-800 text-3xl sm:text-4xl text-primary mb-5 leading-tight">
                 Why {destination.name} is a Must-Visit Destination
               </h2>
-              <p className="text-muted-foreground font-body leading-relaxed text-base mb-6">{destination.about}</p>
+              <p className="text-muted-foreground font-body leading-relaxed text-base mb-6">
+                {/* Through LinkedText so a hub page can point at the
+                    destinations it covers from its opening paragraph,
+                    the way the FAQ answers already can. */}
+                <LinkedText text={destination.about} />
+              </p>
               <div className="flex flex-wrap gap-3">
                 <Link
                   href="/services"

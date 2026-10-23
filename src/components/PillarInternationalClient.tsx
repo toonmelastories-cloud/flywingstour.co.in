@@ -171,7 +171,7 @@ export default function PillarInternationalClient({ packages }: { packages: Pill
             <nav className="flex items-center justify-center gap-2 text-white/50 font-body text-xs mb-6">
               <Link href="/" className="hover:text-secondary transition-colors">Home</Link>
               <span>/</span>
-              <span className="text-secondary">International Tour Packages from Chandigarh</span>
+              <span className="text-secondary">International Tour Packages from India</span>
             </nav>
             <div className="inline-flex items-center gap-2 bg-secondary/20 border border-secondary/30 rounded-full px-4 py-1.5 mb-4">
               <Plane className="w-3.5 h-3.5 text-secondary" />
@@ -180,7 +180,7 @@ export default function PillarInternationalClient({ packages }: { packages: Pill
               </span>
             </div>
             <h1 className="font-display font-900 text-4xl sm:text-5xl text-white mb-4 leading-tight">
-              International Tour Packages from Chandigarh
+              International Tour Packages from India
             </h1>
             <p className="text-white/65 font-body text-lg max-w-2xl mx-auto mb-8 leading-relaxed">
               Flights from Chandigarh or Delhi, handpicked hotels, transfers, sightseeing, and complete
@@ -220,7 +220,7 @@ export default function PillarInternationalClient({ packages }: { packages: Pill
       <section className="section-padding bg-background">
         <div className="container-custom max-w-3xl mx-auto">
           <h2 className="font-display font-800 text-2xl sm:text-3xl text-primary mb-5">
-            Plan Your International Holiday from the Chandigarh Tricity
+            Plan Your International Holiday
           </h2>
           <div className="space-y-4 text-muted-foreground font-body leading-relaxed">
             <p>
@@ -352,7 +352,7 @@ export default function PillarInternationalClient({ packages }: { packages: Pill
       <section className="section-padding bg-muted/40">
         <div className="container-custom max-w-3xl mx-auto">
           <h2 className="font-display font-800 text-2xl sm:text-3xl text-primary mb-10 text-center">
-            International Tour Packages from Chandigarh — FAQs
+            International Tour Packages from India - FAQs
           </h2>
           <div className="space-y-3">
             {PILLAR_FAQS.map((faq) => (

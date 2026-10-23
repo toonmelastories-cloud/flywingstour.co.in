@@ -53,7 +53,7 @@ function messageForPath(pathname: string): string {
       return "Hi Flywings! I was reading your travel blog and would like to plan a trip.";
     case "india-tour-packages-from-chandigarh":
       return "Hi Flywings! I'm interested in a domestic tour package from Chandigarh.";
-    case "international-tour-packages-from-chandigarh":
+    case "international-tour-packages-from-india":
       return "Hi Flywings! I'm interested in an international tour package from Chandigarh.";
     case "contact":
     case "about":

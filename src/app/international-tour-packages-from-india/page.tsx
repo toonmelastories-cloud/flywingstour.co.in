@@ -13,14 +13,16 @@ import {
 
 export const revalidate = 300;
 
-const PATH = "/international-tour-packages-from-chandigarh";
+const PATH = "/international-tour-packages-from-india";
 
 export const metadata: Metadata = pageMetadata({
-  title:
-    "International Tour Packages from Chandigarh 2026 | Dubai, Thailand, Bali | Flywings",
+  title: "International Tour Packages from India | Best Deals",
   titleAbsolute: true,
+  // The SEO team's wording, with "Chandigarh" changed to "India" to
+  // match the new URL and H1, and "customized" shortened: as supplied
+  // the line measured 1005px against the ~920px a snippet gets.
   description:
-    "International tour packages from India, departing Chandigarh or Amritsar. Dubai, Thailand, Bali, Singapore and Maldives with flights and visa help.",
+    "International tour packages from India with affordable prices, visa assistance, hotels and custom holiday plans. Discover your dream destination.",
   path: PATH,
   keywords: [
     "international tour packages from Chandigarh",
@@ -64,7 +66,7 @@ export default async function InternationalToursFromChandigarhPage() {
           faqJsonLd(PILLAR_FAQS.map((f) => ({ ...f, answer: stripLinks(f.answer) }))),
           breadcrumbJsonLd([
             { name: "Home", path: "/" },
-            { name: "International Tour Packages from Chandigarh", path: PATH },
+            { name: "International Tour Packages from India", path: PATH },
           ]),
         ]}
       />

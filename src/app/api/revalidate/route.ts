@@ -42,7 +42,7 @@ function handle(request: Request) {
   // Package data also feeds these.
   revalidatePath("/offers");
   revalidatePath("/india-tour-packages-from-chandigarh");
-  revalidatePath("/international-tour-packages-from-chandigarh");
+  revalidatePath("/international-tour-packages-from-india");
   // /sitemap.xml and /rss.xml are no longer listed here: both are now
   // `dynamic = "force-dynamic"` and rebuild on every request. They used
   // to be ISR routes, and because almost nobody visits them, the one

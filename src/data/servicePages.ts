@@ -193,7 +193,7 @@ const servicePages: ServicePage[] = [
     ],
     related: [
       { label: "Dubai Visa Process Explained", href: "/blog/dubai-tour-package-from-chandigarh" },
-      { label: "International Packages from Chandigarh", href: "/international-tour-packages-from-chandigarh" },
+      { label: "International Packages from India", href: "/international-tour-packages-from-india" },
       { label: "All Travel Services", href: "/services" },
     ],
   },

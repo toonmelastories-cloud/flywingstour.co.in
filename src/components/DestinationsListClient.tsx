@@ -10,16 +10,15 @@ import WhatsAppButton from "@/components/WhatsAppButton";
 import InquiryModal from "@/components/InquiryModal";
 import destinations from "@/data/destinations";
 
-const REGIONS = ["All", "India", "Middle East", "Southeast Asia", "Indian Ocean", "Central Asia"];
+const REGIONS = ["All", "South Asia", "Middle East", "Southeast Asia", "Central Asia"];
 
-// Manali, Goa and Spiti were added without a region, so every filter
-// except "All" hid them. "South Asia" is also the wrong label for a
-// list that is entirely Indian.
+// Maldives moves in with the Indian destinations, which is where it
+// belongs geographically and leaves no chip holding a single card. The
+// group is "South Asia" rather than "India" because Maldives is not.
 const regionMap: Record<string, string[]> = {
-  India: ["kashmir", "manali", "shimla-manali", "goa", "spiti-valley"],
+  "South Asia": ["himachal", "kashmir", "manali", "shimla-manali", "goa", "spiti-valley", "maldives"],
   "Middle East": ["dubai"],
   "Southeast Asia": ["thailand", "bali", "singapore", "malaysia"],
-  "Indian Ocean": ["maldives"],
   "Central Asia": ["almaty"],
 };
 

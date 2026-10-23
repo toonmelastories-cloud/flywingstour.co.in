@@ -15,6 +15,13 @@ const nextConfig: NextConfig = {
         destination: "/services/tourist-visa-assistance",
         permanent: true,
       },
+      // Pillar page broadened from Chandigarh to India, Oct 2026. The
+      // old URL is indexed, so it has to keep sending people on.
+      {
+        source: "/international-tour-packages-from-chandigarh",
+        destination: "/international-tour-packages-from-india",
+        permanent: true,
+      },
       {
         source: "/google-flights-international-booking-process",
         destination: "/blog",

@@ -1067,8 +1067,82 @@ const destinations: Destination[] = [
    * that the sales team has not agreed to honour.
    * ───────────────────────────────────────────────────────────── */
 
+  /**
+   * Himachal hub.
+   *
+   * Manali, the Shimla circuit and the Spiti loop each kept their own
+   * page because each ranks for its own term, but three cards for one
+   * state made the destinations grid look like it was repeating
+   * itself. This is the single card the grid shows, and its job is to
+   * send people on to whichever of the three fits the trip they have
+   * in mind, so the opening paragraph, the FAQs and the related cards
+   * all link to them.
+   */
+  {
+    slug: "himachal",
+    name: "Himachal",
+    country: "India",
+    tagline: "The mountains Chandigarh leaves for on a Friday night",
+    heroImage: destManali,
+    startingPrice: "On request",
+    bestTime:
+      "March to June for the valleys, December to February for snow, mid-June to early October for Spiti",
+    tripDuration: "3-10 Days",
+    currency: "INR (Indian Rupee)",
+    visaInfo:
+      "No visa for Indian citizens. A Rohtang Pass permit is needed only if you drive up to Rohtang itself, and we arrange it. Spiti needs no permit for Indians; foreign nationals need an Inner Line Permit between Rekong Peo and Kaza",
+    weather:
+      "Valleys are pleasant in summer (10-25°C) and cold and snowy in winter; Spiti is high desert, dry and far colder, and much of it is cut off from November to May",
+    about:
+      "Himachal is the holiday Chandigarh does not have to plan around flights for, and there are really three of them. [Manali](/destinations/manali) is the short one: 310 kilometres up the Beas valley, an overnight Volvo or a morning drive, with Solang Valley and the Atal Tunnel within easy reach. The [Shimla and Manali circuit](/destinations/shimla-manali) is the classic loop the Tricity has been driving for fifty years, taking in the Ridge, Kufri and Kullu on the way round. [Spiti Valley](/destinations/spiti-valley) is the serious one: a high-altitude desert circuit of seven to ten days through Kaza and Key Monastery, open only once the passes clear in summer. Tell us how many days you have and which of the three you mean, and the itinerary follows from that.",
+    metaTitle: "Himachal Tour Packages from Chandigarh | Manali to Spiti",
+    metaDescription:
+      "Himachal tour packages from Chandigarh by Volvo or cab: Manali, the Shimla circuit and the Spiti loop, with hotels and sightseeing. Free quote.",
+    packages: [],
+    highlights: [
+      { icon: "🏔️", title: "Manali", description: "4 to 6 days, Solang Valley and the Atal Tunnel, snow from December" },
+      { icon: "🚂", title: "Shimla Circuit", description: "5 to 7 days, the Ridge, Kufri and Kullu on one loop" },
+      { icon: "🏜️", title: "Spiti Valley", description: "7 to 10 days of high desert, open mid-June to early October" },
+      { icon: "🚇", title: "Atal Tunnel", description: "9 km under Rohtang, putting Lahaul within a day trip" },
+      { icon: "🛕", title: "Key Monastery", description: "Thousand-year-old monastery above the Spiti river" },
+      { icon: "🚌", title: "Volvo or Cab", description: "Overnight coach or private car, both ex-Chandigarh" },
+    ],
+    itinerary: [],
+    inclusions: [],
+    exclusions: [],
+    faqs: [
+      {
+        question: "Which Himachal trip should I pick from Chandigarh?",
+        answer:
+          "It comes down to days. With a long weekend take [Manali](/destinations/manali), which is one night on the road and three in the valley. With a week take the [Shimla and Manali circuit](/destinations/shimla-manali) so the driving is spread around the loop instead of doubled back. With ten days and an appetite for altitude take [Spiti Valley](/destinations/spiti-valley).",
+      },
+      {
+        question: "How long is the drive from Chandigarh to Himachal?",
+        answer:
+          "Shimla is about 115 kilometres and three to four hours. Manali is about 310 kilometres and eight to nine hours, usually done overnight by Volvo so no daylight is lost. Kaza in Spiti is two full driving days whichever way you go in.",
+      },
+      {
+        question: "When is the best time to visit Himachal?",
+        answer:
+          "March to June for pleasant valley weather, December to February if the point of the trip is snow, and mid-June to early October for Spiti, which is the only window the full circuit is open. July and August bring heavy monsoon and landslide risk on the Manali road.",
+      },
+      {
+        question: "Do I need any permits in Himachal?",
+        answer:
+          "Not for Indian citizens, with one exception: driving up to Rohtang Pass itself needs a separate permit, which we arrange. The Atal Tunnel route on to Lahaul does not. In Spiti, foreign nationals need an Inner Line Permit between Rekong Peo and Kaza.",
+      },
+      {
+        question: "Do you book Volvo coaches as well as private cabs?",
+        answer:
+          "Both. The overnight Volvo from Chandigarh is the cheaper option and reaches Manali by breakfast. A private cab costs more but suits families, older travellers and anyone wanting to stop along the way. For Spiti a cab with a driver who knows the route is the only sensible choice.",
+      },
+    ],
+    relatedSlugs: ["manali", "shimla-manali", "spiti-valley"],
+  },
+
   {
     slug: "manali",
+    listed: false,
     name: "Manali",
     country: "India",
     tagline: "Eight hours from Chandigarh, and a different world",
@@ -1470,6 +1544,7 @@ const destinations: Destination[] = [
 
   {
     slug: "spiti-valley",
+    listed: false,
     name: "Spiti Valley",
     country: "India",
     tagline: "A cold desert at 4,000 metres, reached from your own doorstep",
@@ -1629,6 +1704,18 @@ const destinations: Destination[] = [
     relatedSlugs: ["manali", "shimla-manali", "kashmir"],
   },
 ];
+
+/**
+ * Where a trip to this destination departs from, for the H1 and the
+ * TouristTrip schema.
+ *
+ * Everything used to say "from India", which is right for Dubai and
+ * wrong for Manali: the domestic destinations are driven or flown from
+ * Chandigarh, and their own meta titles already say so.
+ */
+export function originFor(destination: Destination): string {
+  return destination.country === "India" ? "Chandigarh" : "India";
+}
 
 export function getDestinationBySlug(slug: string): Destination | undefined {
   return destinations.find((d) => d.slug === slug);

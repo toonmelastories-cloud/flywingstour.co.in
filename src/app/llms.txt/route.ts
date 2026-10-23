@@ -149,7 +149,7 @@ ${serviceLines}
 ## Package guides
 
 - [India Tour Packages from Chandigarh](${absoluteUrl("/india-tour-packages-from-chandigarh")}): domestic holidays departing Chandigarh, with routes, seasons and planning advice
-- [International Tour Packages from Chandigarh](${absoluteUrl("/international-tour-packages-from-chandigarh")}): overseas holidays departing Chandigarh or Delhi, with visa notes per country
+- [International Tour Packages from India](${absoluteUrl("/international-tour-packages-from-india")}): overseas holidays departing Chandigarh, Amritsar or Delhi, with visa notes per country
 
 ## Other pages
 
