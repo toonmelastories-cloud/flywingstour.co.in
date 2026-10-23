@@ -329,11 +329,36 @@ export interface FeaturedPackageCard {
   featured?: boolean;
 }
 
+/**
+ * Whether this package actually flies you there.
+ *
+ * Shared with the packages listing, which used to print a "Flights"
+ * chip on every card whatever the package held: five of the twelve
+ * live packages are land only, so five cards were advertising flights
+ * nobody had sold.
+ */
+export function includesFlights(pkg: Pick<TourData, "inclusions">): boolean {
+  return pkg.inclusions.some((i) => /flight|airfare/i.test(i));
+}
+
+/**
+ * The meal plan, short enough for a chip.
+ *
+ * The listing used to take the first word, which turns "Daily
+ * Breakfast" into a chip reading "Daily". Drops the "Daily", drops a
+ * trailing parenthetical, and keeps both meals when the pair is short
+ * enough to fit.
+ */
+export function mealsLabel(meals: string): string {
+  const cleaned = meals.replace(/^daily\s+/i, "").replace(/\s*\([^)]*\)\s*$/, "").trim();
+  if (cleaned.length <= 20) return cleaned;
+  return cleaned.split(/\s*\+\s*/)[0].trim();
+}
+
 /** Short chips for a homepage card, every one of them taken from the package. */
 function chipsFor(pkg: TourData): string[] {
-  const includesFlights = pkg.inclusions.some((i) => /flight|airfare/i.test(i));
   return [
-    ...(includesFlights ? ["Flights"] : []),
+    ...(includesFlights(pkg) ? ["Flights"] : []),
     pkg.hotelCategory,
     ...(pkg.transferIncluded ? ["Transfers"] : []),
     pkg.mealsIncluded,

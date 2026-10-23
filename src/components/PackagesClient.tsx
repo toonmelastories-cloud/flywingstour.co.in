@@ -12,7 +12,7 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import WhatsAppButton from "@/components/WhatsAppButton";
 import InquiryModal from "@/components/InquiryModal";
-import type { TourData } from "@/lib/tours";
+import { includesFlights, mealsLabel, type TourData } from "@/lib/tours";
 
 /** A destination chip in the filter bar, built on the server from the packages themselves. */
 export interface DestinationFilter {
@@ -29,10 +29,16 @@ function PackageCard({ pkg, index, isInView, onBook }: {
     price && Number(pkg.originalPrice.replace(/[^\d]/g, "")) > Number(price.replace(/[^\d]/g, ""))
       ? pkg.originalPrice
       : "";
+  /*
+   * "Flights" was hardcoded here, so every card claimed them whatever
+   * the package included. Five of the live packages are land only, and
+   * taking flights off one in WordPress changed nothing on the card.
+   * Both chips now come from the package.
+   */
   const inclusionPills = [
-    { label: "Flights", icon: Plane },
+    ...(includesFlights(pkg) ? [{ label: "Flights", icon: Plane }] : []),
     { label: pkg.hotelCategory, icon: Hotel },
-    { label: pkg.mealsIncluded.split(" ")[0], icon: Utensils },
+    { label: mealsLabel(pkg.mealsIncluded), icon: Utensils },
   ].filter((p) => p.label);
 
   return (
