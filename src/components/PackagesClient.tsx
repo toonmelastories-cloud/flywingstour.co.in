@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { motion, useInView } from "framer-motion";
@@ -156,6 +156,32 @@ export default function PackagesClient({
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-60px" });
 
+  /*
+   * ?destination=dubai, as the destination pages link here.
+   *
+   * Read on hydration rather than with useSearchParams, which would
+   * pull this whole page out of the prerender and hand crawlers an
+   * empty shell. The server still ships every package; the filter
+   * applies a frame later for the visitor who arrived with one.
+   */
+  useEffect(() => {
+    const slug = new URLSearchParams(window.location.search).get("destination");
+    if (slug && filters.some((f) => f.slug === slug)) setActiveDestination(slug);
+  }, [filters]);
+
+  /** Keeps the address bar in step, so a filtered view can be shared. */
+  const pickDestination = (slug: string) => {
+    setActiveDestination(slug);
+    try {
+      const url = new URL(window.location.href);
+      if (slug === "all") url.searchParams.delete("destination");
+      else url.searchParams.set("destination", slug);
+      window.history.replaceState(null, "", url);
+    } catch (e) {
+      // Not worth failing the click over.
+    }
+  };
+
   const filtered = packages.filter((pkg) => {
     const matchSearch =
       pkg.shortTitle.toLowerCase().includes(search.toLowerCase()) ||
@@ -218,7 +244,7 @@ export default function PackagesClient({
             {[{ slug: "all", label: "All" }, ...filters].map((f) => (
               <button
                 key={f.slug}
-                onClick={() => setActiveDestination(f.slug)}
+                onClick={() => pickDestination(f.slug)}
                 className={`flex-shrink-0 px-3.5 py-1.5 rounded-full text-xs font-body font-semibold transition-all ${
                   activeDestination === f.slug
                     ? "bg-primary text-secondary shadow-navy"
@@ -241,7 +267,7 @@ export default function PackagesClient({
               <h3 className="font-display font-700 text-primary text-xl mb-2">No packages found</h3>
               <p className="text-muted-foreground font-body text-sm mb-6">Try adjusting your filters or search term.</p>
               <button
-                onClick={() => { setSearch(""); setActiveDestination("all"); }}
+                onClick={() => { setSearch(""); pickDestination("all"); }}
                 className="px-6 py-3 bg-gradient-gold text-primary font-display font-700 rounded-full shadow-gold hover:opacity-90 transition-all"
               >
                 Clear Filters

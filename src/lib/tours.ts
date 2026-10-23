@@ -259,6 +259,33 @@ export async function getRelatedTours(tour: TourData): Promise<TourData[]> {
   return [...sameDestination, ...sameRegion].slice(0, 3);
 }
 
+/**
+ * The packages on sale for one destination, for its destination page.
+ *
+ * A Himachal-style hub counts its children too: the hub has no packages
+ * of its own, and a visitor on it is after the whole state, not a page
+ * that says there is nothing here.
+ */
+export async function getToursForDestination(slug: string): Promise<TourData[]> {
+  const wanted = new Set([slug]);
+  if (isHub(slug)) {
+    for (const child of getDestinationBySlug(slug)?.relatedSlugs ?? []) {
+      wanted.add(child);
+    }
+  }
+  return (await getAllTours()).filter((t) => t.destinationSlug && wanted.has(t.destinationSlug));
+}
+
+/**
+ * A destination that stands for several others rather than a place
+ * packages are sold against: it carries no packages and the grid hides
+ * it behind its children. Himachal is the only one today.
+ */
+function isHub(slug: string): boolean {
+  const d = getDestinationBySlug(slug);
+  return !!d && d.packages.length === 0 && d.relatedSlugs.length > 0;
+}
+
 /** Slugs for generateStaticParams. Private-link packages render on first visit instead. */
 export async function getAllTourSlugs(): Promise<string[]> {
   return (await getAllTours()).map((t) => t.slug);

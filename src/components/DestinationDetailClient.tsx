@@ -16,6 +16,7 @@ import WhatsAppButton from "@/components/WhatsAppButton";
 import InquiryModal from "@/components/InquiryModal";
 import LinkedText from "@/components/LinkedText";
 import { getRelatedDestinations, originFor, Destination } from "@/data/destinations";
+import type { TourData } from "@/lib/tours";
 
 /* ─── Animated Counter ────────────────────────── */
 function AnimatedCounter({ target, suffix = "" }: { target: number; suffix?: string }) {
@@ -94,6 +95,73 @@ function PackageCard({ pkg, index, isInView, onBook }: {
   );
 }
 
+/* ─── Real Package Card ───────────────────────── */
+
+/**
+ * A package that exists, unlike the cards above: the whole card links
+ * to its page. The ones built from `destination.packages` only open the
+ * enquiry form, which is a dead end for a visitor who wants to read the
+ * itinerary before asking.
+ */
+function TourCard({ tour, index, isInView }: { tour: TourData; index: number; isInView: boolean }) {
+  const image = tour.cardImage || tour.heroImages[0];
+  const price = tour.showPrice && !tour.priceOnRequest ? tour.startingPrice : "";
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 40 }}
+      animate={isInView ? { opacity: 1, y: 0 } : {}}
+      transition={{ duration: 0.5, delay: Math.min(index, 5) * 0.08 }}
+    >
+      <Link
+        href={`/packages/${tour.slug}`}
+        className="group flex flex-col h-full bg-card rounded-2xl border border-border shadow-card overflow-hidden hover:-translate-y-1 hover:shadow-navy transition-all duration-300"
+      >
+        {image && (
+          <div className="relative h-40 overflow-hidden">
+            <img
+              src={image}
+              alt={tour.heroImageAlts?.[0] || tour.shortTitle}
+              loading="lazy"
+              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+            />
+            {tour.badge && (
+              <span className="absolute top-3 left-3 bg-primary text-secondary text-[11px] font-display font-700 px-2.5 py-1 rounded-full">
+                {tour.badge}
+              </span>
+            )}
+          </div>
+        )}
+        <div className="p-5 flex flex-col flex-1">
+          <h3 className="font-display font-700 text-lg text-primary mb-1 leading-snug">
+            {tour.shortTitle || tour.title}
+          </h3>
+          <div className="flex items-center gap-1 text-muted-foreground text-xs font-body mb-3">
+            <Clock className="w-3.5 h-3.5" /> {tour.duration}
+          </div>
+          {tour.destinations.length > 0 && (
+            <p className="text-muted-foreground font-body text-xs mb-4">{tour.destinations.join(" · ")}</p>
+          )}
+          <div className="mt-auto flex items-center justify-between gap-3">
+            <span className="font-display font-800 text-secondary text-base">
+              {price ? (
+                <>
+                  {price}
+                  <span className="text-muted-foreground font-body text-xs font-normal"> /person</span>
+                </>
+              ) : (
+                <span className="text-muted-foreground font-body text-sm font-normal">Price on request</span>
+              )}
+            </span>
+            <span className="inline-flex items-center gap-1.5 text-secondary font-display font-700 text-sm group-hover:gap-2.5 transition-all">
+              View <ArrowRight className="w-4 h-4" />
+            </span>
+          </div>
+        </div>
+      </Link>
+    </motion.div>
+  );
+}
+
 /* ─── FAQ Item ────────────────────────────────── */
 function FAQItem({ faq, index }: { faq: { question: string; answer: string }; index: number }) {
   const [open, setOpen] = useState(false);
@@ -134,7 +202,14 @@ function FAQItem({ faq, index }: { faq: { question: string; answer: string }; in
 
 
 /* ─── Main Page ───────────────────────────────── */
-export default function DestinationDetailClient({ destination }: { destination: Destination }) {
+export default function DestinationDetailClient({
+  destination,
+  packages,
+}: {
+  destination: Destination;
+  /** Packages on sale for this destination. Empty until WordPress has some. */
+  packages: TourData[];
+}) {
   const router = useRouter();
   const [inquiryOpen, setInquiryOpen] = useState(false);
 
@@ -290,18 +365,71 @@ export default function DestinationDetailClient({ destination }: { destination: 
       </section>
 
       {/* ── TOUR PACKAGES ─────────────────────────────── */}
+      {/*
+        The packages WordPress is selling for this destination, each one
+        a link to its page. `destination.packages` is the fallback: a
+        hand-written outline of what we can put together, with no page
+        behind it, so those cards open the enquiry form instead.
+      */}
       <section id="packages" className="section-padding bg-muted/30">
         <div className="container-custom" ref={packagesRef}>
           <SectionHeader
             badge="Tour Packages"
             title={`${destination.name} Tour Packages`}
-            subtitle={`Thoughtfully crafted packages to give you the best of ${destination.name} at unbeatable value.`}
+            subtitle={
+              packages.length > 0
+                ? `${packages.length} ${destination.name} package${packages.length === 1 ? "" : "s"} on sale now, with itineraries, hotels and what each one includes.`
+                : `Thoughtfully crafted packages to give you the best of ${destination.name} at unbeatable value.`
+            }
           />
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {destination.packages.map((pkg, i) => (
-              <PackageCard key={pkg.id} pkg={pkg} index={i} isInView={packagesInView} onBook={() => setInquiryOpen(true)} />
-            ))}
-          </div>
+          {packages.length > 0 ? (
+            <>
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                {packages.slice(0, 6).map((tour, i) => (
+                  <TourCard key={tour.slug} tour={tour} index={i} isInView={packagesInView} />
+                ))}
+              </div>
+              <div className="mt-10 flex flex-wrap items-center justify-center gap-3">
+                <Link
+                  href={`/packages?destination=${destination.slug}`}
+                  className="inline-flex items-center gap-2 px-6 py-3 bg-primary text-secondary font-display font-700 text-sm rounded-full hover:bg-navy-dark transition-colors"
+                >
+                  {packages.length > 6
+                    ? `See all ${packages.length} ${destination.name} packages`
+                    : `Explore ${destination.name} packages`}
+                  <ArrowRight className="w-4 h-4" />
+                </Link>
+                <button
+                  type="button"
+                  onClick={() => setInquiryOpen(true)}
+                  className="inline-flex items-center gap-2 px-6 py-3 bg-muted text-primary font-display font-700 text-sm rounded-full hover:bg-muted/70 transition-colors"
+                >
+                  Ask for a custom {destination.name} trip
+                </button>
+              </div>
+            </>
+          ) : (
+            <>
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                {destination.packages.map((pkg, i) => (
+                  <PackageCard key={pkg.id} pkg={pkg} index={i} isInView={packagesInView} onBook={() => setInquiryOpen(true)} />
+                ))}
+              </div>
+              {destination.packages.length === 0 && (
+                <p className="text-center text-muted-foreground font-body text-sm">
+                  We build {destination.name} trips to order rather than selling a fixed package.{" "}
+                  <button
+                    type="button"
+                    onClick={() => setInquiryOpen(true)}
+                    className="text-secondary font-semibold underline underline-offset-2"
+                  >
+                    Tell us your dates
+                  </button>{" "}
+                  and we will send an itinerary and a price within 24 hours.
+                </p>
+              )}
+            </>
+          )}
         </div>
       </section>
 

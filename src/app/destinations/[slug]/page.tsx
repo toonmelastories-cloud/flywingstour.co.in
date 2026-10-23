@@ -4,6 +4,7 @@ import DestinationDetailClient from "@/components/DestinationDetailClient";
 import JsonLd from "@/components/JsonLd";
 import { stripLinks } from "@/components/LinkedText";
 import destinations, { getDestinationBySlug, originFor } from "@/data/destinations";
+import { getToursForDestination } from "@/lib/tours";
 import {
   ORG_ID,
   absoluteUrl,
@@ -53,6 +54,10 @@ export default async function DestinationPage({
   const destination = getDestinationBySlug(slug);
   if (!destination) notFound();
 
+  // The packages actually on sale for this destination, so the
+  // cards below link to a page instead of only opening a form.
+  const packages = await getToursForDestination(destination.slug);
+
   const startingPrice = parsePrice(destination.startingPrice);
 
   return (
@@ -91,7 +96,7 @@ export default async function DestinationPage({
           ]),
         ]}
       />
-      <DestinationDetailClient destination={destination} />
+      <DestinationDetailClient destination={destination} packages={packages} />
     </>
   );
 }
