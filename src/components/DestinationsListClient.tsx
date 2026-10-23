@@ -18,7 +18,7 @@ const REGIONS = ["All", "South Asia", "Middle East", "Southeast Asia", "Central 
 const regionMap: Record<string, string[]> = {
   "South Asia": ["himachal", "kashmir", "manali", "shimla-manali", "goa", "spiti-valley", "maldives"],
   "Middle East": ["dubai"],
-  "Southeast Asia": ["thailand", "bali", "singapore", "malaysia"],
+  "Southeast Asia": ["thailand", "bali", "singapore", "malaysia", "vietnam"],
   "Central Asia": ["almaty"],
 };
 

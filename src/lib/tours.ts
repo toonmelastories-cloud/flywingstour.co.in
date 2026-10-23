@@ -277,6 +277,19 @@ export async function getToursForDestination(slug: string): Promise<TourData[]> 
 }
 
 /**
+ * Live offers for one destination, matched on the offer's region.
+ *
+ * Vietnam is sold entirely from the Offers page today, so without this
+ * its destination page would say we have nothing while two circuits sit
+ * on sale one click away.
+ */
+export async function getOffersForDestination(name: string): Promise<QuotedPackage[]> {
+  const wanted = name.trim().toLowerCase();
+  if (!wanted) return [];
+  return (await getOffers()).filter((o) => o.region.trim().toLowerCase() === wanted);
+}
+
+/**
  * A destination that stands for several others rather than a place
  * packages are sold against: it carries no packages and the grid hides
  * it behind its children. Himachal is the only one today.

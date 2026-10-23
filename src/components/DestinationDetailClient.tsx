@@ -17,6 +17,7 @@ import InquiryModal from "@/components/InquiryModal";
 import LinkedText from "@/components/LinkedText";
 import { getRelatedDestinations, originFor, Destination } from "@/data/destinations";
 import type { TourData } from "@/lib/tours";
+import type { QuotedPackage } from "@/data/quotedPackages";
 
 /* ─── Animated Counter ────────────────────────── */
 function AnimatedCounter({ target, suffix = "" }: { target: number; suffix?: string }) {
@@ -162,6 +163,56 @@ function TourCard({ tour, index, isInView }: { tour: TourData; index: number; is
   );
 }
 
+/* ─── Offer Card ──────────────────────────────── */
+
+/** An offer for this destination, linked to its card on /offers. */
+function OfferCard({ offer, index, isInView }: { offer: QuotedPackage; index: number; isInView: boolean }) {
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 40 }}
+      animate={isInView ? { opacity: 1, y: 0 } : {}}
+      transition={{ duration: 0.5, delay: Math.min(index, 5) * 0.08 }}
+    >
+      <Link
+        href={`/offers#${offer.slug}`}
+        className="group flex flex-col h-full bg-card rounded-2xl border border-border shadow-card overflow-hidden hover:-translate-y-1 hover:shadow-navy transition-all duration-300"
+      >
+        {offer.image && (
+          <div className="relative h-40 overflow-hidden">
+            <img
+              src={offer.image}
+              alt={offer.imageAlt || offer.name}
+              loading="lazy"
+              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+            />
+            <span className="absolute top-3 left-3 bg-secondary text-primary text-[11px] font-display font-700 px-2.5 py-1 rounded-full">
+              Offer
+            </span>
+          </div>
+        )}
+        <div className="p-5 flex flex-col flex-1">
+          <h3 className="font-display font-700 text-lg text-primary mb-1 leading-snug">{offer.name}</h3>
+          <div className="flex items-center gap-1 text-muted-foreground text-xs font-body mb-3">
+            <Clock className="w-3.5 h-3.5" /> {offer.duration}
+          </div>
+          {offer.cities.length > 0 && (
+            <p className="text-muted-foreground font-body text-xs mb-4">{offer.cities.join(" · ")}</p>
+          )}
+          <div className="mt-auto flex items-center justify-between gap-3">
+            <span className="font-display font-800 text-secondary text-base">
+              {offer.startingPrice}
+              <span className="text-muted-foreground font-body text-xs font-normal"> /person</span>
+            </span>
+            <span className="inline-flex items-center gap-1.5 text-secondary font-display font-700 text-sm group-hover:gap-2.5 transition-all">
+              View <ArrowRight className="w-4 h-4" />
+            </span>
+          </div>
+        </div>
+      </Link>
+    </motion.div>
+  );
+}
+
 /* ─── FAQ Item ────────────────────────────────── */
 function FAQItem({ faq, index }: { faq: { question: string; answer: string }; index: number }) {
   const [open, setOpen] = useState(false);
@@ -205,10 +256,13 @@ function FAQItem({ faq, index }: { faq: { question: string; answer: string }; in
 export default function DestinationDetailClient({
   destination,
   packages,
+  offers,
 }: {
   destination: Destination;
   /** Packages on sale for this destination. Empty until WordPress has some. */
   packages: TourData[];
+  /** Live offers for it, for destinations sold from the Offers page alone. */
+  offers: QuotedPackage[];
 }) {
   const router = useRouter();
   const [inquiryOpen, setInquiryOpen] = useState(false);
@@ -379,7 +433,9 @@ export default function DestinationDetailClient({
             subtitle={
               packages.length > 0
                 ? `${packages.length} ${destination.name} package${packages.length === 1 ? "" : "s"} on sale now, with itineraries, hotels and what each one includes.`
-                : `Thoughtfully crafted packages to give you the best of ${destination.name} at unbeatable value.`
+                : offers.length > 0
+                  ? `${offers.length} ${destination.name} circuit${offers.length === 1 ? "" : "s"} we are quoting right now, land only, with the full day by day.`
+                  : `Thoughtfully crafted packages to give you the best of ${destination.name} at unbeatable value.`
             }
           />
           {packages.length > 0 ? (
@@ -398,6 +454,29 @@ export default function DestinationDetailClient({
                     ? `See all ${packages.length} ${destination.name} packages`
                     : `Explore ${destination.name} packages`}
                   <ArrowRight className="w-4 h-4" />
+                </Link>
+                <button
+                  type="button"
+                  onClick={() => setInquiryOpen(true)}
+                  className="inline-flex items-center gap-2 px-6 py-3 bg-muted text-primary font-display font-700 text-sm rounded-full hover:bg-muted/70 transition-colors"
+                >
+                  Ask for a custom {destination.name} trip
+                </button>
+              </div>
+            </>
+          ) : offers.length > 0 ? (
+            <>
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                {offers.map((offer, i) => (
+                  <OfferCard key={offer.slug} offer={offer} index={i} isInView={packagesInView} />
+                ))}
+              </div>
+              <div className="mt-10 flex flex-wrap items-center justify-center gap-3">
+                <Link
+                  href="/offers"
+                  className="inline-flex items-center gap-2 px-6 py-3 bg-primary text-secondary font-display font-700 text-sm rounded-full hover:bg-navy-dark transition-colors"
+                >
+                  See all current offers <ArrowRight className="w-4 h-4" />
                 </Link>
                 <button
                   type="button"

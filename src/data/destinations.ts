@@ -6,6 +6,7 @@ const destMaldives = "/assets/dest-maldives.jpg";
 const destSingapore = "/assets/dest-singapore.jpg";
 const destMalaysia = "https://wp.flywingstour.co.in/wp-content/uploads/2026/07/dest-malaysia.jpg";
 const destAlmaty = "https://wp.flywingstour.co.in/wp-content/uploads/2026/07/dest-almaty.jpg";
+const destVietnam = "/assets/dest-vietnam-halong-bay.jpg";
 
 /**
  * Domestic destination heroes.
@@ -1066,6 +1067,82 @@ const destinations: Destination[] = [
    * conditional on it, so nothing breaks, and no rate is invented
    * that the sales team has not agreed to honour.
    * ───────────────────────────────────────────────────────────── */
+
+  /**
+   * Vietnam.
+   *
+   * Added because we were already selling it: the two circuits on the
+   * Offers page had no page of their own, so a search for "Vietnam
+   * package from Chandigarh" had nowhere to land but a blog post. The
+   * packages section on this page shows those offers, since there is
+   * no Vietnam package in WordPress yet.
+   */
+  {
+    slug: "vietnam",
+    name: "Vietnam",
+    country: "Vietnam",
+    tagline: "Limestone bays, river deltas and the cheapest long-haul week we sell",
+    heroImage: destVietnam,
+    startingPrice: "\u20b920,999",
+    bestTime:
+      "October to April. The north is cool and dry then; the south is dry from December to April",
+    tripDuration: "4-8 Days",
+    currency: "VND (Vietnamese Dong)",
+    visaInfo:
+      "An e-visa before travel for all Indian passport holders: 90 days, single entry USD 25 or multiple entry USD 50, applied for on the official portal and issued in about 3 to 5 working days. There is no visa on arrival and no visa-free entry. We file it with the booking",
+    weather:
+      "The south is tropical all year (26-33\u00b0C). The north has a cool winter (15-20\u00b0C, December to February), a hot humid summer and heavy rain from June to September",
+    about:
+      "Vietnam is the long-haul holiday that costs less than most short ones, which is why it has gone from a curiosity to one of the most asked-about trips on our desk. The country splits into two trips that happen to cost about the same. In the north, [Hanoi](/offers#vietnam-hanoi-halong-ninh-binh-5d) is the Old Quarter, the street food and the lake, with Halong Bay's limestone islands an overnight cruise away and the rice fields and caves of Ninh Binh a day trip in the other direction. In the south, [Saigon](/offers#vietnam-saigon-mekong-cu-chi-4d) is the fast one, with the Cu Chi tunnels an hour out and the Mekong Delta's canals and floating markets a day beyond that. Delhi flies direct to Hanoi, so from Chandigarh it is a short hop and one flight. Four to five nights does one half properly; eight does both.",
+    metaTitle: "Vietnam Tour Package from Chandigarh | Hanoi & Saigon",
+    metaDescription:
+      "Vietnam tour packages from Chandigarh starting \u20b920,999: Hanoi, Halong Bay, Saigon and the Mekong Delta, with e-visa help. Free quote.",
+    packages: [],
+    highlights: [
+      { icon: "\u26f5", title: "Halong Bay", description: "Overnight cruise through limestone islands, the picture everyone comes for" },
+      { icon: "\U0001f3ee", title: "Hanoi Old Quarter", description: "Thirty-six streets of food, coffee and motorbikes around Hoan Kiem lake" },
+      { icon: "\U0001f6a3", title: "Ninh Binh", description: "Rowing boats through rice fields and caves, the dry-land Halong" },
+      { icon: "\U0001f6e3\ufe0f", title: "Cu Chi Tunnels", description: "The war tunnels an hour outside Saigon, and the museum that explains them" },
+      { icon: "\U0001f34c", title: "Mekong Delta", description: "Canals, floating markets and fruit orchards south of Saigon" },
+      { icon: "\U0001f35c", title: "The food", description: "Pho, banh mi and egg coffee, and the reason half our travellers go back" },
+    ],
+    itinerary: [],
+    inclusions: [],
+    exclusions: [],
+    faqs: [
+      {
+        question: "Do Indians need a visa for Vietnam?",
+        answer:
+          "Yes. Vietnam has no visa-free entry and no visa on arrival for Indian passport holders, so an e-visa has to be approved before you fly. It runs 90 days, costs USD 25 for single entry or USD 50 for multiple, and takes about 3 to 5 working days on the official government portal. Plenty of lookalike sites charge several times that; we file it on the real one as part of the booking.",
+      },
+      {
+        question: "How much does a Vietnam trip cost from Chandigarh?",
+        answer:
+          "Our [Saigon, Mekong Delta and Cu Chi 4 day circuit](/offers#vietnam-saigon-mekong-cu-chi-4d) starts at \u20b920,999 per person and the [Hanoi, Halong Bay and Ninh Binh 5 day circuit](/offers#vietnam-hanoi-halong-ninh-binh-5d) at \u20b927,999, both land only for two travellers sharing. International airfare, the visa and travel insurance are extra. Ask us and the quote comes back with the flights priced for your dates.",
+      },
+      {
+        question: "North or south: which half should I pick?",
+        answer:
+          "With four or five nights, pick one. The north suits a first trip: Hanoi, an overnight on Halong Bay and a day in Ninh Binh cover the scenery Vietnam is known for. The south is flatter and warmer and works better in December and January, when Hanoi can be grey and chilly. With eight nights you can do both and fly between them.",
+      },
+      {
+        question: "When is the best time to visit Vietnam?",
+        answer:
+          "October to April for the country as a whole. The north is at its best from October to April and gets cold and damp in January; the south is dry from December to April and hot all year. June to September is the rainy season in the north, which is also when the Halong cruises are most often cancelled for weather.",
+      },
+      {
+        question: "How do I get to Vietnam from Chandigarh?",
+        answer:
+          "Through Delhi, which has direct flights to Hanoi. From Chandigarh that is a short hop or a three hour drive, then one flight of about five hours. Ho Chi Minh City is usually one change. We book the whole thing, including the Chandigarh leg.",
+      },
+      {
+        question: "Is Vietnam good for families and older travellers?",
+        answer:
+          "Yes, with the right pace. The Halong cruise, Ninh Binh and the Mekong are all gentle, and the walking is optional. The Cu Chi tunnels involve crawling if you want to go in, but you can skip that part and still see the site. Tell us who is travelling and we will set the days accordingly.",
+      },
+    ],
+    relatedSlugs: ["thailand", "bali", "malaysia"],
+  },
 
   /**
    * Himachal hub.
