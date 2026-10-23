@@ -57,6 +57,26 @@ class FWP_Rest {
 		);
 		register_rest_route(
 			self::NS,
+			'/offers',
+			array(
+				'methods'             => WP_REST_Server::READABLE,
+				'callback'            => array( __CLASS__, 'list_offers' ),
+				'permission_callback' => '__return_true',
+			)
+		);
+		register_rest_route(
+			self::NS,
+			'/offers/import',
+			array(
+				'methods'             => WP_REST_Server::CREATABLE,
+				'callback'            => array( __CLASS__, 'import_offers' ),
+				'permission_callback' => function () {
+					return current_user_can( 'manage_options' );
+				},
+			)
+		);
+		register_rest_route(
+			self::NS,
 			'/import',
 			array(
 				'methods'             => WP_REST_Server::CREATABLE,
@@ -194,10 +214,11 @@ class FWP_Rest {
 	 * a headless install can be hours late; the website asks for this list
 	 * every few minutes, so it is the reliable trigger.
 	 */
+	/** Covers both post types, so either endpoint releases anything due. */
 	private static function publish_overdue() {
 		$overdue = get_posts(
 			array(
-				'post_type'        => FWP_Data::POST_TYPE,
+				'post_type'        => array( FWP_Data::POST_TYPE, FWO_Data::POST_TYPE ),
 				'post_status'      => 'future',
 				'posts_per_page'   => 20,
 				'fields'           => 'ids',
@@ -341,4 +362,136 @@ class FWP_Rest {
 
 		return rest_ensure_response( $result );
 	}
+
+	/* ─── Offers ─────────────────────────────────────────────────────────── */
+
+	/**
+	 * Every offer the website should show today.
+	 *
+	 * Expired and hidden offers are left out entirely rather than sent
+	 * with a flag: unlike a package an offer has no page of its own, so
+	 * there is nothing for the website to do with one it must not show.
+	 */
+	public static function list_offers() {
+		self::publish_overdue();
+
+		$posts = get_posts(
+			array(
+				'post_type'        => FWO_Data::POST_TYPE,
+				'post_status'      => 'publish',
+				'posts_per_page'   => 200,
+				'has_password'     => false,
+				'orderby'          => 'menu_order date',
+				'order'            => 'ASC',
+				'no_found_rows'    => true,
+				'suppress_filters' => true,
+			)
+		);
+		$offers = array();
+		foreach ( $posts as $post ) {
+			$d = FWO_Data::get( $post->ID );
+			if ( FWO_Data::is_live( $d ) ) {
+				$offers[] = FWO_Data::to_api( $post, $d );
+			}
+		}
+		return self::respond( array( 'offers' => $offers ) );
+	}
+
+	/**
+	 * Copies the offers hard-coded in src/data/quotedPackages.ts into
+	 * WordPress, so nobody retypes them. Run once; see the README.
+	 */
+	public static function import_offers( WP_REST_Request $request ) {
+		$body   = $request->get_json_params();
+		$items  = isset( $body['offers'] ) && is_array( $body['offers'] ) ? $body['offers'] : array();
+		$status = isset( $body['status'] ) && 'draft' === $body['status'] ? 'draft' : 'publish';
+		$site   = FWP_Settings::site_url();
+		$result = array(
+			'created' => array(),
+			'updated' => array(),
+			'skipped' => array(),
+		);
+
+		$digits = function ( $v ) {
+			return (int) preg_replace( '/\D/', '', (string) $v );
+		};
+
+		foreach ( $items as $o ) {
+			$slug = isset( $o['slug'] ) ? sanitize_title( $o['slug'] ) : '';
+			if ( '' === $slug || empty( $o['name'] ) ) {
+				$result['skipped'][] = $slug;
+				continue;
+			}
+
+			$image_url = isset( $o['image'] ) ? (string) $o['image'] : '';
+			if ( '' !== $image_url && 0 === strpos( $image_url, '/' ) ) {
+				$image_url = $site . $image_url;
+			}
+
+			$compare     = isset( $o['compareWith'] ) && is_array( $o['compareWith'] ) ? $o['compareWith'] : array();
+			$has_compare = ! empty( $compare );
+
+			$data = FWO_Data::sanitize(
+				array(
+					'region'        => isset( $o['region'] ) ? $o['region'] : '',
+					'duration'      => isset( $o['duration'] ) ? $o['duration'] : '',
+					'cities'        => isset( $o['cities'] ) ? $o['cities'] : array(),
+					'hotelCategory' => isset( $o['hotelCategory'] ) ? $o['hotelCategory'] : '',
+					'startingPrice' => $digits( isset( $o['startingPrice'] ) ? $o['startingPrice'] : 0 ),
+					'minPax'        => isset( $o['minPax'] ) ? $o['minPax'] : 2,
+					'itinerary'     => isset( $o['itinerary'] ) ? $o['itinerary'] : array(),
+					'inclusions'    => isset( $o['inclusions'] ) ? $o['inclusions'] : array(),
+					'image'         => array(
+						'id'  => 0,
+						'url' => $image_url,
+						'alt' => isset( $o['imageAlt'] ) ? $o['imageAlt'] : '',
+					),
+					'compare'       => array(
+						'enabled'  => $has_compare,
+						'label'    => isset( $compare['label'] ) ? $compare['label'] : '',
+						'price'    => $digits( isset( $compare['price'] ) ? $compare['price'] : 0 ),
+						'href'     => isset( $compare['href'] ) ? $compare['href'] : '',
+						'sameTrip' => ! empty( $compare['sameTrip'] ),
+						'note'     => isset( $compare['note'] ) ? $compare['note'] : '',
+					),
+					'validTill'     => isset( $o['validTill'] ) ? $o['validTill'] : '',
+					'listed'        => true,
+				)
+			);
+
+			$existing = get_posts(
+				array(
+					'post_type'        => FWO_Data::POST_TYPE,
+					'post_status'      => 'any',
+					'name'             => $slug,
+					'posts_per_page'   => 1,
+					'no_found_rows'    => true,
+					'suppress_filters' => true,
+				)
+			);
+			$existing = $existing ? $existing[0] : null;
+
+			$postarr = array(
+				'post_type'   => FWO_Data::POST_TYPE,
+				'post_title'  => wp_strip_all_tags( (string) $o['name'] ),
+				'post_name'   => $slug,
+				'post_status' => $status,
+			);
+			if ( $existing ) {
+				$postarr['ID'] = $existing->ID;
+			}
+
+			$id = wp_insert_post( wp_slash( $postarr ), true );
+			if ( is_wp_error( $id ) ) {
+				$result['skipped'][] = $slug;
+				continue;
+			}
+			update_post_meta( $id, FWO_Data::META, wp_slash( $data ) );
+			$result[ $existing ? 'updated' : 'created' ][] = $slug;
+		}
+
+		FWP_Sync::queue();
+		return rest_ensure_response( $result );
+	}
+
 }

@@ -1,7 +1,7 @@
 import { getTours, getTourBySlug, getFeaturedImageUrl, getYoastMeta, wpJsonFetch, type WPPost } from "@/lib/wordpress";
 import { getAllPackages, getPackageBySlug, type PackageData } from "@/data/packages";
 import { getDestinationBySlug } from "@/data/destinations";
-import type { QuotedPackage } from "@/data/quotedPackages";
+import { activeOffers, type QuotedPackage } from "@/data/quotedPackages";
 import { stripWpHtml } from "@/lib/sanitize";
 
 const FALLBACK_IMAGE = "/assets/hero-bg.jpg";
@@ -327,6 +327,39 @@ export async function getFeaturedPackageCards(limit = 6): Promise<FeaturedPackag
 }
 
 /* ─── Offers ───────────────────────────────────────────────────────────── */
+
+/**
+ * Standalone offers from the plugin's Offers menu.
+ *
+ * These are rates for trips with no package page of their own: the
+ * Vietnam circuits, a supplier's one-off Kuala Lumpur price. WordPress
+ * has already dropped anything expired or hidden, so whatever comes
+ * back is what the page should show.
+ *
+ * Returns null, not an empty array, when WordPress cannot be reached,
+ * so the caller can tell "no offers today" from "no answer" and fall
+ * back to the hard-coded list instead of emptying the page.
+ */
+export async function getWpOffers(): Promise<QuotedPackage[] | null> {
+  const data = await wpJsonFetch<{ offers?: QuotedPackage[] }>("/flywings/v1/offers");
+  return data && Array.isArray(data.offers) ? data.offers : null;
+}
+
+/**
+ * Every offer for /offers and /llms.txt: packages switched on in the
+ * package editor first, then the standalone offers.
+ *
+ * `src/data/quotedPackages.ts` is the fallback for the standalone half.
+ * It is used only while WordPress is unreachable or has no offers of
+ * its own yet, so the page still has something on it the day the
+ * plugin is installed, or the morning WordPress is down.
+ */
+export async function getOffers(): Promise<QuotedPackage[]> {
+  const [fromPackages, fromWp] = await Promise.all([getPackageOffers(), getWpOffers()]);
+  const standalone = fromWp && fromWp.length > 0 ? fromWp : activeOffers();
+  const seen = new Set(fromPackages.map((o) => o.slug));
+  return [...fromPackages, ...standalone.filter((o) => !seen.has(o.slug))];
+}
 
 /**
  * Plugin packages with a live offer, in the shape /offers and llms.txt

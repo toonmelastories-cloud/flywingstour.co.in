@@ -24,13 +24,29 @@ class FWP_Sync {
 
 	public static function on_delete( $post_id, $post = null ) {
 		$post = $post ? $post : get_post( $post_id );
-		if ( $post && FWP_Data::POST_TYPE === $post->post_type && 'publish' === $post->post_status ) {
+		if ( $post && self::ours( $post->post_type ) && 'publish' === $post->post_status ) {
 			self::on_transition( 'trash', 'publish', $post );
 		}
 	}
 
+	private static function ours( $post_type ) {
+		return in_array( $post_type, array( FWP_Data::POST_TYPE, FWO_Data::POST_TYPE ), true );
+	}
+
 	public static function on_transition( $new_status, $old_status, $post ) {
-		if ( FWP_Data::POST_TYPE !== $post->post_type ) {
+		if ( ! self::ours( $post->post_type ) ) {
+			return;
+		}
+
+		/*
+		 * Offers have no page of their own, so there is no old URL to
+		 * redirect and nothing to remember: a changed offer only needs
+		 * the Offers page rebuilt.
+		 */
+		if ( FWO_Data::POST_TYPE === $post->post_type ) {
+			if ( 'publish' === $new_status || 'publish' === $old_status ) {
+				self::queue();
+			}
 			return;
 		}
 		// Its current slug plus any it had before a rename, so every old link is covered.
