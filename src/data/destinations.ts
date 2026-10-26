@@ -350,7 +350,7 @@ const destinations: Destination[] = [
     visaInfo: "Visa on arrival for Indian passport holders (USD 35, 30 days)",
     weather: "Tropical; warm year-round (26–32°C). Dry season: April–October.",
     about:
-      "Bali is more than a destination — it is a spiritual experience. This enchanting Indonesian island captivates travelers with emerald rice terraces, ancient Hindu temples perched on cliff edges, pristine surf beaches, and a wellness culture unlike anywhere else. From the cultural hub of Ubud to the beach paradise of Seminyak and the surfer's haven of Canggu, Bali suits every type of traveler. Indian visitors especially love Bali for its vegetarian-friendly cuisine, vibrant yoga retreats, and warm Balinese hospitality.",
+      "Discover the beauty of Bali with our Bali tour packages from India, featuring tropical beaches, ancient temples, lush rice terraces, and unforgettable island experiences. Explore popular destinations such as Ubud, Seminyak, and Canggu while enjoying a relaxing holiday tailored to your travel preferences. Whether you're planning a romantic getaway, a family vacation, or a trip with friends, find a Bali holiday package that suits your budget and travel plans. Contact Flywings Tour & Packages to plan your Bali getaway.",
     metaTitle: "Bali Tour Package from India | Flywings Tour & Packages Pvt Ltd",
     metaDescription:
       "Bali tour package from India starting ₹36,999 with flights. Temples, rice terraces, beaches and spa stays. Free quote in 24 hours.",
