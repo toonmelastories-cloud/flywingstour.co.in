@@ -24,10 +24,19 @@
  *   node scripts/import-offers-to-wp.mjs --dry-run   # list what would be sent, send nothing
  *   node scripts/import-offers-to-wp.mjs --only bali-4n5d
  *
+ * Once the plugin is installed, WordPress is where offers are added and
+ * edited, and quotedPackages.ts is only the fallback for when it cannot
+ * be reached. To push a new offer straight into WordPress without
+ * touching that file, put it in a JSON file shaped like QuotedPackage
+ * (an array, or { "offers": [...] }) and pass it:
+ *
+ *   node scripts/import-offers-to-wp.mjs --file new-offers.json --dry-run
+ *   node scripts/import-offers-to-wp.mjs --file new-offers.json
+ *
  * Needs Node 22.18 or newer (it loads quotedPackages.ts directly).
  */
 
-import { existsSync } from "node:fs";
+import { existsSync, readFileSync } from "node:fs";
 
 // Node warns that quotedPackages.ts has no declared module type.
 // Harmless here, and it would bury the useful output.
@@ -39,6 +48,20 @@ const dryRun = args.includes("--dry-run");
 const asDraft = args.includes("--draft");
 const onlyArg = args.indexOf("--only");
 const only = onlyArg >= 0 ? new Set((args[onlyArg + 1] ?? "").split(",").filter(Boolean)) : null;
+const fileArg = args.indexOf("--file");
+const file = fileArg >= 0 ? args[fileArg + 1] : null;
+
+/** The offers to send: a JSON file when given, else the fallback data file. */
+function source() {
+  if (!file) return quotedPackages;
+  const parsed = JSON.parse(readFileSync(file, "utf8"));
+  const list = Array.isArray(parsed) ? parsed : parsed.offers;
+  if (!Array.isArray(list)) {
+    console.error(`${file} should hold an array of offers, or { "offers": [...] }.`);
+    process.exit(1);
+  }
+  return list;
+}
 
 if (existsSync(".env.local")) process.loadEnvFile(".env.local");
 
@@ -47,7 +70,7 @@ const root = apiUrl.replace(/\/wp\/v2\/?$/, "");
 const user = process.env.WP_APP_USER;
 const password = process.env.WP_APP_PASSWORD;
 
-const offers = quotedPackages.filter((o) => !only || only.has(o.slug));
+const offers = source().filter((o) => !only || only.has(o.slug));
 if (offers.length === 0) {
   console.error("No offers matched.");
   process.exit(1);

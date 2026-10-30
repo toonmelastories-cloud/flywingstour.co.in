@@ -381,8 +381,11 @@ class FWP_Rest {
 				'post_status'      => 'publish',
 				'posts_per_page'   => 200,
 				'has_password'     => false,
+				// Newest first. Ascending put a freshly added offer at the
+				// bottom of the page, which is the opposite of what someone
+				// adding this week's rate wants.
 				'orderby'          => 'menu_order date',
-				'order'            => 'ASC',
+				'order'            => 'DESC',
 				'no_found_rows'    => true,
 				'suppress_filters' => true,
 			)
