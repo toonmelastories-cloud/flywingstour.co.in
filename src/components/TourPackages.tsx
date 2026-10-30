@@ -118,8 +118,14 @@ export default function TourPackages({ packages, onBook }: TourPackagesProps) {
           <h2 className="font-display font-800 text-3xl sm:text-4xl text-navy mb-4">
             Premium Tour Packages
           </h2>
-          <p className="text-muted-foreground font-body max-w-xl mx-auto leading-relaxed">
-            Thoughtfully designed packages that combine the best experiences at unbeatable value.
+          {/* Wider than the old one-liner it replaced, which wrapped badly at max-w-xl. */}
+          <p className="text-muted-foreground font-body max-w-3xl mx-auto leading-relaxed">
+            Discover thoughtfully designed premium tour packages that bring together unforgettable
+            experiences, comfortable stays, and exceptional value for every journey. Explore exciting
+            domestic and international tour packages, from relaxing beach holidays to thrilling
+            adventures and cultural escapes. Enjoy customized holiday packages, handpicked hotels,
+            sightseeing, and convenient travel arrangements tailored to your preferences and budget.
+            Let us make every trip memorable with the perfect holiday experience.
           </p>
         </motion.div>
 

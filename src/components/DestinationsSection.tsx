@@ -43,15 +43,21 @@ export default function DestinationsSection() {
             Handpicked For You
           </span>
           <h2 className="font-display font-800 text-3xl sm:text-4xl text-navy mb-4">
-            Popular Destinations
+            Explore Beautiful Destinations Around the World
           </h2>
-          <p className="text-muted-foreground font-body max-w-xl mx-auto leading-relaxed">
-            Dream destinations curated by our travel experts — each one a masterpiece waiting to be explored.
+          <p className="text-muted-foreground font-body max-w-3xl mx-auto leading-relaxed">
+            Explore the world's most beautiful destinations, carefully selected by our travel experts
+            to make every journey special. From stunning beaches and scenic mountains to vibrant cities
+            and cultural attractions, discover exciting places, unique experiences, and unforgettable
+            adventures. Find the perfect destination for your next holiday and create memories that
+            last a lifetime.
           </p>
         </motion.div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {destinations.map(({ name, slug, country, image, description, badge }, i) => (
+          {/* One row. The rest of the list stays here so the count is a
+              one-character change, and /destinations has them all. */}
+          {destinations.slice(0, 3).map(({ name, slug, country, image, description, badge }, i) => (
             <motion.div
               key={name}
               initial={{ opacity: 0, y: 50 }}

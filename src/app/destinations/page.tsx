@@ -2,9 +2,12 @@ import type { Metadata } from "next";
 import DestinationsListClient from "@/components/DestinationsListClient";
 import JsonLd from "@/components/JsonLd";
 import destinations from "@/data/destinations";
+import { DESTINATIONS_FAQS } from "@/data/destinationsPage";
+import { stripLinks } from "@/components/LinkedText";
 import {
   KEYWORDS,
   breadcrumbJsonLd,
+  faqJsonLd,
   itemListJsonLd,
   pageMetadata,
 } from "@/lib/seo";
@@ -37,6 +40,8 @@ export default function Destinations() {
                 image: d.heroImage,
               }))
           ),
+          // Answers can carry links; the schema takes the plain text.
+          faqJsonLd(DESTINATIONS_FAQS.map((f) => ({ ...f, answer: stripLinks(f.answer) }))),
           breadcrumbJsonLd([
             { name: "Home", path: "/" },
             { name: "Destinations", path: "/destinations" },

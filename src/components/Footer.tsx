@@ -212,7 +212,7 @@ export default function Footer() {
             <span className="text-white/20 mx-2">|</span>
             Design &amp; Developed by{" "}
             <a
-              href="https://wa.me/917888997622"
+              href="https://wa.me/919501692921"
               target="_blank"
               rel="noopener noreferrer"
               className="text-gold/80 font-semibold hover:text-gold transition-colors"

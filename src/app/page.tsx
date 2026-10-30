@@ -50,7 +50,9 @@ const homeFaqs = [
 export default async function Home() {
   // Latest 3 posts for the "Latest Travel Insights" section; the
   // section hides itself if WordPress is unreachable.
-  const [posts, featuredPackages] = await Promise.all([getPosts(), getFeaturedPackageCards()]);
+  // Three, so the section is one row. Which three is still WordPress's
+  // call, from "Feature on the homepage" and its order.
+  const [posts, featuredPackages] = await Promise.all([getPosts(), getFeaturedPackageCards(3)]);
   const latestPosts: HomeBlogPost[] = (posts ?? []).slice(0, 3).map((post) => {
     const category = post._embedded?.["wp:term"]?.[0]?.[0]?.name ?? "Travel Guide";
     return {
