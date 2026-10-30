@@ -224,6 +224,33 @@ const quotedPackages: QuotedPackage[] = [
       sameTrip: false,
     },
   },
+  {
+    slug: "south-india-divine-shores-5n6d",
+    name: "Divine Shores of South India 5 Nights 6 Days",
+    region: "South India",
+    duration: "5 Nights / 6 Days",
+    cities: ["Madurai", "Rameshwaram", "Kanyakumari", "Kovalam", "Trivandrum"],
+    hotelCategory: "3 Star",
+    startingPrice: "₹23,499",
+    minPax: 2,
+    // The rate sheet listed the six day headings first and their
+    // descriptions afterwards, in a block; paired back up here.
+    itinerary: [
+      "Day 1: Arrive Madurai, Meenakshi temple, Nayakkar Mahal, Theppakulam and the Gandhi museum",
+      "Day 2: Madurai to Rameshwaram (175 km, 3 hrs), Adam's Bridge, Rameshwaram temple and Agni Theertham",
+      "Day 3: Rameshwaram to Kanyakumari (300 km, 6 hrs), sunset point in the evening",
+      "Day 4: Kanyakumari sunrise, Vivekananda Rock, Thiruvalluvar statue and Kumari Amman temple",
+      "Day 5: Kanyakumari sunrise, then drive to Trivandrum via Poovar lake, Kovalam beach and Padmanabhaswamy temple",
+      "Day 6: Drop at Trivandrum airport after breakfast",
+    ],
+    inclusions: [
+      "5 nights accommodation in 3 star hotels",
+      "Daily breakfast",
+      "Airport transfers and local sightseeing by private air-conditioned vehicle",
+      "All tolls, parking and fuel charges",
+      "GST included in the price",
+    ],
+  },
 ];
 
 /**
